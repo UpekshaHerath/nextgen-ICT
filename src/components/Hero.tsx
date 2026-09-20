@@ -16,12 +16,12 @@ import { classes, site, stats, tutorPhoto, waLink } from "@/lib/site";
 /** Page-load choreography for the headline column. */
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+  show: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.2, 0.8, 0.3, 1] } },
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.2, 0.8, 0.3, 1] } },
 };
 
 const BADGE_KEY = "nextgen-ict:hero-badge-dismissed";
@@ -53,6 +53,13 @@ function dismissBadge() {
   badgeListeners.forEach((cb) => cb());
 }
 
+const wideQuery = "(min-width: 1024px)";
+function subscribeWide(cb: () => void) {
+  const mq = window.matchMedia(wideQuery);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+
 export function Hero() {
   const { t, L } = useLang();
   const verified = classes.filter((c) => c.verified);
@@ -60,19 +67,29 @@ export function Hero() {
   // server snapshot = dismissed, so returning visitors never see a flash
   const badgeHidden = useSyncExternalStore(subscribeBadge, badgeDismissed, () => true);
 
+  const wide = useSyncExternalStore(
+    subscribeWide,
+    () => window.matchMedia(wideQuery).matches,
+    () => false,
+  );
+
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
+  // gentle parallax on laptops only - stacked, the portrait would drift over the copy below it
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce || !wide ? 0 : 60]);
   const stickerRotate = useTransform(scrollYProgress, [0, 1], [-12, reduce ? -12 : 16]);
 
   return (
     <section id="home" ref={sectionRef} className="relative">
       <div className="shell pb-12 pt-8 sm:pb-14 sm:pt-14">
-        <div className="flex flex-col items-center gap-9 text-center sm:gap-12">
+        {/* phones/tablets: headline > portrait > rest, centred. laptops: text column left, portrait right. */}
+        <div className="grid items-start gap-9 text-center sm:gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-x-10 lg:gap-y-0 lg:text-left">
           {/* 1. headline - the message comes first */}
           <motion.div
+            className="lg:col-start-1 lg:row-start-1"
             variants={container}
             initial={reduce ? false : "hidden"}
             animate="show"
@@ -115,12 +132,13 @@ export function Hero() {
             </h1>
           </motion.div>
 
-          {/* 2. portrait - straight under the headline */}
+          {/* 2. portrait - under the headline on small screens, beside the copy on laptops */}
           <motion.div
+            style={{ y: portraitY }}
             initial={reduce ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.2, 0.8, 0.3, 1] }}
-            className="relative mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:max-w-[400px]"
+            transition={{ duration: 0.95, delay: 0.3, ease: [0.2, 0.8, 0.3, 1] }}
+            className="relative mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-3 lg:max-w-[400px]"
           >
             <div
               className="dots absolute -left-3 -top-3 h-20 w-20 opacity-25 sm:-left-5 sm:-top-5 sm:h-32 sm:w-32"
@@ -166,7 +184,7 @@ export function Hero() {
             <motion.figure
               initial={reduce ? false : { opacity: 0, x: -24, rotate: -12 }}
               animate={{ opacity: 1, x: 0, rotate: -4 }}
-              transition={{ duration: 0.55, delay: 0.4, ease: [0.2, 0.8, 0.3, 1] }}
+              transition={{ duration: 0.85, delay: 0.7, ease: [0.2, 0.8, 0.3, 1] }}
               whileHover={{ rotate: 0, scale: 1.04 }}
               className="hard-sm absolute -left-10 -top-8 z-10 hidden w-[36%] border-2 border-[var(--ink)] bg-[var(--paper)] p-1.5 sm:block"
             >
@@ -199,14 +217,14 @@ export function Hero() {
 
           {/* 3. everything else: pitch, calls to action, confirmed classes */}
           <motion.div
-            className="w-full"
+            className="w-full lg:col-start-1 lg:row-start-2 lg:mt-6"
             variants={container}
             initial={reduce ? false : "hidden"}
             animate="show"
           >
             <motion.div
               variants={item}
-              className="mx-auto flex max-w-3xl items-start justify-center gap-4 border-t-2 border-[var(--ink)] pt-5 sm:gap-5"
+              className="mx-auto flex max-w-3xl items-start justify-center gap-4 border-t-2 border-[var(--ink)] pt-5 sm:gap-5 lg:mx-0 lg:max-w-none lg:justify-start"
             >
               <span className="display hidden shrink-0 text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
                 &ldquo;
@@ -221,7 +239,7 @@ export function Hero() {
 
             <motion.div
               variants={item}
-              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3"
+              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3 lg:justify-start"
             >
               <a
                 href={waLink(t.wa.generic)}
@@ -250,7 +268,7 @@ export function Hero() {
             {/* torn-ticket strip of confirmed classes */}
             <motion.ul
               variants={item}
-              className="mx-auto mt-7 grid max-w-3xl border-2 border-[var(--ink)] sm:mt-8 sm:grid-cols-2"
+              className="mx-auto mt-7 grid max-w-3xl border-2 border-[var(--ink)] sm:mt-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none"
             >
               {verified.map((c, i) => (
                 <li
