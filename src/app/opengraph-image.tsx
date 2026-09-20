@@ -9,9 +9,9 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 /*
-  The share card in the site's own printed-matter language: paper ground, hard
-  ink rules, one maroon block. Latin only — the image renderer ships a Latin
-  face, and Sinhala glyphs would come out as empty boxes.
+  The share card in the site's own language: warm canvas, deep ink type, one
+  copper mark. Latin only — the image renderer ships a Latin face, and Sinhala
+  glyphs would come out as empty boxes.
 */
 export default async function OpengraphImage() {
   const photo = await readFile(
@@ -19,10 +19,11 @@ export default async function OpengraphImage() {
   );
   const photoSrc = `data:image/jpeg;base64,${photo.toString("base64")}`;
 
-  const ink = "#16130f";
-  const paper = "#f4efe4";
-  const maroon = "#8e1b2e";
-  const mustard = "#e3a11b";
+  const ink = "#14181d";
+  const canvas = "#fbfaf7";
+  const surface = "#ffffff";
+  const accent = "#9c5a2a";
+  const line = "#e6e2da";
 
   return new ImageResponse(
     (
@@ -31,17 +32,19 @@ export default async function OpengraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          background: paper,
+          background: canvas,
           color: ink,
-          padding: 48,
+          padding: 56,
         }}
       >
         <div
           style={{
             flex: 1,
             display: "flex",
-            border: `6px solid ${ink}`,
-            background: paper,
+            border: `1px solid ${line}`,
+            borderRadius: 20,
+            overflow: "hidden",
+            background: surface,
           }}
         >
           {/* left column — the words */}
@@ -60,22 +63,24 @@ export default async function OpengraphImage() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  width: 58,
-                  height: 58,
-                  background: maroon,
-                  color: paper,
-                  fontSize: 22,
+                  width: 56,
+                  height: 56,
+                  borderRadius: 14,
+                  background: accent,
+                  color: "#ffffff",
+                  fontSize: 20,
                   fontWeight: 700,
-                  letterSpacing: 1,
+                  letterSpacing: 2,
                 }}
               >
                 ICT
               </div>
               <div
                 style={{
-                  fontSize: 22,
-                  letterSpacing: 6,
+                  fontSize: 20,
+                  letterSpacing: 5,
                   textTransform: "uppercase",
+                  color: "#4b525b",
                 }}
               >
                 NextGen ICT
@@ -83,15 +88,15 @@ export default async function OpengraphImage() {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 68, fontWeight: 800, lineHeight: 1.05 }}>
+              <div style={{ fontSize: 66, fontWeight: 700, lineHeight: 1.08 }}>
                 A/L ICT with
               </div>
               <div
                 style={{
-                  fontSize: 58,
-                  fontWeight: 800,
-                  lineHeight: 1.1,
-                  color: maroon,
+                  fontSize: 56,
+                  fontWeight: 700,
+                  lineHeight: 1.12,
+                  color: accent,
                 }}
               >
                 {site.tutor.name.en}
@@ -99,9 +104,9 @@ export default async function OpengraphImage() {
               <div
                 style={{
                   marginTop: 22,
-                  fontSize: 27,
-                  lineHeight: 1.35,
-                  color: "#554c40",
+                  fontSize: 26,
+                  lineHeight: 1.4,
+                  color: "#4b525b",
                 }}
               >
                 Theory · Revision · Paper classes, Sinhala medium
@@ -112,16 +117,18 @@ export default async function OpengraphImage() {
               <div
                 style={{
                   display: "flex",
-                  background: mustard,
-                  border: `3px solid ${ink}`,
-                  padding: "10px 18px",
-                  fontSize: 22,
-                  fontWeight: 700,
+                  background: "#f7efe6",
+                  border: `1px solid #e8d7c4`,
+                  borderRadius: 999,
+                  padding: "10px 20px",
+                  fontSize: 21,
+                  fontWeight: 600,
+                  color: accent,
                 }}
               >
                 Makandura · Kuliyapitiya
               </div>
-              <div style={{ display: "flex", fontSize: 22 }}>
+              <div style={{ display: "flex", fontSize: 21, color: "#4b525b" }}>
                 + Online island-wide
               </div>
             </div>
@@ -132,7 +139,7 @@ export default async function OpengraphImage() {
             style={{
               display: "flex",
               width: 420,
-              borderLeft: `6px solid ${ink}`,
+              borderLeft: `1px solid ${line}`,
             }}
           >
             {/* the image renderer draws plain <img>; next/image has no place here */}

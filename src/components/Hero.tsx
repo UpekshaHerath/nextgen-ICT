@@ -16,12 +16,12 @@ import { classes, site, stats, tutorPhoto, waLink } from "@/lib/site";
 /** Page-load choreography for the headline column. */
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.2, 0.8, 0.3, 1] } },
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.2, 0.8, 0.3, 1] } },
 };
 
 export function Hero() {
@@ -35,131 +35,108 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
   // gentle parallax: the portrait drifts slower than the copy beside it
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 60]);
-  const stickerRotate = useTransform(scrollYProgress, [0, 1], [-12, reduce ? -12 : 16]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 48]);
 
   return (
-    <section id="home" ref={sectionRef} className="relative">
-      <div className="shell pb-12 pt-8 sm:pb-14 sm:pt-14">
-        <div className="grid items-start gap-9 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-          {/* headline column - always first, so phones open on the message */}
+    <section id="home" ref={sectionRef} className="relative overflow-hidden">
+      <div
+        className="grid-faint pointer-events-none absolute inset-0 opacity-70"
+        aria-hidden
+      />
+
+      <div className="shell relative pb-14 pt-10 sm:pb-20 sm:pt-16">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-14">
+          {/* headline column — always first, so phones open on the message */}
           <motion.div
             className="order-1"
             variants={container}
             initial={reduce ? false : "hidden"}
             animate="show"
           >
-            <motion.p
-              variants={item}
-              className="label inline-block border-2 border-[var(--ink)] bg-[var(--mustard)] px-2.5 py-1.5 leading-relaxed text-[var(--on-accent)] sm:px-3"
-            >
+            <motion.p variants={item} className="chip chip-accent">
+              <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
               {t.hero.badge}
             </motion.p>
 
-            <h1 className="display mt-5 text-[clamp(2.2rem,8.6vw,5.4rem)] sm:mt-6">
+            <h1 className="display mt-6 text-[clamp(2.4rem,6.8vw,4.4rem)]">
               <motion.span
                 variants={item}
-                className="block text-[0.44em] font-semibold tracking-[0.14em] text-[var(--maroon)] sm:tracking-[0.18em]"
+                className="eyebrow block font-[family-name:var(--font-ui)] text-[var(--ink-3)]"
               >
                 {t.hero.titleTop}
               </motion.span>
-              <motion.span variants={item} className="mt-1.5 block sm:mt-2">
+              <motion.span variants={item} className="mt-2.5 block">
                 {t.hero.titleMain}
               </motion.span>
               <motion.span
                 variants={item}
-                className="mt-1 block text-[0.5em] font-semibold"
+                className="mt-1 block text-[0.42em] font-semibold leading-snug text-[var(--accent)]"
               >
                 {t.hero.titleBottom}
               </motion.span>
             </h1>
 
-            <motion.div
-              variants={item}
-              className="mt-5 flex items-start gap-4 border-t-2 border-[var(--ink)] pt-5 sm:mt-6 sm:gap-5"
-            >
-              <span className="display hidden shrink-0 text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
-                &ldquo;
-              </span>
-              <p className="max-w-[54ch] text-[14.5px] text-[var(--ink-soft)] sm:text-[15.5px]">
-                {t.hero.sub}
-              </p>
-              <span className="display hidden shrink-0 self-end text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
-                &rdquo;
-              </span>
-            </motion.div>
+            <motion.p variants={item} className="lede mt-6 max-w-[52ch]">
+              {t.hero.sub}
+            </motion.p>
 
             <motion.div
               variants={item}
-              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
             >
               <a
                 href={waLink(t.wa.generic)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press hard inline-flex items-center justify-center gap-2.5 border-2 border-[var(--ink)] bg-[var(--green)] px-5 py-3.5 text-[14.5px] font-bold text-[var(--paper)] sm:px-6 sm:text-[15px]"
+                className="btn btn-primary"
               >
-                <WhatsAppGlyph className="h-5 w-5 shrink-0" />
+                <WhatsAppGlyph className="h-[18px] w-[18px] shrink-0" />
                 {t.hero.ctaPrimary}
               </a>
-              <a
-                href="#timetable"
-                className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--paper)] px-5 py-3.5 text-[14.5px] font-semibold sm:px-6 sm:text-[15px]"
-              >
+              <a href="#timetable" className="btn btn-ghost">
                 {t.hero.ctaSecondary}
-                <motion.span
-                  aria-hidden
-                  animate={reduce ? {} : { y: [0, 3, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                >
+                <span aria-hidden className="text-[var(--ink-3)]">
                   ↓
-                </motion.span>
+                </span>
               </a>
             </motion.div>
 
-            {/* torn-ticket strip of confirmed classes */}
-            <motion.ul
-              variants={item}
-              className="mt-7 grid border-2 border-[var(--ink)] sm:mt-8 sm:grid-cols-2"
-            >
-              {verified.map((c, i) => (
-                <li
-                  key={c.id}
-                  className={`p-4 ${
-                    i === 0 ? "sm:border-r-2 sm:border-dashed sm:border-[var(--ink)]" : ""
-                  } ${i > 0 ? "border-t-2 border-dashed border-[var(--ink)] sm:border-t-0" : ""}`}
-                >
-                  <p className="label text-[var(--maroon)]">{L(c.kind)}</p>
-                  <p className="mt-1.5 text-[14px] font-semibold leading-snug sm:text-[14.5px]">
-                    {L(c.institute)} - {L(c.town)}
-                  </p>
-                  <p className="font-[family-name:var(--font-mono)] text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
-                    {L(c.day)} · {L(c.time)}
-                  </p>
-                </li>
-              ))}
-            </motion.ul>
+            {/* confirmed classes, set as a small schedule block */}
+            <motion.div variants={item} className="mt-10 border-t border-[var(--line)] pt-6">
+              <p className="eyebrow text-[var(--ink-3)]">
+                {L(site.location)} · {L(site.medium)}
+              </p>
+              <ul className="mt-4 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+                {verified.map((c) => (
+                  <li key={c.id} className="flex gap-3">
+                    <span
+                      className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"
+                      aria-hidden
+                    />
+                    <span className="min-w-0">
+                      <span className="block text-[14px] font-semibold leading-snug">
+                        {L(c.institute)} — {L(c.town)}
+                      </span>
+                      <span className="num block text-[12.5px] text-[var(--ink-3)]">
+                        {L(c.day)} · {L(c.time)}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </motion.div>
 
-          {/* portrait column - capped well below the fold height on small screens */}
+          {/* portrait column */}
           <motion.div
             style={{ y: portraitY }}
-            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.2, 0.8, 0.3, 1] }}
-            className="relative order-2 mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:mt-3 lg:max-w-[400px]"
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.2, 0.8, 0.3, 1] }}
+            className="relative order-2 mx-auto w-full max-w-[min(360px,80vw)] sm:max-w-[400px] lg:max-w-[440px]"
           >
-            <div
-              className="dots absolute -left-3 -top-3 h-20 w-20 opacity-25 sm:-left-5 sm:-top-5 sm:h-32 sm:w-32"
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0 translate-x-2 translate-y-2 bg-[var(--maroon)] sm:translate-x-3 sm:translate-y-3"
-              aria-hidden
-            />
-
-            <figure className="relative border-2 border-[var(--ink)] bg-[var(--paper-2)]">
-              <div className="relative aspect-[4/5] overflow-hidden">
+            <figure className="card overflow-hidden shadow-[var(--shadow-lg)]">
+              <div className="relative aspect-[4/5] bg-[var(--surface-2)]">
                 {tutorPhoto ? (
                   <Image
                     src={tutorPhoto}
@@ -167,37 +144,36 @@ export function Hero() {
                     fill
                     priority
                     className="object-cover"
-                    sizes="(max-width: 1024px) 80vw, 400px"
+                    sizes="(max-width: 1024px) 80vw, 440px"
                   />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center">
-                    <TeacherGlyph className="h-32 w-32 text-[var(--ink)] opacity-20 sm:h-48 sm:w-48" />
-                    <p className="label absolute bottom-4 px-3 text-center text-[var(--ink-soft)]">
+                    <TeacherGlyph className="h-32 w-32 text-[var(--ink-3)] opacity-30 sm:h-40 sm:w-40" />
+                    <p className="eyebrow absolute bottom-5 px-3 text-center text-[var(--ink-3)]">
                       public/images/tutor.jpg
                     </p>
                   </div>
                 )}
               </div>
-              <figcaption className="border-t-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-3">
-                <p className="display text-[19px] sm:text-[22px]">{L(site.tutor.name)}</p>
-                <p className="mt-1 text-[12px] leading-snug text-[var(--ink-soft)] sm:text-[12.5px]">
+              <figcaption className="border-t border-[var(--line)] px-5 py-4">
+                <p className="display text-[20px]">{L(site.tutor.name)}</p>
+                <p className="mt-1 text-[13px] leading-snug text-[var(--ink-2)]">
                   {L(site.tutor.subject)}
                 </p>
-                <p className="label mt-1.5 text-[var(--maroon)]">
+                <p className="eyebrow mt-2.5 text-[var(--accent)]">
                   {L(site.tutor.qualification)}
                 </p>
               </figcaption>
             </figure>
 
-            {/* second photo, tucked under the main frame like a loose print */}
+            {/* second photo, tucked into the corner as a small inset print */}
             <motion.figure
-              initial={reduce ? false : { opacity: 0, x: -24, rotate: -12 }}
-              animate={{ opacity: 1, x: 0, rotate: -4 }}
-              transition={{ duration: 0.55, delay: 0.4, ease: [0.2, 0.8, 0.3, 1] }}
-              whileHover={{ rotate: 0, scale: 1.04 }}
-              className="hard-sm absolute -left-10 -top-8 z-10 hidden w-[36%] border-2 border-[var(--ink)] bg-[var(--paper)] p-1.5 sm:block"
+              initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.45, ease: [0.2, 0.8, 0.3, 1] }}
+              className="absolute -left-5 bottom-24 z-10 hidden w-[38%] overflow-hidden rounded-[var(--r)] border-4 border-[var(--canvas)] shadow-[var(--shadow-lg)] sm:block lg:-left-8"
             >
-              <div className="relative aspect-square">
+              <div className="relative aspect-square bg-[var(--surface-2)]">
                 <Image
                   src="/images/tutor-2.jpg"
                   alt={`${L(site.tutor.name)} — ${L(site.tutor.subject)} ${L(site.medium)}`}
@@ -208,47 +184,45 @@ export function Hero() {
               </div>
             </motion.figure>
 
-            {/* rotated sticker */}
-            <motion.div
-              style={{ rotate: stickerRotate }}
-              initial={reduce ? false : { scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.55 }}
-              className="absolute -right-2 -top-4 grid h-[72px] w-[72px] place-items-center rounded-full border-2 border-[var(--ink)] bg-[var(--mustard)] text-center text-[var(--on-accent)] sm:-right-3 sm:-top-6 sm:h-24 sm:w-24"
+            {/* batch badge */}
+            <motion.p
+              initial={reduce ? false : { opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.55 }}
+              className="absolute -right-2 top-5 z-10 rounded-full bg-[var(--panel)] px-3.5 py-2 text-center shadow-[var(--shadow-lg)] lg:-right-5"
             >
-              <span className="display text-[11px] leading-tight sm:text-[13px]">
-                2027
-                <br />
-                BATCH
-              </span>
-            </motion.div>
+              <span className="eyebrow block text-[var(--panel-fg)]">2027 batch</span>
+            </motion.p>
           </motion.div>
         </div>
       </div>
 
       {/* stat band */}
-      <div className="border-y-2 border-[var(--ink)] bg-[var(--panel)]">
-        <dl className="shell grid grid-cols-2 divide-x divide-y divide-[var(--panel-fg)]/20 sm:grid-cols-4 sm:divide-y-0">
-          {stats.map((s) => (
-            <div key={s.value} className="px-2 py-4 text-center sm:py-5">
-              <dt className="display text-[clamp(1.7rem,6vw,2.7rem)] text-[var(--mustard)]">
+      <div className="panel relative">
+        <dl className="shell grid grid-cols-2 gap-y-8 py-10 sm:grid-cols-4 sm:py-12">
+          {stats.map((s, i) => (
+            <div
+              key={s.value}
+              className={`px-2 text-center sm:px-4 ${
+                i > 0 ? "sm:border-l sm:border-[var(--panel-line)]" : ""
+              }`}
+            >
+              <dt className="display text-[clamp(1.9rem,5vw,2.6rem)] text-[var(--panel-fg)]">
                 <StatCounter value={s.value} />
               </dt>
-              <dd className="label mt-1 leading-relaxed text-[var(--panel-fg)] opacity-80">
-                {L(s.label)}
-              </dd>
+              <dd className="eyebrow mt-2 text-[var(--panel-muted)]">{L(s.label)}</dd>
             </div>
           ))}
         </dl>
       </div>
 
-      {/* printed ticker */}
-      <div className="overflow-hidden border-b-2 border-[var(--ink)] bg-[var(--paper-2)] py-2">
-        <div className="marquee-track gap-6">
+      {/* subject ticker */}
+      <div className="overflow-hidden border-b border-[var(--line)] bg-[var(--surface-2)] py-3">
+        <div className="marquee-track gap-8">
           {[0, 1].map((dup) => (
             <div
               key={dup}
-              className="flex shrink-0 items-center gap-6 pr-6"
+              className="flex shrink-0 items-center gap-8 pr-8"
               aria-hidden={dup === 1}
             >
               {[
@@ -263,8 +237,12 @@ export function Hero() {
                 "A/L 2026",
                 "A/L 2027",
               ].map((w) => (
-                <span key={w} className="label whitespace-nowrap text-[var(--ink-soft)]">
-                  {w} <span className="text-[var(--maroon)]">✦</span>
+                <span
+                  key={w}
+                  className="flex items-center gap-8 whitespace-nowrap text-[12.5px] font-medium text-[var(--ink-3)]"
+                >
+                  {w}
+                  <span className="h-1 w-1 rounded-full bg-[var(--line-strong)]" aria-hidden />
                 </span>
               ))}
             </div>

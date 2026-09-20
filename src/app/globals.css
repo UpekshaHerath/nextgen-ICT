@@ -1,83 +1,108 @@
 @import "tailwindcss";
 
 /*
-  Design language: printed matter.
-  A warm paper ground, black ink rules, one maroon and one mustard accent taken
-  from the hand-lettered Sinhala cover art. No blur, no gradients, no glass —
-  weight comes from solid offset shadows and hard 2px borders.
+  Design language: editorial institute.
+  A warm off-white canvas, deep ink type, hairline rules and one copper accent.
+  Weight comes from typography and whitespace — not from borders or shadows.
+  Every surface is either the canvas, a raised card, or the deep navy panel.
 */
 
 @theme inline {
-  /* tokens follow the palette below, so both themes flow through Tailwind */
-  --color-paper: var(--paper);
-  --color-paper-2: var(--paper-2);
+  /* tokens below flow through Tailwind utilities (bg-canvas, text-ink, …) */
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-ink: var(--ink);
-  --color-maroon: var(--maroon);
-  --color-mustard: var(--mustard);
-  --font-display: var(--font-display), serif;
-  --font-ui: var(--font-ui), sans-serif;
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --font-display: var(--font-display), Georgia, serif;
+  --font-ui: var(--font-ui), system-ui, sans-serif;
   --font-mono: var(--font-mono), monospace;
 }
 
 /*
-  Daylight palette. `paper` is the ground and `ink` the mark on it; the two
-  swap roles after dark. Three things deliberately do NOT swap: `panel` (the
-  inverted blocks — a section tag, a card header, the footer — stay dark slabs
-  in both themes), `on-accent` (text printed on a mustard or green fill), and
-  the maroon stamps, which keep paper-coloured lettering.
+  Daylight palette. `canvas` is the page, `surface` the cards that sit on it.
+  Two things deliberately do not invert: `panel` (the deep navy blocks — the
+  stat band, card headers, the footer) and `on-accent` (type printed on a
+  copper fill). Both keep their light-on-dark relationship in either theme.
 */
 :root {
-  --paper: #f4efe4;
-  --paper-2: #e9e0cf;
-  --ink: #16130f;
-  --ink-soft: #554c40;
-  --maroon: #8e1b2e;
-  --mustard: #e3a11b;
-  --green: #0f8a4d;
+  --canvas: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f4f2ed;
 
-  --panel: #16130f;
-  --panel-fg: #f4efe4;
-  --on-accent: #16130f;
+  --ink: #14181d;
+  --ink-2: #4b525b;
+  --ink-3: #7c848e;
 
-  --rule-line: rgba(22, 19, 15, 0.09);
-  --tape-bg: rgba(227, 161, 27, 0.78);
-  --tape-border: rgba(22, 19, 15, 0.35);
-  --field-focus: rgba(227, 161, 27, 0.14);
+  --line: #e6e2da;
+  --line-strong: #d3cec3;
 
-  /* the grain is printed into light paper and lifted off dark stock */
-  --grain-blend: multiply;
-  --grain-opacity: 0.32;
+  --accent: #9c5a2a;
+  --accent-hover: #874b20;
+  --accent-soft: #f7efe6;
+  --accent-line: #e8d7c4;
+
+  --green: #14784a;
+  --green-hover: #10603b;
+
+  --panel: #141c26;
+  --panel-2: #1d2733;
+  --panel-fg: #f2f0ec;
+  --panel-muted: #9aa5b1;
+  --panel-line: rgba(242, 240, 236, 0.14);
+
+  --on-accent: #ffffff;
+  --focus: #9c5a2a;
+
+  --shadow-sm: 0 1px 2px rgba(20, 24, 29, 0.05);
+  --shadow: 0 1px 2px rgba(20, 24, 29, 0.04), 0 10px 26px -16px rgba(20, 24, 29, 0.22);
+  --shadow-lg: 0 2px 4px rgba(20, 24, 29, 0.04), 0 22px 48px -24px rgba(20, 24, 29, 0.28);
+
+  --r-sm: 6px;
+  --r: 10px;
+  --r-lg: 16px;
 
   color-scheme: light;
 }
 
-/*
-  After dark: the same ink and paper, unlit. Maroon and mustard are lifted
-  until they carry on a dark ground; everything below is tuned so body text
-  and every accent fill clear WCAG AA.
-*/
-/* system preference, unless the reader has explicitly chosen light */
+/* after dark: the same layout, unlit — contrast tuned so body copy and every
+   accent fill clear WCAG AA on the new ground */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #12100c;
-    --paper-2: #1c1812;
-    --ink: #f1eadb;
-    --ink-soft: #a79b87;
-    --maroon: #ef6d82;
-    --mustard: #f0b83e;
-    --green: #2fbd75;
+    --canvas: #0f1114;
+    --surface: #161a1f;
+    --surface-2: #1c2128;
 
-    --panel: #272119;
-    --panel-fg: #f1eadb;
-    --on-accent: #16130f;
+    --ink: #eceae5;
+    --ink-2: #b2b8c0;
+    --ink-3: #868d96;
 
-    --rule-line: rgba(241, 234, 219, 0.1);
-    --tape-bg: rgba(227, 161, 27, 0.55);
-    --tape-border: rgba(241, 234, 219, 0.28);
-    --field-focus: rgba(240, 184, 62, 0.16);
+    --line: #262b32;
+    --line-strong: #363d46;
 
-    --grain-blend: screen;
-    --grain-opacity: 0.08;
+    --accent: #d99560;
+    --accent-hover: #e8a874;
+    --accent-soft: #241a12;
+    --accent-line: #3a2a1c;
+
+    --green: #35b877;
+    --green-hover: #4ccb8a;
+
+    --panel: #10151b;
+    --panel-2: #1a222c;
+    --panel-fg: #eceae5;
+    --panel-muted: #98a1ac;
+    --panel-line: rgba(236, 234, 229, 0.12);
+
+    --on-accent: #12161a;
+    --focus: #d99560;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 26px -16px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.35), 0 22px 48px -24px rgba(0, 0, 0, 0.75);
 
     color-scheme: dark;
   }
@@ -85,25 +110,37 @@
 
 /* an explicit choice wins in both directions */
 :root[data-theme="dark"] {
-  --paper: #12100c;
-  --paper-2: #1c1812;
-  --ink: #f1eadb;
-  --ink-soft: #a79b87;
-  --maroon: #ef6d82;
-  --mustard: #f0b83e;
-  --green: #2fbd75;
+  --canvas: #0f1114;
+  --surface: #161a1f;
+  --surface-2: #1c2128;
 
-  --panel: #272119;
-  --panel-fg: #f1eadb;
-  --on-accent: #16130f;
+  --ink: #eceae5;
+  --ink-2: #b2b8c0;
+  --ink-3: #868d96;
 
-  --rule-line: rgba(241, 234, 219, 0.1);
-  --tape-bg: rgba(227, 161, 27, 0.55);
-  --tape-border: rgba(241, 234, 219, 0.28);
-  --field-focus: rgba(240, 184, 62, 0.16);
+  --line: #262b32;
+  --line-strong: #363d46;
 
-  --grain-blend: screen;
-  --grain-opacity: 0.08;
+  --accent: #d99560;
+  --accent-hover: #e8a874;
+  --accent-soft: #241a12;
+  --accent-line: #3a2a1c;
+
+  --green: #35b877;
+  --green-hover: #4ccb8a;
+
+  --panel: #10151b;
+  --panel-2: #1a222c;
+  --panel-fg: #eceae5;
+  --panel-muted: #98a1ac;
+  --panel-line: rgba(236, 234, 229, 0.12);
+
+  --on-accent: #12161a;
+  --focus: #d99560;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 26px -16px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.35), 0 22px 48px -24px rgba(0, 0, 0, 0.75);
 
   color-scheme: dark;
 }
@@ -116,222 +153,267 @@ html {
 
 @media (min-width: 640px) {
   html {
-    scroll-padding-top: 116px;
+    scroll-padding-top: 112px;
   }
 }
 
 /* one shared page gutter: never narrower than 16px on a phone */
 .shell {
   width: 100%;
-  max-width: 1288px;
+  max-width: 1200px;
   margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 1.5rem);
+  padding-inline: clamp(1rem, 4vw, 2rem);
 }
 
 body {
-  background: var(--paper);
+  background: var(--canvas);
   color: var(--ink);
   font-family: var(--font-ui), var(--font-sinhala), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-}
-
-/* paper grain sits above everything, multiplied into the page */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: var(--grain-opacity);
-  mix-blend-mode: var(--grain-blend);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--mustard);
+  background: var(--accent);
   color: var(--on-accent);
+}
+
+/* one focus ring for the whole site */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
 }
 
 /* ---------- type ---------- */
 
 .display {
-  font-family: var(--font-display), serif;
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.015em;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
 }
 
 html[data-lang="si"] .display {
-  line-height: 1.18;
+  line-height: 1.3;
+  letter-spacing: 0;
 }
 
 html[data-lang="si"] body {
-  line-height: 1.8;
+  line-height: 1.85;
 }
 
-.label {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.24em;
+/* small-caps eyebrow — the only uppercase on the page */
+.eyebrow {
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  line-height: 1.5;
 }
 
-/* ---------- printed devices ---------- */
-
-.frame {
-  border: 2px solid var(--ink);
+/* Sinhala has no case and its glyphs carry their own rhythm — the Latin
+   tracking that makes an eyebrow read as small caps only loosens it */
+html[data-lang="si"] .eyebrow {
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
 }
 
-.hard {
-  box-shadow: 7px 7px 0 var(--ink);
+.num {
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
-/* lighter offsets on phones so shadows never crowd the gutter */
-@media (max-width: 640px) {
-  .hard {
-    box-shadow: 4px 4px 0 var(--ink);
-  }
-  .hard-sm {
-    box-shadow: 3px 3px 0 var(--ink);
-  }
+.lede {
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.7;
+  color: var(--ink-2);
 }
 
-.hard-sm {
-  box-shadow: 4px 4px 0 var(--ink);
+/* ---------- surfaces ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
 }
 
-.hard-maroon {
-  box-shadow: 7px 7px 0 var(--maroon);
+.card-flat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
 }
 
-.press {
+.card-lift {
   transition:
-    transform 0.14s ease,
-    box-shadow 0.14s ease;
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.3, 1),
+    border-color 0.25s ease;
 }
 
-.press:hover {
-  transform: translate(3px, 3px);
-  box-shadow: 3px 3px 0 var(--ink);
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--line-strong);
 }
 
-.press:active {
-  transform: translate(7px, 7px);
-  box-shadow: 0 0 0 var(--ink);
+.panel {
+  background: var(--panel);
+  color: var(--panel-fg);
 }
 
-/* ruled exercise-book lines — the rule pitch drives the line-height so text
-   always sits on a line, at every screen size.
+/* ---------- controls ---------- */
 
-   Bare text on a .ruled element already lands on the rules. A padded box of
-   paragraphs does not, so it adds .ruled-box: that keeps every vertical
-   measure a whole number of rules — one rule of block padding, one rule
-   between paragraphs — and starts the ruling at the content box. Such a box
-   takes horizontal padding only; the vertical comes from here. */
-.ruled {
-  --rule: 38px;
-  line-height: var(--rule);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent calc(var(--rule) - 1px),
-    var(--rule-line) calc(var(--rule) - 1px),
-    var(--rule-line) var(--rule)
-  );
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  padding: 0.875rem 1.5rem;
+  white-space: nowrap;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.ruled-box {
-  padding-block: var(--rule);
-  background-origin: content-box;
-  background-clip: content-box;
+.btn:active {
+  transform: translateY(1px);
 }
 
-.ruled-box > * + * {
-  margin-top: var(--rule);
+.btn-primary {
+  background: var(--green);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
 }
 
-@media (max-width: 640px) {
-  .ruled {
-    --rule: 32px;
-  }
+.btn-primary:hover {
+  background: var(--green-hover);
+  box-shadow: var(--shadow);
 }
 
-/* halftone dot field, used behind portraits and section corners */
-.dots {
-  background-image: radial-gradient(var(--ink) 1.4px, transparent 1.4px);
-  background-size: 11px 11px;
+.btn-accent {
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
-.dashed-rule {
-  border-top: 2px dashed var(--ink);
+.btn-accent:hover {
+  background: var(--accent-hover);
 }
 
-/* ticket notches on the sides of class cards */
-.ticket {
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+
+.btn-ghost:hover {
+  background: var(--surface-2);
+  border-color: var(--ink-3);
+}
+
+.btn-sm {
+  padding: 0.625rem 1.125rem;
+  font-size: 0.875rem;
+}
+
+/* pill used for filters, tags and metadata */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  padding: 0.3125rem 0.6875rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.chip-accent {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+.field {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+  padding: 0.75rem 0.875rem;
+  font-size: 16px;
+  color: var(--ink);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.field::placeholder {
+  color: var(--ink-3);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+/* ---------- link with a rule that draws itself ---------- */
+
+.link-underline {
   position: relative;
+  color: var(--accent);
+  font-weight: 600;
 }
 
-.ticket::before,
-.ticket::after {
+.link-underline::after {
   content: "";
   position: absolute;
-  top: var(--notch, 126px);
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--ink);
-  border-radius: 999px;
-  background: var(--paper);
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 
-.ticket::before {
-  left: -11px;
-  clip-path: inset(0 0 0 50%);
+.link-underline:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
 }
 
-.ticket::after {
-  right: -11px;
-  clip-path: inset(0 50% 0 0);
-}
+/* ---------- decorative ---------- */
 
-/* the tear line sits lower when the title wraps on narrow cards */
-@media (max-width: 640px) {
-  .ticket {
-    --notch: 152px;
-  }
-}
-
-/* strip of tape holding a note to the wall */
-.tape {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  translate: -50% 0;
-  width: 104px;
-  height: 26px;
-  background: var(--tape-bg);
-  border: 1px solid var(--tape-border);
-  rotate: -1.5deg;
-}
-
-.underline-field {
-  background: transparent;
-  border: 0;
-  border-bottom: 2px solid var(--ink);
-  border-radius: 0;
-  outline: none;
-  padding: 0.55rem 0.2rem;
-}
-
-.underline-field:focus {
-  border-bottom-color: var(--maroon);
-  background: var(--field-focus);
+/* faint measured grid, used only behind the hero */
+.grid-faint {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 60% at 68% 32%, #000 18%, transparent 76%);
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 38s linear infinite;
+  animation: marquee 46s linear infinite;
 }
 
 @keyframes marquee {
@@ -343,7 +425,7 @@ html[data-lang="si"] body {
   }
 }
 
-/* Scroll reveals and micro-interactions live in Framer Motion now
+/* Scroll reveals and micro-interactions live in Framer Motion
    (see components/Reveal.tsx); only the CSS-driven marquee remains here. */
 
 @media (prefers-reduced-motion: reduce) {
@@ -353,14 +435,18 @@ html[data-lang="si"] body {
   html {
     scroll-behavior: auto;
   }
+  .card-lift:hover {
+    transform: none;
+  }
 }
 
 .thin-scroll::-webkit-scrollbar {
-  height: 8px;
+  height: 6px;
 }
 .thin-scroll::-webkit-scrollbar-track {
-  background: var(--paper-2);
+  background: transparent;
 }
 .thin-scroll::-webkit-scrollbar-thumb {
-  background: var(--ink);
+  background: var(--line-strong);
+  border-radius: 999px;
 }

@@ -2,7 +2,10 @@
 
 import { Reveal } from "./Reveal";
 
-/** Shared section masthead: printed index number, rule, headline. */
+/**
+ * Shared section masthead: an index number set against a copper eyebrow,
+ * then the headline and an optional standfirst on a comfortable measure.
+ */
 export function SectionHead({
   no,
   eyebrow,
@@ -17,24 +20,16 @@ export function SectionHead({
   align?: "left" | "center";
 }) {
   return (
-    <Reveal className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-3xl"}>
+    <Reveal className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       <div
-        className={`flex items-center gap-2.5 sm:gap-3 ${
-          align === "center" ? "justify-center" : ""
-        }`}
+        className={`flex items-center gap-2.5 ${align === "center" ? "justify-center" : ""}`}
       >
-        <span className="label shrink-0 bg-[var(--panel)] px-2 py-1 text-[var(--panel-fg)]">
-          {no}
-        </span>
-        <span className="label min-w-0 truncate text-[var(--maroon)]">{eyebrow}</span>
-        <span className="h-px flex-1 bg-[var(--ink)] opacity-30" />
+        <span className="num text-[12px] font-semibold text-[var(--ink-3)]">{no}</span>
+        <span className="h-px w-6 bg-[var(--line-strong)]" aria-hidden />
+        <span className="eyebrow min-w-0 truncate text-[var(--accent)]">{eyebrow}</span>
       </div>
-      <h2 className="display mt-3 text-[clamp(1.75rem,5.6vw,3.6rem)] sm:mt-4">{title}</h2>
-      {sub && (
-        <p className="mt-2.5 max-w-[58ch] text-[14px] text-[var(--ink-soft)] sm:mt-3 sm:text-[15px]">
-          {sub}
-        </p>
-      )}
+      <h2 className="display mt-3.5 text-[clamp(1.75rem,4.4vw,2.85rem)]">{title}</h2>
+      {sub && <p className="lede mt-3 max-w-[56ch]">{sub}</p>}
     </Reveal>
   );
 }

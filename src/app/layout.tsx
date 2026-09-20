@@ -15,11 +15,11 @@ import {
   seoTitleShort,
 } from "@/lib/seo";
 
-/** Sinhala display face — the voice of every headline. */
+/** Sinhala display serif — the voice of every headline. */
 const display = Abhaya_Libre({
   variable: "--font-display",
   subsets: ["sinhala", "latin"],
-  weight: ["600", "700", "800"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
@@ -90,8 +90,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4efe4" },
-    { media: "(prefers-color-scheme: dark)", color: "#12100c" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfaf7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f1114" },
   ],
 };
 

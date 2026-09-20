@@ -8,34 +8,37 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t-2 border-[var(--ink)] bg-[var(--panel)] text-[var(--panel-fg)]">
-      <div className="shell grid gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
+    <footer className="panel">
+      <div className="shell grid gap-10 py-14 sm:grid-cols-2 sm:py-16 lg:grid-cols-[1.5fr_0.75fr_0.75fr]">
         <div className="sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <span className="grid h-11 w-11 shrink-0 place-items-center border-2 border-[var(--panel-fg)] bg-[var(--maroon)] font-[family-name:var(--font-mono)] text-[12px]">
-              ICT
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-[var(--accent)] text-[var(--on-accent)]">
+              <span className="eyebrow text-[10px] tracking-[0.08em]">ICT</span>
             </span>
-            <span className="leading-none">
-              <span className="display block text-[20px]">NextGen ICT</span>
-              <span className="label mt-1 block opacity-70">with Subhashana</span>
+            <span className="leading-tight">
+              <span className="display block text-[19px]">NextGen ICT</span>
+              <span className="block text-[12px] text-[var(--panel-muted)]">
+                with Subhashana
+              </span>
             </span>
           </div>
-          <p className="mt-4 max-w-[40ch] text-[13px] leading-relaxed opacity-75 sm:text-[13.5px]">
+          <p className="mt-6 max-w-[42ch] text-[13.5px] leading-relaxed text-[var(--panel-muted)]">
             {L(site.tutor.role)} · {L(site.location)}
           </p>
-          <p className="display mt-4 text-[clamp(1.1rem,4.4vw,1.7rem)] text-[var(--mustard)] sm:mt-5">
+          <p className="display mt-5 max-w-[24ch] text-[clamp(1.15rem,3.4vw,1.6rem)]">
             {L(site.tutor.tagline)}
           </p>
         </div>
 
         <div>
-          <h3 className="label border-b border-[var(--panel-fg)]/30 pb-2 opacity-70">
-            {t.footer.quick}
-          </h3>
-          <ul className="mt-3 grid gap-2 text-[13.5px]">
+          <h3 className="eyebrow text-[var(--panel-muted)]">{t.footer.quick}</h3>
+          <ul className="mt-4 grid gap-2.5 text-[13.5px]">
             {(["about", "classes", "timetable", "syllabus", "faq"] as const).map((k) => (
               <li key={k}>
-                <a href={`#${k}`} className="hover:text-[var(--mustard)]">
+                <a
+                  href={`#${k}`}
+                  className="text-[var(--panel-fg)]/85 transition-colors hover:text-[var(--accent)]"
+                >
                   {t.nav[k]}
                 </a>
               </li>
@@ -44,13 +47,14 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="label border-b border-[var(--panel-fg)]/30 pb-2 opacity-70">
-            {t.footer.contact}
-          </h3>
-          <ul className="mt-3 grid gap-2 text-[13.5px]">
+          <h3 className="eyebrow text-[var(--panel-muted)]">{t.footer.contact}</h3>
+          <ul className="mt-4 grid gap-2.5 text-[13.5px]">
             <li>
-              <a href={telLink} className="hover:text-[var(--mustard)]">
-                ☏ {site.phoneDisplay}
+              <a
+                href={telLink}
+                className="text-[var(--panel-fg)]/85 transition-colors hover:text-[var(--accent)]"
+              >
+                {site.phoneDisplay}
               </a>
             </li>
             <li>
@@ -58,7 +62,7 @@ export function Footer() {
                 href={site.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[var(--mustard)]"
+                className="text-[var(--panel-fg)]/85 transition-colors hover:text-[var(--accent)]"
               >
                 Facebook
               </a>
@@ -68,7 +72,7 @@ export function Footer() {
                 href={site.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="break-all hover:text-[var(--mustard)]"
+                className="break-all text-[var(--panel-fg)]/85 transition-colors hover:text-[var(--accent)]"
               >
                 TikTok @{site.tiktokHandle}
               </a>
@@ -77,12 +81,12 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[var(--panel-fg)]/25">
-        <div className="shell flex flex-wrap items-center justify-between gap-2 py-4">
-          <p className="label opacity-60">
+      <div className="border-t border-[var(--panel-line)]">
+        <div className="shell flex flex-wrap items-center justify-between gap-2 py-5">
+          <p className="text-[12px] text-[var(--panel-muted)]">
             © {year} NextGen ICT. {t.footer.rights}
           </p>
-          <p className="label opacity-60">{t.footer.built}</p>
+          <p className="text-[12px] text-[var(--panel-muted)]">{t.footer.built}</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { SectionHead } from "./SectionHead";
 import { WhatsAppGlyph } from "./Hero";
@@ -36,7 +36,7 @@ export function Classes() {
   return (
     <section
       id="classes"
-      className="scroll-mt-24 border-b-2 border-[var(--ink)] bg-[var(--paper-2)] py-14 sm:scroll-mt-28 sm:py-20"
+      className="scroll-mt-24 border-y border-[var(--line)] bg-[var(--surface-2)] py-20 sm:scroll-mt-28 sm:py-28"
     >
       <div className="shell">
         <SectionHead
@@ -47,26 +47,24 @@ export function Classes() {
         />
 
         {/* filters scroll sideways on phones rather than wrapping into rows */}
-        <div className="thin-scroll -mx-[clamp(1rem,4vw,1.5rem)] mt-6 overflow-x-auto px-[clamp(1rem,4vw,1.5rem)] pb-1 sm:mx-0 sm:mt-7 sm:px-0 sm:pb-0">
-          <div className="flex w-max min-w-full border-2 border-[var(--ink)] bg-[var(--paper)]">
-            {filters.map((f, i) => (
+        <div className="thin-scroll -mx-[clamp(1rem,4vw,2rem)] mt-8 overflow-x-auto px-[clamp(1rem,4vw,2rem)] pb-2 sm:mx-0 sm:px-0">
+          <div className="flex w-max gap-1 rounded-full border border-[var(--line)] bg-[var(--surface)] p-1">
+            {filters.map((f) => (
               <button
                 key={f.key}
                 type="button"
                 onClick={() => setFilter(f.key)}
                 aria-pressed={filter === f.key}
-                className={`relative shrink-0 whitespace-nowrap px-4 py-2.5 text-[13px] font-semibold transition-colors sm:px-5 sm:py-3 sm:text-[13.5px] ${
-                  i > 0 ? "border-l-2 border-[var(--ink)]" : ""
-                } ${
+                className={`relative shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-[13.5px] font-medium transition-colors ${
                   filter === f.key
-                    ? "text-[var(--panel-fg)]"
-                    : "hover:bg-[var(--mustard)] hover:text-[var(--on-accent)]"
+                    ? "text-[var(--on-accent)]"
+                    : "text-[var(--ink-2)] hover:text-[var(--ink)]"
                 }`}
               >
                 {filter === f.key && (
                   <motion.span
                     layoutId="class-filter"
-                    className="absolute inset-0 bg-[var(--panel)]"
+                    className="absolute inset-0 rounded-full bg-[var(--accent)]"
                     transition={{ type: "spring", stiffness: 400, damping: 34 }}
                   />
                 )}
@@ -76,15 +74,15 @@ export function Classes() {
           </div>
         </div>
 
-        <motion.ul layout className="mt-7 grid gap-6 sm:mt-8 sm:gap-7 lg:grid-cols-2">
+        <motion.ul layout className="mt-8 grid gap-6 lg:grid-cols-2">
           <AnimatePresence mode="popLayout">
             {list.map((c) => (
               <motion.li
                 key={c.id}
                 layout
-                initial={{ opacity: 0, y: 18, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.18 } }}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.18 } }}
                 transition={{ duration: 0.4, ease: [0.2, 0.8, 0.3, 1] }}
               >
                 <ClassCard c={c} />
@@ -97,10 +95,9 @@ export function Classes() {
   );
 }
 
-/** Admission-ticket card: stub header, perforated split, details below. */
+/** One class: kind and grade on top, details in a definition row, CTA at the foot. */
 function ClassCard({ c }: { c: ClassInfo }) {
-  const { t, L } = useLang();
-  const reduce = useReducedMotion();
+  const { t, L, lang } = useLang();
 
   const modeLabel =
     c.mode === "online"
@@ -109,71 +106,92 @@ function ClassCard({ c }: { c: ClassInfo }) {
         ? t.classes.hybrid
         : t.classes.physical;
 
+  const gradeLabel =
+    c.grade === "all"
+      ? lang === "si"
+        ? "සියලු ශ්‍රේණි"
+        : "All grades"
+      : c.grade === "13"
+        ? t.classes.grade13
+        : c.grade === "12"
+          ? t.classes.grade12
+          : t.classes.grade11;
+
   const message = `${t.wa.classPrefix}\n\n• ${L(c.title)}\n• ${L(c.institute)}, ${L(c.town)}\n• ${L(c.day)} ${L(c.time)}`;
 
   return (
-    <motion.article
-      whileHover={reduce ? {} : { y: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="ticket hard flex h-full flex-col border-2 border-[var(--ink)] bg-[var(--paper)]"
-    >
-      {/* stub */}
-      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 sm:px-5 sm:py-3">
-        <span className="label text-[var(--mustard)]">{L(c.kind)}</span>
-        <span className="label text-[var(--panel-fg)] opacity-70">
-          {c.grade === "all" ? "ALL" : `GRADE ${c.grade}`} · {c.examYear}
-        </span>
+    <article className="card card-lift flex h-full flex-col p-6 sm:p-7">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="chip chip-accent">{L(c.kind)}</span>
+        <span className="chip">{gradeLabel}</span>
+        {/* the kind already says "Online" for those classes — don't repeat it */}
+        {L(c.kind) !== modeLabel && <span className="chip">{modeLabel}</span>}
+        <span className="num ml-auto text-[12px] text-[var(--ink-3)]">{c.examYear}</span>
       </div>
 
-      <div className="px-4 pb-4 pt-4 sm:px-5 sm:pb-5 sm:pt-5">
-        <h3 className="display text-[clamp(1.15rem,4.4vw,1.6rem)]">{L(c.title)}</h3>
-        <p className="mt-2 text-[13px] leading-relaxed text-[var(--ink-soft)] sm:mt-2.5 sm:text-[13.5px]">
-          {L(c.desc)}
-        </p>
-      </div>
+      <h3 className="display mt-5 text-[clamp(1.2rem,2.6vw,1.5rem)]">{L(c.title)}</h3>
+      <p className="mt-2.5 text-[14px] leading-relaxed text-[var(--ink-2)]">{L(c.desc)}</p>
 
-      <div className="dashed-rule mx-4 sm:mx-5" />
-
-      <dl className="grid px-4 sm:px-5">
-        <Row k={c.mode === "physical" ? "☖" : "✽"} v={modeLabel} />
-        <Row k="▣" v={`${L(c.institute)} - ${L(c.town)}`} />
-        <Row k="▤" v={L(c.day)} />
-        <Row k="◷" v={L(c.time)} warn={!c.verified} />
+      <dl className="mt-6 grid gap-px overflow-hidden rounded-[var(--r)] border border-[var(--line)] bg-[var(--line)] text-[13.5px]">
+        <Row
+          label={lang === "si" ? "ස්ථානය" : "Venue"}
+          value={`${L(c.institute)} — ${L(c.town)}`}
+        />
+        <Row label={lang === "si" ? "දිනය" : "Day"} value={L(c.day)} />
+        <Row
+          label={lang === "si" ? "වේලාව" : "Time"}
+          value={L(c.time)}
+          mono
+          warn={!c.verified}
+        />
       </dl>
 
-      <ul className="mt-3.5 flex flex-wrap gap-2 px-4 sm:mt-4 sm:px-5">
-        {c.highlights.map((h) => (
-          <li
-            key={h.en}
-            className="border border-[var(--ink)] bg-[var(--paper-2)] px-2.5 py-1 text-[11.5px]"
-          >
-            {L(h)}
-          </li>
-        ))}
-      </ul>
+      {c.highlights.length > 0 && (
+        <ul className="mt-5 flex flex-wrap gap-2">
+          {c.highlights.map((h) => (
+            <li key={h.en} className="chip">
+              {L(h)}
+            </li>
+          ))}
+        </ul>
+      )}
 
-      <div className="mt-auto p-4 sm:p-5">
+      <div className="mt-auto pt-7">
         <a
           href={waLink(message)}
           target="_blank"
           rel="noopener noreferrer"
-          className="press hard-sm flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--green)] px-4 py-3 text-[13.5px] font-bold text-[var(--paper)] sm:px-5 sm:text-[14px]"
+          className="btn btn-primary w-full"
         >
-          <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+          <WhatsAppGlyph className="h-[18px] w-[18px] shrink-0" />
           {c.verified ? t.classes.join : t.classes.confirm}
         </a>
       </div>
-    </motion.article>
+    </article>
   );
 }
 
-function Row({ k, v, warn }: { k: string; v: string; warn?: boolean }) {
+function Row({
+  label,
+  value,
+  mono,
+  warn,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+  warn?: boolean;
+}) {
   return (
-    <div className="flex items-baseline gap-2.5 border-b border-dotted border-[var(--ink)]/40 py-2.5 text-[13px] last:border-b-0 sm:gap-3 sm:text-[13.5px]">
-      <span aria-hidden className="w-4 shrink-0 text-[var(--maroon)]">
-        {k}
-      </span>
-      <span className={warn ? "font-semibold text-[var(--maroon)]" : ""}>{v}</span>
+    <div className="flex items-baseline gap-4 bg-[var(--surface)] px-4 py-3">
+      <dt className="w-20 shrink-0 text-[12.5px] text-[var(--ink-3)]">{label}</dt>
+      <dd
+        className={`min-w-0 font-medium ${mono ? "num" : ""} ${
+          warn ? "text-[var(--accent)]" : ""
+        }`}
+      >
+        {value}
+      </dd>
     </div>
   );
 }

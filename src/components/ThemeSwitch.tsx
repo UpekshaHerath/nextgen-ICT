@@ -50,7 +50,7 @@ export function ThemeSwitch({
 
   return (
     <div
-      className={`flex border border-[var(--ink)] ${className}`}
+      className={`flex rounded-full border border-[var(--line)] bg-[var(--surface-2)] p-0.5 ${className}`}
       role="group"
       aria-label={t.common.themeLabel}
     >
@@ -62,16 +62,16 @@ export function ThemeSwitch({
           aria-pressed={resolved === key}
           aria-label={key === "light" ? t.common.themeLight : t.common.themeDark}
           title={key === "light" ? t.common.themeLight : t.common.themeDark}
-          className={`relative grid h-[30px] w-9 place-items-center transition-colors ${
+          className={`relative grid h-[26px] w-8 place-items-center rounded-full transition-colors ${
             resolved === key
-              ? "text-[var(--panel-fg)]"
-              : "text-[var(--ink)] hover:bg-[var(--mustard)] hover:text-[var(--on-accent)]"
+              ? "text-[var(--ink)]"
+              : "text-[var(--ink-3)] hover:text-[var(--ink)]"
           }`}
         >
           {resolved === key && (
             <motion.span
               layoutId={pillId}
-              className="absolute inset-0 bg-[var(--panel)]"
+              className="absolute inset-0 rounded-full bg-[var(--surface)] shadow-[var(--shadow-sm)]"
               transition={{ type: "spring", stiffness: 420, damping: 34 }}
             />
           )}

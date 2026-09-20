@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring } from "motion/react";
 
-/** Maroon rule across the top that fills as the page is read. */
+/** Copper hairline across the top that fills as the page is read. */
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -15,7 +15,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-[var(--maroon)]"
+      className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-[var(--accent)]"
     />
   );
 }
