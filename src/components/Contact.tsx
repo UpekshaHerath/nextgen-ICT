@@ -41,7 +41,7 @@ export function Contact() {
   );
 
   return (
-    <section id="contact" className="scroll-mt-24 py-14 sm:scroll-mt-28 sm:py-20">
+    <section id="contact" className="py-14 sm:py-20">
       <div className="shell">
         <SectionHead
           no="08"

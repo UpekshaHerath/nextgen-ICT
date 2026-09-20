@@ -85,6 +85,23 @@ export function Nav() {
     };
   }, [open]);
 
+  // The sheet locks body scroll while open, and a native anchor jump fired in
+  // that state is swallowed. Unlock first, then scroll on the next frame.
+  const goTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const el = document.getElementById(id);
+    if (!el) {
+      setOpen(false);
+      return;
+    }
+    e.preventDefault();
+    document.body.style.overflow = "";
+    setOpen(false);
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.pushState(null, "", `#${id}`);
+    });
+  };
+
   return (
     <motion.header
       className="sticky top-0 z-50"
@@ -200,7 +217,7 @@ export function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.2, 0.8, 0.3, 1] }}
-            className="overflow-hidden border-b-2 border-[var(--ink)] bg-[var(--paper-2)] lg:hidden"
+            className="absolute inset-x-0 top-full overflow-hidden border-b-2 border-[var(--ink)] bg-[var(--paper-2)] lg:hidden"
           >
             <ul className="shell max-h-[calc(100dvh-140px)] overflow-y-auto py-2">
               {SECTIONS.map((s, i) => (
@@ -213,7 +230,7 @@ export function Nav() {
                 >
                   <a
                     href={`#${s.id}`}
-                    onClick={() => setOpen(false)}
+                    onClick={(e) => goTo(e, s.id)}
                     className="flex items-baseline gap-3 py-3.5 text-[15px]"
                   >
                     <span className="label text-[var(--maroon)]">→</span>

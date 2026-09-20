@@ -14,7 +14,7 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="scroll-mt-24 border-b-2 border-[var(--ink)] py-14 sm:scroll-mt-28 sm:py-20"
+      className="border-b-2 border-[var(--ink)] py-14 sm:py-20"
     >
       <div className="shell grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start lg:gap-10">
         <SectionHead no="07" eyebrow={t.faq.eyebrow} title={t.faq.title} />
