@@ -222,7 +222,13 @@ html[data-lang="si"] body {
 }
 
 /* ruled exercise-book lines — the rule pitch drives the line-height so text
-   always sits on a line, at every screen size */
+   always sits on a line, at every screen size.
+
+   Bare text on a .ruled element already lands on the rules. A padded box of
+   paragraphs does not, so it adds .ruled-box: that keeps every vertical
+   measure a whole number of rules — one rule of block padding, one rule
+   between paragraphs — and starts the ruling at the content box. Such a box
+   takes horizontal padding only; the vertical comes from here. */
 .ruled {
   --rule: 38px;
   line-height: var(--rule);
@@ -233,6 +239,16 @@ html[data-lang="si"] body {
     var(--rule-line) calc(var(--rule) - 1px),
     var(--rule-line) var(--rule)
   );
+}
+
+.ruled-box {
+  padding-block: var(--rule);
+  background-origin: content-box;
+  background-clip: content-box;
+}
+
+.ruled-box > * + * {
+  margin-top: var(--rule);
 }
 
 @media (max-width: 640px) {

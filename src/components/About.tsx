@@ -19,9 +19,9 @@ export function About() {
             <SectionHead no="01" eyebrow={t.about.eyebrow} title={t.about.title} />
 
             <Reveal delay={60}>
-              <div className="ruled mt-6 border-2 border-[var(--ink)] bg-[var(--paper-2)] p-4 sm:mt-7 sm:p-6">
+              <div className="ruled ruled-box mt-6 border-2 border-[var(--ink)] bg-[var(--paper-2)] px-4 sm:mt-7 sm:px-6">
                 <p className="text-[14.5px] sm:text-[15px]">{t.about.body1}</p>
-                <p className="mt-5 text-[14.5px] sm:mt-6 sm:text-[15px]">{t.about.body2}</p>
+                <p className="text-[14.5px] sm:text-[15px]">{t.about.body2}</p>
               </div>
             </Reveal>
 

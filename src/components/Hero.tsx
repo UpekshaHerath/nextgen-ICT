@@ -178,7 +178,7 @@ export function Hero() {
               <figcaption className="border-t-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-3">
                 <p className="display text-[19px] sm:text-[22px]">{L(site.tutor.name)}</p>
                 <p className="mt-1 text-[12px] leading-snug text-[var(--ink-soft)] sm:text-[12.5px]">
-                  {L(site.tutor.role)}
+                  {L(site.tutor.subject)}
                 </p>
                 <p className="label mt-1.5 text-[var(--maroon)]">
                   {L(site.tutor.qualification)}
@@ -197,7 +197,7 @@ export function Hero() {
               <div className="relative aspect-square">
                 <Image
                   src="/images/tutor-2.jpg"
-                  alt={`${L(site.tutor.name)} - ${L(site.tutor.role)}`}
+                  alt={`${L(site.tutor.name)} - ${L(site.tutor.subject)}`}
                   fill
                   className="object-cover"
                   sizes="200px"

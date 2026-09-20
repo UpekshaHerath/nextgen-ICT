@@ -41,6 +41,11 @@ export const site = {
       si: "උසස් පෙළ තොරතුරු හා සන්නිවේදන තාක්ෂණය (ICT) ගුරුවරයා",
       en: "GCE A/L Information & Communication Technology Teacher",
     },
+    /** Same line without the "teacher" word — used under the hero portrait. */
+    subject: {
+      si: "උසස් පෙළ තොරතුරු හා සන්නිවේදන තාක්ෂණය (ICT)",
+      en: "GCE A/L Information & Communication Technology",
+    },
     /** Printed on the official class posters. */
     qualification: { si: "BET (Hons) WUSL", en: "BET (Hons) WUSL" },
     tagline: {
@@ -283,7 +288,7 @@ export const whyUs: { icon: string; title: Bi; desc: Bi }[] = [
   },
   {
     icon: "code",
-    title: { si: "සරලව කියන Programming", en: "Programming made simple" },
+    title: { si: "Programming සරලව", en: "Programming made simple" },
     desc: {
       si: "Python, දත්ත සමුදාය සහ තර්ක ද්වාර - බය නැතිව, උදාහරණ සමඟ මුල සිට.",
       en: "Python, databases and logic gates - from scratch, with worked examples and no fear.",
