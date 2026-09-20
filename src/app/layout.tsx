@@ -5,6 +5,15 @@ import { LanguageProvider } from "@/components/LanguageProvider";
 import { ThemeProvider, themeScript } from "@/components/ThemeProvider";
 import { site } from "@/lib/site";
 import { siteUrl } from "@/lib/siteUrl";
+import {
+  jsonLdGraph,
+  seoDescription,
+  seoKeywords,
+  seoSocialDescription,
+  seoTagline,
+  seoTitle,
+  seoTitleShort,
+} from "@/lib/seo";
 
 /** Sinhala display face — the voice of every headline. */
 const display = Abhaya_Libre({
@@ -39,45 +48,44 @@ export const metadata: Metadata = {
   // absolute URLs for OG and canonical tags; see lib/siteUrl.ts
   metadataBase: new URL(siteUrl),
   alternates: { canonical: "/" },
-  title: "NextGen ICT with Subhashana | උසස් පෙළ ICT පන්ති",
-  description:
-    "සුභාෂණ කරුණානායක සමඟ උසස් පෙළ ICT තියරි, Revision සහ Paper පන්ති. මාකඳුර, කුලියාපිටිය සහ දිවයින පුරා Online පන්ති. A/L ICT classes in Sinhala medium for Grades 12 & 13.",
-  keywords: [
-    "A/L ICT",
-    "උසස් පෙළ ICT",
-    "ICT පන්ති",
-    "Subhashana Karunanayake",
-    "NextGen ICT",
-    "Kuliyapitiya ICT class",
-    "Makandura ICT class",
-    "ICT online class Sri Lanka",
-  ],
+  title: {
+    default: seoTitleShort,
+    template: `%s | ${seoTitle}`,
+  },
+  description: seoDescription,
+  keywords: seoKeywords,
+  applicationName: "NextGen ICT",
+  category: "education",
+  authors: [{ name: site.tutor.name.en, url: site.facebook }],
+  creator: site.tutor.name.en,
+  publisher: `${site.brand.en} with ${site.tutor.name.en}`,
+  // og:image and twitter:image come from app/opengraph-image.tsx
   openGraph: {
-    title: "NextGen ICT with Subhashana",
-    description:
-      "උසස් පෙළ ICT - තියරි, Revision සහ Paper පන්ති. සිංහල මාධ්‍යය. Online + භෞතික.",
-    locale: "si_LK",
     type: "website",
     url: "/",
-    siteName: "NextGen ICT with Subhashana",
-    // widest photo in the library (1400x788); swap in a purpose-made
-    // 1200x630 card when there is one
-    images: [
-      {
-        url: "/images/group-batch-full.jpg",
-        width: 1400,
-        height: 788,
-        alt: "NextGen ICT with Subhashana",
-      },
-    ],
+    siteName: seoTitle,
+    title: `${seoTitle} | ${seoTagline}`,
+    description: seoSocialDescription,
+    locale: "si_LK",
+    alternateLocale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NextGen ICT with Subhashana",
-    description:
-      "උසස් පෙළ ICT - තියරි, Revision සහ Paper පන්ති. සිංහල මාධ්‍යය. Online + භෞතික.",
-    images: ["/images/group-batch-full.jpg"],
+    title: `${seoTitle} | ${seoTagline}`,
+    description: seoSocialDescription,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  formatDetection: { telephone: true, address: true },
 };
 
 export const viewport: Viewport = {
@@ -90,21 +98,7 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    name: "NextGen ICT with Subhashana",
-    description: site.tutor.role.en,
-    telephone: `+${site.whatsappNumber}`,
-    areaServed: "Sri Lanka",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Kuliyapitiya",
-      addressCountry: "LK",
-    },
-    url: siteUrl,
-    sameAs: [site.facebook, site.tiktok],
-  };
+  const jsonLd = jsonLdGraph();
 
   return (
     <html lang="si" data-lang="si" suppressHydrationWarning>
@@ -112,8 +106,12 @@ export default function RootLayout({
         {/* stamps a stored theme before first paint, so the page never flashes */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
+      {/* Extensions such as Grammarly stamp their own attributes onto <body>
+          before React hydrates, which reads as a mismatch. suppressHydration-
+          Warning covers this element's own attributes only, not its subtree. */}
       <body
         className={`${display.variable} ${sinhala.variable} ${ui.variable} ${mono.variable}`}
+        suppressHydrationWarning
       >
         <script
           type="application/ld+json"

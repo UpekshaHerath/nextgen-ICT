@@ -84,6 +84,9 @@ export function Hero() {
               <p className="max-w-[54ch] text-[14.5px] text-[var(--ink-soft)] sm:text-[15.5px]">
                 {t.hero.sub}
               </p>
+              <span className="display hidden shrink-0 self-end text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
+                &rdquo;
+              </span>
             </motion.div>
 
             <motion.div
@@ -160,7 +163,7 @@ export function Hero() {
                 {tutorPhoto ? (
                   <Image
                     src={tutorPhoto}
-                    alt={L(site.tutor.name)}
+                    alt={`${L(site.tutor.name)} — ${L(site.tutor.role)}, ${L(site.location)}`}
                     fill
                     priority
                     className="object-cover"
@@ -197,7 +200,7 @@ export function Hero() {
               <div className="relative aspect-square">
                 <Image
                   src="/images/tutor-2.jpg"
-                  alt={`${L(site.tutor.name)} - ${L(site.tutor.subject)}`}
+                  alt={`${L(site.tutor.name)} — ${L(site.tutor.subject)} ${L(site.medium)}`}
                   fill
                   className="object-cover"
                   sizes="200px"

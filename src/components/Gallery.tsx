@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
-import { gallery } from "@/lib/site";
+import { gallery, site } from "@/lib/site";
 
 const TILT = ["-1.6deg", "1.2deg", "-0.8deg", "1.8deg", "-1.2deg", "0.9deg"];
 
@@ -50,7 +50,7 @@ export function Gallery() {
                   {g.src ? (
                     <Image
                       src={g.src}
-                      alt={L(g.caption)}
+                      alt={`${L(g.caption)} — ${L(site.brand)} ${L(site.tutor.subject)}, ${L(site.tutor.name)}`}
                       fill
                       className="object-cover"
                       sizes={
