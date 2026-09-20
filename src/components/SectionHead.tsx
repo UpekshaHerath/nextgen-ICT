@@ -23,7 +23,7 @@ export function SectionHead({
           align === "center" ? "justify-center" : ""
         }`}
       >
-        <span className="label shrink-0 bg-[var(--ink)] px-2 py-1 text-[var(--paper)]">
+        <span className="label shrink-0 bg-[var(--panel)] px-2 py-1 text-[var(--panel-fg)]">
           {no}
         </span>
         <span className="label min-w-0 truncate text-[var(--maroon)]">{eyebrow}</span>

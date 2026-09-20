@@ -54,11 +54,11 @@ export function Contact() {
           {/* the slip */}
           <Reveal>
             <div className="hard border-2 border-[var(--ink)] bg-[var(--paper)]">
-              <div className="flex items-center justify-between gap-3 border-b-2 border-[var(--ink)] bg-[var(--ink)] px-4 py-2.5 sm:px-5 sm:py-3">
+              <div className="flex items-center justify-between gap-3 border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 sm:px-5 sm:py-3">
                 <span className="label text-[var(--mustard)]">
                   {lang === "si" ? "ලියාපදිංචි පත්‍රය" : "Registration slip"}
                 </span>
-                <span className="label shrink-0 text-[var(--paper)] opacity-60">
+                <span className="label shrink-0 text-[var(--panel-fg)] opacity-60">
                   No. ___
                 </span>
               </div>
@@ -114,7 +114,7 @@ export function Contact() {
                   </a>
                   <a
                     href={telLink}
-                    className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--mustard)] px-5 py-3.5 text-[14.5px] font-semibold sm:px-6 sm:text-[15px]"
+                    className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--mustard)] px-5 py-3.5 text-[14.5px] font-semibold text-[var(--on-accent)] sm:px-6 sm:text-[15px]"
                   >
                     ☏ {t.contact.call}
                   </a>
@@ -193,7 +193,7 @@ export function Contact() {
                       href={item.href}
                       target={item.href.startsWith("tel:") ? undefined : "_blank"}
                       rel="noopener noreferrer"
-                      className="block h-full px-4 py-4 transition-colors hover:bg-[var(--mustard)] sm:px-5 sm:py-5"
+                      className="block h-full px-4 py-4 transition-colors hover:bg-[var(--mustard)] hover:text-[var(--on-accent)] sm:px-5 sm:py-5"
                     >
                       <span className="display block text-[1.3rem] leading-none text-[var(--maroon)] sm:text-[1.5rem]">
                         {item.mark}

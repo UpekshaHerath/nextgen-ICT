@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useLang } from "./LanguageProvider";
+import { ThemeSwitch } from "./ThemeSwitch";
 import { site, telLink, waLink } from "@/lib/site";
 
 const SECTIONS = [
@@ -29,13 +30,15 @@ function LangSwitch({ className = "" }: { className?: string }) {
           onClick={() => setLang(l)}
           aria-pressed={lang === l}
           className={`label relative px-2.5 py-1.5 transition-colors ${
-            lang === l ? "text-[var(--paper)]" : "text-[var(--ink)] hover:bg-[var(--mustard)]"
+            lang === l
+              ? "text-[var(--panel-fg)]"
+              : "text-[var(--ink)] hover:bg-[var(--mustard)] hover:text-[var(--on-accent)]"
           }`}
         >
           {lang === l && (
             <motion.span
               layoutId="lang-pill"
-              className="absolute inset-0 bg-[var(--ink)]"
+              className="absolute inset-0 bg-[var(--panel)]"
               transition={{ type: "spring", stiffness: 420, damping: 34 }}
             />
           )}
@@ -99,6 +102,7 @@ export function Nav() {
               ☏ {site.phoneDisplay}
             </a>
             <LangSwitch />
+            <ThemeSwitch />
           </div>
         </div>
       </div>
@@ -147,12 +151,13 @@ export function Nav() {
 
           <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
             <LangSwitch className="sm:hidden" />
+            <ThemeSwitch className="sm:hidden" pillId="theme-pill-compact" />
 
             <a
               href={waLink(t.wa.generic)}
               target="_blank"
               rel="noopener noreferrer"
-              className="press hard-sm hidden border-2 border-[var(--ink)] bg-[var(--mustard)] px-3 py-2.5 text-[13px] font-semibold md:inline-block xl:px-4 xl:text-[13.5px]"
+              className="press hard-sm hidden border-2 border-[var(--ink)] bg-[var(--mustard)] px-3 py-2.5 text-[13px] font-semibold text-[var(--on-accent)] md:inline-block xl:px-4 xl:text-[13.5px]"
             >
               {t.nav.join}
             </a>
@@ -225,7 +230,7 @@ export function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
-                  className="press hard-sm block border-2 border-[var(--ink)] bg-[var(--mustard)] px-4 py-3 text-center text-[14px] font-semibold sm:inline-block"
+                  className="press hard-sm block border-2 border-[var(--ink)] bg-[var(--mustard)] px-4 py-3 text-center text-[14px] font-semibold text-[var(--on-accent)] sm:inline-block"
                 >
                   {t.nav.join}
                 </a>

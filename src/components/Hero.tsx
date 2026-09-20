@@ -51,7 +51,7 @@ export function Hero() {
           >
             <motion.p
               variants={item}
-              className="label inline-block border-2 border-[var(--ink)] bg-[var(--mustard)] px-2.5 py-1.5 leading-relaxed sm:px-3"
+              className="label inline-block border-2 border-[var(--ink)] bg-[var(--mustard)] px-2.5 py-1.5 leading-relaxed text-[var(--on-accent)] sm:px-3"
             >
               {t.hero.badge}
             </motion.p>
@@ -211,7 +211,7 @@ export function Hero() {
               initial={reduce ? false : { scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.55 }}
-              className="absolute -right-2 -top-4 grid h-[72px] w-[72px] place-items-center rounded-full border-2 border-[var(--ink)] bg-[var(--mustard)] text-center sm:-right-3 sm:-top-6 sm:h-24 sm:w-24"
+              className="absolute -right-2 -top-4 grid h-[72px] w-[72px] place-items-center rounded-full border-2 border-[var(--ink)] bg-[var(--mustard)] text-center text-[var(--on-accent)] sm:-right-3 sm:-top-6 sm:h-24 sm:w-24"
             >
               <span className="display text-[11px] leading-tight sm:text-[13px]">
                 2027
@@ -224,14 +224,14 @@ export function Hero() {
       </div>
 
       {/* stat band */}
-      <div className="border-y-2 border-[var(--ink)] bg-[var(--ink)]">
-        <dl className="shell grid grid-cols-2 divide-x divide-y divide-[var(--paper)]/20 sm:grid-cols-4 sm:divide-y-0">
+      <div className="border-y-2 border-[var(--ink)] bg-[var(--panel)]">
+        <dl className="shell grid grid-cols-2 divide-x divide-y divide-[var(--panel-fg)]/20 sm:grid-cols-4 sm:divide-y-0">
           {stats.map((s) => (
             <div key={s.value} className="px-2 py-4 text-center sm:py-5">
               <dt className="display text-[clamp(1.7rem,6vw,2.7rem)] text-[var(--mustard)]">
                 <StatCounter value={s.value} />
               </dt>
-              <dd className="label mt-1 leading-relaxed text-[var(--paper)] opacity-80">
+              <dd className="label mt-1 leading-relaxed text-[var(--panel-fg)] opacity-80">
                 {L(s.label)}
               </dd>
             </div>

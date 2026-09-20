@@ -8,16 +8,24 @@
 */
 
 @theme inline {
-  --color-paper: #f4efe4;
-  --color-paper-2: #e9e0cf;
-  --color-ink: #16130f;
-  --color-maroon: #8e1b2e;
-  --color-mustard: #e3a11b;
+  /* tokens follow the palette below, so both themes flow through Tailwind */
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-maroon: var(--maroon);
+  --color-mustard: var(--mustard);
   --font-display: var(--font-display), serif;
   --font-ui: var(--font-ui), sans-serif;
   --font-mono: var(--font-mono), monospace;
 }
 
+/*
+  Daylight palette. `paper` is the ground and `ink` the mark on it; the two
+  swap roles after dark. Three things deliberately do NOT swap: `panel` (the
+  inverted blocks — a section tag, a card header, the footer — stay dark slabs
+  in both themes), `on-accent` (text printed on a mustard or green fill), and
+  the maroon stamps, which keep paper-coloured lettering.
+*/
 :root {
   --paper: #f4efe4;
   --paper-2: #e9e0cf;
@@ -26,7 +34,78 @@
   --maroon: #8e1b2e;
   --mustard: #e3a11b;
   --green: #0f8a4d;
+
+  --panel: #16130f;
+  --panel-fg: #f4efe4;
+  --on-accent: #16130f;
+
+  --rule-line: rgba(22, 19, 15, 0.09);
+  --tape-bg: rgba(227, 161, 27, 0.78);
+  --tape-border: rgba(22, 19, 15, 0.35);
+  --field-focus: rgba(227, 161, 27, 0.14);
+
+  /* the grain is printed into light paper and lifted off dark stock */
+  --grain-blend: multiply;
+  --grain-opacity: 0.32;
+
   color-scheme: light;
+}
+
+/*
+  After dark: the same ink and paper, unlit. Maroon and mustard are lifted
+  until they carry on a dark ground; everything below is tuned so body text
+  and every accent fill clear WCAG AA.
+*/
+/* system preference, unless the reader has explicitly chosen light */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #12100c;
+    --paper-2: #1c1812;
+    --ink: #f1eadb;
+    --ink-soft: #a79b87;
+    --maroon: #ef6d82;
+    --mustard: #f0b83e;
+    --green: #2fbd75;
+
+    --panel: #272119;
+    --panel-fg: #f1eadb;
+    --on-accent: #16130f;
+
+    --rule-line: rgba(241, 234, 219, 0.1);
+    --tape-bg: rgba(227, 161, 27, 0.55);
+    --tape-border: rgba(241, 234, 219, 0.28);
+    --field-focus: rgba(240, 184, 62, 0.16);
+
+    --grain-blend: screen;
+    --grain-opacity: 0.08;
+
+    color-scheme: dark;
+  }
+}
+
+/* an explicit choice wins in both directions */
+:root[data-theme="dark"] {
+  --paper: #12100c;
+  --paper-2: #1c1812;
+  --ink: #f1eadb;
+  --ink-soft: #a79b87;
+  --maroon: #ef6d82;
+  --mustard: #f0b83e;
+  --green: #2fbd75;
+
+  --panel: #272119;
+  --panel-fg: #f1eadb;
+  --on-accent: #16130f;
+
+  --rule-line: rgba(241, 234, 219, 0.1);
+  --tape-bg: rgba(227, 161, 27, 0.55);
+  --tape-border: rgba(241, 234, 219, 0.28);
+  --field-focus: rgba(240, 184, 62, 0.16);
+
+  --grain-blend: screen;
+  --grain-opacity: 0.08;
+
+  color-scheme: dark;
 }
 
 html {
@@ -64,14 +143,14 @@ body::after {
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.32;
-  mix-blend-mode: multiply;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
 }
 
 ::selection {
   background: var(--mustard);
-  color: var(--ink);
+  color: var(--on-accent);
 }
 
 /* ---------- type ---------- */
@@ -151,8 +230,8 @@ html[data-lang="si"] body {
     to bottom,
     transparent 0,
     transparent calc(var(--rule) - 1px),
-    rgba(22, 19, 15, 0.09) calc(var(--rule) - 1px),
-    rgba(22, 19, 15, 0.09) var(--rule)
+    var(--rule-line) calc(var(--rule) - 1px),
+    var(--rule-line) var(--rule)
   );
 }
 
@@ -214,8 +293,8 @@ html[data-lang="si"] body {
   translate: -50% 0;
   width: 104px;
   height: 26px;
-  background: rgba(227, 161, 27, 0.78);
-  border: 1px solid rgba(22, 19, 15, 0.35);
+  background: var(--tape-bg);
+  border: 1px solid var(--tape-border);
   rotate: -1.5deg;
 }
 
@@ -230,7 +309,7 @@ html[data-lang="si"] body {
 
 .underline-field:focus {
   border-bottom-color: var(--maroon);
-  background: rgba(227, 161, 27, 0.14);
+  background: var(--field-focus);
 }
 
 .marquee-track {

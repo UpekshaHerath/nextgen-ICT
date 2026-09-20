@@ -49,7 +49,7 @@ export function Timetable() {
             .map(({ day, list }) => (
               <Reveal as="li" key={day.en}>
                 <div className="border-2 border-[var(--ink)] bg-[var(--paper-2)]">
-                  <p className="display border-b-2 border-[var(--ink)] bg-[var(--ink)] px-4 py-2.5 text-[16px] text-[var(--mustard)]">
+                  <p className="display border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 text-[16px] text-[var(--mustard)]">
                     {lang === "si" ? day.si : day.en}
                   </p>
                   <ul>
@@ -82,7 +82,7 @@ export function Timetable() {
         <Reveal className="thin-scroll mt-8 hidden overflow-x-auto lg:block">
           <table className="w-full min-w-[760px] border-collapse border-2 border-[var(--ink)] text-left">
             <thead>
-              <tr className="bg-[var(--ink)] text-[var(--paper)]">
+              <tr className="bg-[var(--panel)] text-[var(--panel-fg)]">
                 <th className="label w-[18%] px-4 py-3">
                   {lang === "si" ? "දිනය" : "Day"}
                 </th>

@@ -110,6 +110,9 @@ export const dict = {
     common: {
       langLabel: "භාෂාව",
       whatsapp: "WhatsApp",
+      themeLabel: "වර්ණ රටාව",
+      themeLight: "දීප්ත මාදිලිය",
+      themeDark: "අඳුරු මාදිලිය",
     },
     wa: {
       generic:
@@ -221,6 +224,9 @@ export const dict = {
     common: {
       langLabel: "Language",
       whatsapp: "WhatsApp",
+      themeLabel: "Theme",
+      themeLight: "Light mode",
+      themeDark: "Dark mode",
     },
     wa: {
       generic:

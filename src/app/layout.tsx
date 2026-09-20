@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Abhaya_Libre, Noto_Sans_Sinhala, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { ThemeProvider, themeScript } from "@/components/ThemeProvider";
 import { site } from "@/lib/site";
 
 /** Sinhala display face — the voice of every headline. */
@@ -57,7 +58,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4efe4",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4efe4" },
+    { media: "(prefers-color-scheme: dark)", color: "#12100c" },
+  ],
 };
 
 export default function RootLayout({
@@ -80,6 +84,10 @@ export default function RootLayout({
 
   return (
     <html lang="si" data-lang="si" suppressHydrationWarning>
+      <head>
+        {/* stamps a stored theme before first paint, so the page never flashes */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body
         className={`${display.variable} ${sinhala.variable} ${ui.variable} ${mono.variable}`}
       >
@@ -87,7 +95,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <LanguageProvider>{children}</LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider>{children}</LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

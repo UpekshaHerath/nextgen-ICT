@@ -8,11 +8,11 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t-2 border-[var(--ink)] bg-[var(--ink)] text-[var(--paper)]">
+    <footer className="border-t-2 border-[var(--ink)] bg-[var(--panel)] text-[var(--panel-fg)]">
       <div className="shell grid gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
         <div className="sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <span className="grid h-11 w-11 shrink-0 place-items-center border-2 border-[var(--paper)] bg-[var(--maroon)] font-[family-name:var(--font-mono)] text-[12px]">
+            <span className="grid h-11 w-11 shrink-0 place-items-center border-2 border-[var(--panel-fg)] bg-[var(--maroon)] font-[family-name:var(--font-mono)] text-[12px]">
               ICT
             </span>
             <span className="leading-none">
@@ -29,7 +29,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="label border-b border-[var(--paper)]/30 pb-2 opacity-70">
+          <h3 className="label border-b border-[var(--panel-fg)]/30 pb-2 opacity-70">
             {t.footer.quick}
           </h3>
           <ul className="mt-3 grid gap-2 text-[13.5px]">
@@ -44,7 +44,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="label border-b border-[var(--paper)]/30 pb-2 opacity-70">
+          <h3 className="label border-b border-[var(--panel-fg)]/30 pb-2 opacity-70">
             {t.footer.contact}
           </h3>
           <ul className="mt-3 grid gap-2 text-[13.5px]">
@@ -77,7 +77,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[var(--paper)]/25">
+      <div className="border-t border-[var(--panel-fg)]/25">
         <div className="shell flex flex-wrap items-center justify-between gap-2 py-4">
           <p className="label opacity-60">
             © {year} NextGen ICT. {t.footer.rights}

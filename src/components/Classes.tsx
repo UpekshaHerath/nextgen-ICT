@@ -58,13 +58,15 @@ export function Classes() {
                 className={`relative shrink-0 whitespace-nowrap px-4 py-2.5 text-[13px] font-semibold transition-colors sm:px-5 sm:py-3 sm:text-[13.5px] ${
                   i > 0 ? "border-l-2 border-[var(--ink)]" : ""
                 } ${
-                  filter === f.key ? "text-[var(--paper)]" : "hover:bg-[var(--mustard)]"
+                  filter === f.key
+                    ? "text-[var(--panel-fg)]"
+                    : "hover:bg-[var(--mustard)] hover:text-[var(--on-accent)]"
                 }`}
               >
                 {filter === f.key && (
                   <motion.span
                     layoutId="class-filter"
-                    className="absolute inset-0 bg-[var(--ink)]"
+                    className="absolute inset-0 bg-[var(--panel)]"
                     transition={{ type: "spring", stiffness: 400, damping: 34 }}
                   />
                 )}
@@ -116,9 +118,9 @@ function ClassCard({ c }: { c: ClassInfo }) {
       className="ticket hard flex h-full flex-col border-2 border-[var(--ink)] bg-[var(--paper)]"
     >
       {/* stub */}
-      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b-2 border-[var(--ink)] bg-[var(--ink)] px-4 py-2.5 sm:px-5 sm:py-3">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 sm:px-5 sm:py-3">
         <span className="label text-[var(--mustard)]">{L(c.kind)}</span>
-        <span className="label text-[var(--paper)] opacity-70">
+        <span className="label text-[var(--panel-fg)] opacity-70">
           {c.grade === "all" ? "ALL" : `GRADE ${c.grade}`} · {c.examYear}
         </span>
       </div>

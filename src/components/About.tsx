@@ -48,7 +48,7 @@ export function About() {
                 <span className="border-2 border-[var(--ink)] px-3.5 py-2.5 text-[13px] sm:px-4 sm:text-[13.5px]">
                   ☖ {L(site.location)}
                 </span>
-                <span className="border-2 border-[var(--ink)] bg-[var(--mustard)] px-3.5 py-2.5 text-[13px] font-semibold sm:px-4 sm:text-[13.5px]">
+                <span className="border-2 border-[var(--ink)] bg-[var(--mustard)] px-3.5 py-2.5 text-[13px] font-semibold text-[var(--on-accent)] sm:px-4 sm:text-[13.5px]">
                   ☏ {site.phoneDisplay}
                 </span>
               </div>
