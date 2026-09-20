@@ -89,7 +89,7 @@ export const classes: ClassInfo[] = [
     institute: { si: "සමාධි උසස් අධ්‍යාපන ආයතනය", en: "Samadhi Higher Education Institute" },
     town: { si: "මාකඳුර", en: "Makandura" },
     day: { si: "අඟහරුවාදා", en: "Tuesday" },
-    time: { si: "පෙ.ව. 9.00 – ප.ව. 2.00", en: "9.00 a.m. – 2.00 p.m." },
+    time: { si: "පෙ.ව. 9.00 - ප.ව. 2.00", en: "9.00 a.m. - 2.00 p.m." },
     mode: "physical",
     highlights: [
       { si: "සෑම පාඩමකටම past paper සාකච්ඡාව", en: "Past paper discussion per unit" },
@@ -114,7 +114,7 @@ export const classes: ClassInfo[] = [
     institute: { si: "Science Center", en: "Science Center" },
     town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
     day: { si: "සඳුදා", en: "Monday" },
-    time: { si: "ප.ව. 4.00 – ප.ව. 9.00", en: "4.00 p.m. – 9.00 p.m." },
+    time: { si: "ප.ව. 4.00 - ප.ව. 9.00", en: "4.00 p.m. - 9.00 p.m." },
     mode: "physical",
     highlights: [
       { si: "Past paper 15+ ක් අවසන් කිරීම", en: "15+ past papers completed" },
