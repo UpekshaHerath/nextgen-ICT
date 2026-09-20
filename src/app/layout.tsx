@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { ThemeProvider, themeScript } from "@/components/ThemeProvider";
 import { site } from "@/lib/site";
+import { siteUrl } from "@/lib/siteUrl";
 
 /** Sinhala display face — the voice of every headline. */
 const display = Abhaya_Libre({
@@ -35,6 +36,9 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  // absolute URLs for OG and canonical tags; see lib/siteUrl.ts
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
   title: "NextGen ICT with Subhashana | උසස් පෙළ ICT පන්ති",
   description:
     "සුභාෂණ කරුණානායක සමඟ උසස් පෙළ ICT තියරි, Revision සහ Paper පන්ති. මාකඳුර, කුලියාපිටිය සහ දිවයින පුරා Online පන්ති. A/L ICT classes in Sinhala medium for Grades 12 & 13.",
@@ -54,6 +58,25 @@ export const metadata: Metadata = {
       "උසස් පෙළ ICT - තියරි, Revision සහ Paper පන්ති. සිංහල මාධ්‍යය. Online + භෞතික.",
     locale: "si_LK",
     type: "website",
+    url: "/",
+    siteName: "NextGen ICT with Subhashana",
+    // widest photo in the library (1400x788); swap in a purpose-made
+    // 1200x630 card when there is one
+    images: [
+      {
+        url: "/images/group-batch-full.jpg",
+        width: 1400,
+        height: 788,
+        alt: "NextGen ICT with Subhashana",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NextGen ICT with Subhashana",
+    description:
+      "උසස් පෙළ ICT - තියරි, Revision සහ Paper පන්ති. සිංහල මාධ්‍යය. Online + භෞතික.",
+    images: ["/images/group-batch-full.jpg"],
   },
 };
 
@@ -79,6 +102,7 @@ export default function RootLayout({
       addressLocality: "Kuliyapitiya",
       addressCountry: "LK",
     },
+    url: siteUrl,
     sameAs: [site.facebook, site.tiktok],
   };
 
