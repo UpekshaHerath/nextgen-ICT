@@ -20,6 +20,7 @@ export const dict = {
     },
     hero: {
       badge: "2026 / 2027 A/L කණ්ඩායම් සඳහා ලියාපදිංචිය විවෘතයි",
+      badgeClose: "වසන්න",
       titleTop: "උසස් පෙළ",
       titleMain: "ICT",
       titleBottom: "ඊළඟ පරම්පරාවට",
@@ -110,6 +111,7 @@ export const dict = {
     common: {
       langLabel: "භාෂාව",
       whatsapp: "WhatsApp",
+      backToTop: "ඉහළට යන්න",
       themeLabel: "වර්ණ රටාව",
       themeLight: "දීප්ත මාදිලිය",
       themeDark: "අඳුරු මාදිලිය",
@@ -134,6 +136,7 @@ export const dict = {
     },
     hero: {
       badge: "Enrolment open for the 2026 / 2027 A/L batches",
+      badgeClose: "Dismiss",
       titleTop: "Advanced Level",
       titleMain: "ICT",
       titleBottom: "for the next generation",
@@ -224,6 +227,7 @@ export const dict = {
     common: {
       langLabel: "Language",
       whatsapp: "WhatsApp",
+      backToTop: "Back to top",
       themeLabel: "Theme",
       themeLight: "Light mode",
       themeDark: "Dark mode",

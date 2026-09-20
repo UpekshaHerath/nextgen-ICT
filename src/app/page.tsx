@@ -11,6 +11,7 @@ import { Faq } from "@/components/Faq";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { BackToTop } from "@/components/BackToTop";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
       </main>
       <Footer />
       <WhatsAppFab />
+      <BackToTop />
     </>
   );
 }

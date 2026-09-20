@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useSyncExternalStore } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -24,39 +24,79 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.2, 0.8, 0.3, 1] } },
 };
 
+const BADGE_KEY = "nextgen-ict:hero-badge-dismissed";
+const badgeListeners = new Set<() => void>();
+
+function subscribeBadge(cb: () => void) {
+  badgeListeners.add(cb);
+  window.addEventListener("storage", cb);
+  return () => {
+    badgeListeners.delete(cb);
+    window.removeEventListener("storage", cb);
+  };
+}
+
+function badgeDismissed() {
+  try {
+    return localStorage.getItem(BADGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function dismissBadge() {
+  try {
+    localStorage.setItem(BADGE_KEY, "1");
+  } catch {
+    /* storage blocked - banner just hides for this visit */
+  }
+  badgeListeners.forEach((cb) => cb());
+}
+
 export function Hero() {
   const { t, L } = useLang();
   const verified = classes.filter((c) => c.verified);
   const reduce = useReducedMotion();
+  // server snapshot = dismissed, so returning visitors never see a flash
+  const badgeHidden = useSyncExternalStore(subscribeBadge, badgeDismissed, () => true);
 
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  // gentle parallax: the portrait drifts slower than the copy beside it
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 60]);
   const stickerRotate = useTransform(scrollYProgress, [0, 1], [-12, reduce ? -12 : 16]);
 
   return (
     <section id="home" ref={sectionRef} className="relative">
       <div className="shell pb-12 pt-8 sm:pb-14 sm:pt-14">
-        <div className="grid items-start gap-9 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-          {/* headline column - always first, so phones open on the message */}
+        <div className="flex flex-col items-center gap-9 text-center sm:gap-12">
+          {/* 1. headline - the message comes first */}
           <motion.div
-            className="order-1"
             variants={container}
             initial={reduce ? false : "hidden"}
             animate="show"
           >
-            <motion.p
-              variants={item}
-              className="label inline-block border-2 border-[var(--ink)] bg-[var(--mustard)] px-2.5 py-1.5 leading-relaxed text-[var(--on-accent)] sm:px-3"
-            >
-              {t.hero.badge}
-            </motion.p>
+            {!badgeHidden && (
+              <motion.div
+                variants={item}
+                className="mb-5 inline-flex items-stretch border-2 border-[var(--ink)] bg-[var(--mustard)] text-[var(--on-accent)] sm:mb-6"
+              >
+                <p className="label px-2.5 py-1.5 text-left leading-relaxed sm:px-3">
+                  {t.hero.badge}
+                </p>
+                <button
+                  type="button"
+                  onClick={dismissBadge}
+                  aria-label={t.hero.badgeClose}
+                  className="grid w-8 shrink-0 place-items-center border-l-2 border-[var(--ink)] text-[15px] font-bold leading-none hover:bg-[var(--ink)] hover:text-[var(--mustard)]"
+                >
+                  <span aria-hidden>✕</span>
+                </button>
+              </motion.div>
+            )}
 
-            <h1 className="display mt-5 text-[clamp(2.2rem,8.6vw,5.4rem)] sm:mt-6">
+            <h1 className="display text-[clamp(2.2rem,8.6vw,5.4rem)]">
               <motion.span
                 variants={item}
                 className="block text-[0.44em] font-semibold tracking-[0.14em] text-[var(--maroon)] sm:tracking-[0.18em]"
@@ -73,81 +113,14 @@ export function Hero() {
                 {t.hero.titleBottom}
               </motion.span>
             </h1>
-
-            <motion.div
-              variants={item}
-              className="mt-5 flex items-start gap-4 border-t-2 border-[var(--ink)] pt-5 sm:mt-6 sm:gap-5"
-            >
-              <span className="display hidden shrink-0 text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
-                &ldquo;
-              </span>
-              <p className="max-w-[54ch] text-[14.5px] text-[var(--ink-soft)] sm:text-[15.5px]">
-                {t.hero.sub}
-              </p>
-              <span className="display hidden shrink-0 self-end text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
-                &rdquo;
-              </span>
-            </motion.div>
-
-            <motion.div
-              variants={item}
-              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
-            >
-              <a
-                href={waLink(t.wa.generic)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="press hard inline-flex items-center justify-center gap-2.5 border-2 border-[var(--ink)] bg-[var(--green)] px-5 py-3.5 text-[14.5px] font-bold text-[var(--paper)] sm:px-6 sm:text-[15px]"
-              >
-                <WhatsAppGlyph className="h-5 w-5 shrink-0" />
-                {t.hero.ctaPrimary}
-              </a>
-              <a
-                href="#timetable"
-                className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--paper)] px-5 py-3.5 text-[14.5px] font-semibold sm:px-6 sm:text-[15px]"
-              >
-                {t.hero.ctaSecondary}
-                <motion.span
-                  aria-hidden
-                  animate={reduce ? {} : { y: [0, 3, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  ↓
-                </motion.span>
-              </a>
-            </motion.div>
-
-            {/* torn-ticket strip of confirmed classes */}
-            <motion.ul
-              variants={item}
-              className="mt-7 grid border-2 border-[var(--ink)] sm:mt-8 sm:grid-cols-2"
-            >
-              {verified.map((c, i) => (
-                <li
-                  key={c.id}
-                  className={`p-4 ${
-                    i === 0 ? "sm:border-r-2 sm:border-dashed sm:border-[var(--ink)]" : ""
-                  } ${i > 0 ? "border-t-2 border-dashed border-[var(--ink)] sm:border-t-0" : ""}`}
-                >
-                  <p className="label text-[var(--maroon)]">{L(c.kind)}</p>
-                  <p className="mt-1.5 text-[14px] font-semibold leading-snug sm:text-[14.5px]">
-                    {L(c.institute)} - {L(c.town)}
-                  </p>
-                  <p className="font-[family-name:var(--font-mono)] text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
-                    {L(c.day)} · {L(c.time)}
-                  </p>
-                </li>
-              ))}
-            </motion.ul>
           </motion.div>
 
-          {/* portrait column - capped well below the fold height on small screens */}
+          {/* 2. portrait - straight under the headline */}
           <motion.div
-            style={{ y: portraitY }}
             initial={reduce ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.2, 0.8, 0.3, 1] }}
-            className="relative order-2 mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:mt-3 lg:max-w-[400px]"
+            className="relative mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:max-w-[400px]"
           >
             <div
               className="dots absolute -left-3 -top-3 h-20 w-20 opacity-25 sm:-left-5 sm:-top-5 sm:h-32 sm:w-32"
@@ -222,6 +195,80 @@ export function Hero() {
                 BATCH
               </span>
             </motion.div>
+          </motion.div>
+
+          {/* 3. everything else: pitch, calls to action, confirmed classes */}
+          <motion.div
+            className="w-full"
+            variants={container}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+          >
+            <motion.div
+              variants={item}
+              className="mx-auto flex max-w-3xl items-start justify-center gap-4 border-t-2 border-[var(--ink)] pt-5 sm:gap-5"
+            >
+              <span className="display hidden shrink-0 text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
+                &ldquo;
+              </span>
+              <p className="max-w-[54ch] text-[14.5px] text-[var(--ink-soft)] sm:text-[15.5px]">
+                {t.hero.sub}
+              </p>
+              <span className="display hidden shrink-0 self-end text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
+                &rdquo;
+              </span>
+            </motion.div>
+
+            <motion.div
+              variants={item}
+              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3"
+            >
+              <a
+                href={waLink(t.wa.generic)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="press hard inline-flex items-center justify-center gap-2.5 border-2 border-[var(--ink)] bg-[var(--green)] px-5 py-3.5 text-[14.5px] font-bold text-[var(--paper)] sm:px-6 sm:text-[15px]"
+              >
+                <WhatsAppGlyph className="h-5 w-5 shrink-0" />
+                {t.hero.ctaPrimary}
+              </a>
+              <a
+                href="#timetable"
+                className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--paper)] px-5 py-3.5 text-[14.5px] font-semibold sm:px-6 sm:text-[15px]"
+              >
+                {t.hero.ctaSecondary}
+                <motion.span
+                  aria-hidden
+                  animate={reduce ? {} : { y: [0, 3, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  ↓
+                </motion.span>
+              </a>
+            </motion.div>
+
+            {/* torn-ticket strip of confirmed classes */}
+            <motion.ul
+              variants={item}
+              className="mx-auto mt-7 grid max-w-3xl border-2 border-[var(--ink)] sm:mt-8 sm:grid-cols-2"
+            >
+              {verified.map((c, i) => (
+                <li
+                  key={c.id}
+                  className={`p-4 ${
+                    i === 0 ? "sm:border-r-2 sm:border-dashed sm:border-[var(--ink)]" : ""
+                  } ${i > 0 ? "border-t-2 border-dashed border-[var(--ink)] sm:border-t-0" : ""}`}
+                >
+                  <p className="label text-[var(--maroon)]">{L(c.kind)}</p>
+                  <p className="mt-1.5 text-[14px] font-semibold leading-snug sm:text-[14.5px]">
+                    {L(c.institute)} - {L(c.town)}
+                  </p>
+                  <p className="font-[family-name:var(--font-mono)] text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
+                    {L(c.day)} · {L(c.time)}
+                  </p>
+                </li>
+              ))}
+            </motion.ul>
           </motion.div>
         </div>
       </div>
