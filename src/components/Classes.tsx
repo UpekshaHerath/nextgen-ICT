@@ -5,7 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { SectionHead } from "./SectionHead";
 import { WhatsAppGlyph } from "./Hero";
-import { classes, waLink, type ClassInfo } from "@/lib/site";
+import type { Dict } from "@/lib/i18n";
+import { classes, isOL, waLink, type Bi, type ClassInfo } from "@/lib/site";
 
 type Filter = "all" | "12" | "13" | "11" | "online";
 
@@ -28,7 +29,9 @@ export function Classes() {
           ? true
           : filter === "online"
             ? c.mode !== "physical"
-            : c.grade === filter,
+            : filter === "11"
+              ? isOL(c)
+              : c.grade === filter,
       ),
     [filter],
   );
@@ -97,6 +100,13 @@ export function Classes() {
   );
 }
 
+/** WhatsApp link pre-filled with the class the student wants to join. */
+export function joinLink(c: ClassInfo, t: Dict, L: (f: Bi) => string) {
+  return waLink(
+    `${t.wa.classPrefix}\n\n• ${L(c.title)}\n• ${L(c.institute)}, ${L(c.town)}\n• ${L(c.day)} ${L(c.time)}`,
+  );
+}
+
 /** Admission-ticket card: stub header, perforated split, details below. */
 function ClassCard({ c }: { c: ClassInfo }) {
   const { t, L } = useLang();
@@ -109,8 +119,6 @@ function ClassCard({ c }: { c: ClassInfo }) {
         ? t.classes.hybrid
         : t.classes.physical;
 
-  const message = `${t.wa.classPrefix}\n\n• ${L(c.title)}\n• ${L(c.institute)}, ${L(c.town)}\n• ${L(c.day)} ${L(c.time)}`;
-
   return (
     <motion.article
       whileHover={reduce ? {} : { y: -5 }}
@@ -121,7 +129,8 @@ function ClassCard({ c }: { c: ClassInfo }) {
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 sm:px-5 sm:py-3">
         <span className="label text-[var(--mustard)]">{L(c.kind)}</span>
         <span className="label text-[var(--panel-fg)] opacity-70">
-          {c.grade === "all" ? "ALL" : `GRADE ${c.grade}`} · {c.examYear}
+          {c.grade === "all" ? "ALL" : c.grade === "ol" ? "O/L" : `GRADE ${c.grade}`} ·{" "}
+          {c.examYear}
         </span>
       </div>
 
@@ -154,7 +163,7 @@ function ClassCard({ c }: { c: ClassInfo }) {
 
       <div className="mt-auto p-4 sm:p-5">
         <a
-          href={waLink(message)}
+          href={joinLink(c, t, L)}
           target="_blank"
           rel="noopener noreferrer"
           className="press hard-sm flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--green)] px-4 py-3 text-[13.5px] font-bold text-[var(--paper)] sm:px-5 sm:text-[14px]"

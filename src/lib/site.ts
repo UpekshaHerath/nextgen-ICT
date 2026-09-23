@@ -14,8 +14,8 @@ export type Mode = "physical" | "online" | "hybrid";
 
 export type ClassInfo = {
   id: string;
-  /** School grade the class targets. */
-  grade: "12" | "13" | "11" | "all";
+  /** School grade the class targets. `"ol"` = open to any O/L grade. */
+  grade: "13" | "12" | "11" | "10" | "ol" | "all";
   /** A/L or O/L exam year the batch sits for. */
   examYear: number;
   kind: Bi;
@@ -25,6 +25,11 @@ export type ClassInfo = {
   town: Bi;
   day: Bi;
   time: Bi;
+  /**
+   * Start / end in 24h decimal hours (16.5 = 4.30 p.m.). Places the class on
+   * the timetable's week grid; leave out while the time is unconfirmed.
+   */
+  slot?: { from: number; to: number };
   mode: Mode;
   highlights: Bi[];
   verified: boolean;
@@ -72,6 +77,11 @@ export function waLink(message: string) {
 
 export const telLink = `tel:+${site.whatsappNumber}`;
 
+/** O/L (Grade 10 / 11) class, as opposed to A/L. */
+export function isOL(c: ClassInfo) {
+  return c.grade === "10" || c.grade === "11" || c.grade === "ol";
+}
+
 export const classes: ClassInfo[] = [
   {
     id: "al-2027-revision",
@@ -90,6 +100,7 @@ export const classes: ClassInfo[] = [
     town: { si: "මාකඳුර", en: "Makandura" },
     day: { si: "අඟහරුවාදා", en: "Tuesday" },
     time: { si: "පෙ.ව. 9.00 - ප.ව. 2.00", en: "9.00 a.m. - 2.00 p.m." },
+    slot: { from: 9, to: 14 },
     mode: "physical",
     highlights: [
       { si: "සෑම පාඩමකටම past paper සාකච්ඡාව", en: "Past paper discussion per unit" },
@@ -113,13 +124,114 @@ export const classes: ClassInfo[] = [
     },
     institute: { si: "Science Center", en: "Science Center" },
     town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
-    day: { si: "සඳුදා", en: "Monday" },
+    day: { si: "ඉරිදා", en: "Sunday" },
     time: { si: "ප.ව. 4.00 - ප.ව. 9.00", en: "4.00 p.m. - 9.00 p.m." },
+    slot: { from: 16, to: 21 },
     mode: "physical",
     highlights: [
       { si: "Past paper 15+ ක් අවසන් කිරීම", en: "15+ past papers completed" },
       { si: "පිළිතුරු ලිවීමේ ක්‍රමවේදය", en: "Answer-writing method" },
       { si: "ගාස්තුව රු. 250/=", en: "Fee Rs. 250/=" },
+    ],
+    verified: true,
+  },
+  {
+    id: "ol-g11-group1",
+    grade: "11",
+    examYear: 2026,
+    kind: { si: "Theory · Group 1", en: "Theory · Group 1" },
+    title: {
+      si: "11 ශ්‍රේණිය - O/L ICT පන්තිය (Group 1)",
+      en: "Grade 11 - O/L ICT Class (Group 1)",
+    },
+    desc: {
+      si: "සාමාන්‍ය පෙළ ICT විෂය නිර්දේශය පාඩමෙන් පාඩම, සෑම පාඩමකටම ප්‍රශ්න පුහුණුව සමඟ.",
+      en: "The O/L ICT syllabus lesson by lesson, with question practice after every unit.",
+    },
+    institute: { si: "Science Center", en: "Science Center" },
+    town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
+    day: { si: "බ්‍රහස්පතින්දා", en: "Thursday" },
+    time: { si: "ප.ව. 4.00 - ප.ව. 6.00", en: "4.00 p.m. - 6.00 p.m." },
+    slot: { from: 16, to: 18 },
+    mode: "physical",
+    highlights: [
+      { si: "සම්පූර්ණ O/L syllabus", en: "Full O/L syllabus" },
+      { si: "පාඩම් අනුව ප්‍රශ්න", en: "Unit-wise questions" },
+    ],
+    verified: true,
+  },
+  {
+    id: "ol-g11-group2",
+    grade: "11",
+    examYear: 2026,
+    kind: { si: "Theory · Group 2", en: "Theory · Group 2" },
+    title: {
+      si: "11 ශ්‍රේණිය - O/L ICT පන්තිය (Group 2)",
+      en: "Grade 11 - O/L ICT Class (Group 2)",
+    },
+    desc: {
+      si: "Group 1 හි පාඩම්ම සවස් කාලයේ - බ්‍රහස්පතින්දා එන්න බැරි සිසුන්ට.",
+      en: "The same lessons as Group 1 in an evening slot, for students who cannot make Thursday.",
+    },
+    institute: { si: "Science Center", en: "Science Center" },
+    town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
+    day: { si: "බදාදා", en: "Wednesday" },
+    time: { si: "ප.ව. 6.30 - ප.ව. 8.30", en: "6.30 p.m. - 8.30 p.m." },
+    slot: { from: 18.5, to: 20.5 },
+    mode: "physical",
+    highlights: [
+      { si: "සම්පූර්ණ O/L syllabus", en: "Full O/L syllabus" },
+      { si: "සවස් කණ්ඩායම", en: "Evening group" },
+    ],
+    verified: true,
+  },
+  {
+    id: "ol-g10",
+    grade: "10",
+    examYear: 2027,
+    kind: { si: "Theory", en: "Theory" },
+    title: {
+      si: "10 ශ්‍රේණිය - O/L ICT පන්තිය",
+      en: "Grade 10 - O/L ICT Class",
+    },
+    desc: {
+      si: "O/L ICT සඳහා ශක්තිමත් පදනමක් - මූලික සංකල්ප සරලව, පරිගණක ප්‍රායෝගික උදාහරණ සමඟ.",
+      en: "A solid start to O/L ICT - core concepts explained simply, with hands-on computer examples.",
+    },
+    institute: { si: "Science Center", en: "Science Center" },
+    town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
+    day: { si: "ඉරිදා", en: "Sunday" },
+    time: { si: "පෙ.ව. 9.00 - පෙ.ව. 11.00", en: "9.00 a.m. - 11.00 a.m." },
+    slot: { from: 9, to: 11 },
+    mode: "physical",
+    highlights: [
+      { si: "මුල සිට ඉගැන්වීම", en: "Taught from scratch" },
+      { si: "ප්‍රායෝගික උදාහරණ", en: "Practical examples" },
+    ],
+    verified: true,
+  },
+  {
+    id: "ol-daekma-pannala",
+    grade: "ol",
+    examYear: 2026,
+    kind: { si: "O/L ICT", en: "O/L ICT" },
+    title: {
+      si: "O/L ICT පන්තිය - දැක්ම, පන්නල",
+      en: "O/L ICT Class - Dakma, Pannala",
+    },
+    desc: {
+      si: "පන්නල ප්‍රදේශයේ සිසුන් සඳහා සාමාන්‍ය පෙළ ICT පන්තිය - පාඩම් සහ ප්‍රශ්න පුහුණුව එකම පන්තියක.",
+      en: "O/L ICT for students around Pannala - lessons and question practice in one class.",
+    },
+    institute: { si: "දැක්ම", en: "Dakma" },
+    town: { si: "පන්නල", en: "Pannala" },
+    day: { si: "බදාදා", en: "Wednesday" },
+    time: { si: "ප.ව. 3.30 - ප.ව. 6.00", en: "3.30 p.m. - 6.00 p.m." },
+    slot: { from: 15.5, to: 18 },
+    mode: "physical",
+    highlights: [
+      { si: "O/L syllabus ආවරණය", en: "O/L syllabus coverage" },
+      { si: "ප්‍රශ්න පුහුණුව", en: "Question practice" },
     ],
     verified: true,
   },
