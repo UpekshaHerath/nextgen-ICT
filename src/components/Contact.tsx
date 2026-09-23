@@ -139,7 +139,7 @@ export function Contact() {
                       }`}
                     >
                       <span className="label shrink-0 text-[var(--maroon)]">
-                        {v.mode === "online" ? "WEB" : String(i + 1).padStart(2, "0")}
+                        {String(i + 1).padStart(2, "0")}
                       </span>
                       <span className="min-w-0">
                         <span className="block text-[14px] font-bold sm:text-[14.5px]">

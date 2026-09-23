@@ -106,7 +106,7 @@ export function Timetable() {
 
   const hours = list.reduce((sum, c) => sum + (c.slot ? c.slot.to - c.slot.from : 0), 0);
   const venues = new Set(
-    list.filter((c) => c.mode !== "online").map((c) => `${c.institute.en}|${c.town.en}`),
+    list.map((c) => `${c.institute.en}|${c.town.en}`),
   ).size;
 
   const filters: { key: Level; label: string; count: number }[] = [
