@@ -27,11 +27,11 @@ export const seoTagline =
 
 /** ~155 characters, the most a result snippet will show. */
 export const seoDescription =
-  "සුභාෂණ කරුණානායක සමඟ උසස් පෙළ ICT තියරි, Revision සහ Paper පන්ති. මාකඳුර සහ කුලියාපිටිය භෞතික පන්ති, දිවයින පුරා Online පන්ති. A/L & O/L ICT classes in Sinhala medium with Subhashana Karunanayake.";
+  "සුභාෂණ කරුණානායක සමඟ උසස් පෙළ ICT තියරි, Revision සහ Paper පන්ති. මාකඳුර, කුලියාපිටිය සහ පන්නල භෞතික පන්ති. A/L & O/L ICT classes in Sinhala medium with Subhashana Karunanayake.";
 
 /** Longer form for Open Graph and social cards, where there is room. */
 export const seoSocialDescription =
-  "12 සහ 13 ශ්‍රේණි සඳහා උසස් පෙළ ICT තියරි, Revision සහ Paper පන්ති — සිංහල මාධ්‍යයෙන්. මාකඳුර සහ කුලියාපිටිය භෞතික පන්ති සහ දිවයින පුරා Online පන්ති. Sinhala-medium A/L ICT with Subhashana Karunanayake.";
+  "12 සහ 13 ශ්‍රේණි සඳහා උසස් පෙළ ICT තියරි, Revision සහ Paper පන්ති — සිංහල මාධ්‍යයෙන්. මාකඳුර, කුලියාපිටිය සහ පන්නල භෞතික පන්ති. Sinhala-medium A/L ICT with Subhashana Karunanayake.";
 
 export const seoKeywords = [
   ...tutorNames,
@@ -47,8 +47,7 @@ export const seoKeywords = [
   "Kuliyapitiya ICT class",
   "Makandura ICT class",
   "ICT class Sri Lanka",
-  "ICT online class Sri Lanka",
-  "A/L ICT online class",
+  "Pannala ICT class",
   "O/L ICT class",
   "Sinhala medium ICT class",
   "ICT theory class",
@@ -62,13 +61,6 @@ export const seoKeywords = [
 ];
 
 const id = (hash: string) => `${siteUrl}/#${hash}`;
-
-/** schema.org courseMode values for the three ways a class runs. */
-const COURSE_MODE: Record<string, string | string[]> = {
-  physical: "Onsite",
-  online: "Online",
-  hybrid: ["Onsite", "Online"],
-};
 
 /**
  * One @graph so the organization, the tutor, the classes and the FAQ all
@@ -142,26 +134,22 @@ export function jsonLdGraph() {
     provider: { "@id": id("organization") },
     hasCourseInstance: {
       "@type": "CourseInstance",
-      courseMode: COURSE_MODE[c.mode],
+      courseMode: "Onsite",
       courseSchedule: {
         "@type": "Schedule",
         repeatFrequency: "Weekly",
         byDay: c.day.en,
       },
       instructor: { "@id": id("tutor") },
-      ...(c.mode === "online"
-        ? {}
-        : {
-            location: {
-              "@type": "Place",
-              name: c.institute.en,
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: c.town.en,
-                addressCountry: "LK",
-              },
-            },
-          }),
+      location: {
+        "@type": "Place",
+        name: c.institute.en,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: c.town.en,
+          addressCountry: "LK",
+        },
+      },
     },
   }));
 

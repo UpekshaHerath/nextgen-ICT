@@ -8,7 +8,7 @@ import { WhatsAppGlyph } from "./Hero";
 import type { Dict } from "@/lib/i18n";
 import { classes, isOL, waLink, type Bi, type ClassInfo } from "@/lib/site";
 
-type Filter = "all" | "12" | "13" | "11" | "online";
+type Filter = "all" | "12" | "13" | "11";
 
 export function Classes() {
   const { t } = useLang();
@@ -19,7 +19,6 @@ export function Classes() {
     { key: "13", label: t.classes.grade13 },
     { key: "12", label: t.classes.grade12 },
     { key: "11", label: t.classes.grade11 },
-    { key: "online", label: t.classes.online },
   ];
 
   const list = useMemo(
@@ -27,11 +26,9 @@ export function Classes() {
       classes.filter((c) =>
         filter === "all"
           ? true
-          : filter === "online"
-            ? c.mode !== "physical"
-            : filter === "11"
-              ? isOL(c)
-              : c.grade === filter,
+          : filter === "11"
+            ? isOL(c)
+            : c.grade === filter,
       ),
     [filter],
   );
@@ -112,13 +109,6 @@ function ClassCard({ c }: { c: ClassInfo }) {
   const { t, L } = useLang();
   const reduce = useReducedMotion();
 
-  const modeLabel =
-    c.mode === "online"
-      ? t.classes.online
-      : c.mode === "hybrid"
-        ? t.classes.hybrid
-        : t.classes.physical;
-
   return (
     <motion.article
       whileHover={reduce ? {} : { y: -5 }}
@@ -144,7 +134,7 @@ function ClassCard({ c }: { c: ClassInfo }) {
       <div className="dashed-rule mx-4 sm:mx-5" />
 
       <dl className="grid px-4 sm:px-5">
-        <Row k={c.mode === "physical" ? "☖" : "✽"} v={modeLabel} />
+        <Row k="☖" v={t.classes.physical} />
         <Row k="▣" v={`${L(c.institute)} - ${L(c.town)}`} />
         <Row k="▤" v={L(c.day)} />
         <Row k="◷" v={L(c.time)} warn={!c.verified} />

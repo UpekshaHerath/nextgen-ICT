@@ -92,8 +92,8 @@ Entries in `classes[]` carry a `verified` flag:
 - `verified: true` — read off the official Facebook page posters
   (2027 A/L Revision + Paper @ Samadhi, Makandura — Tuesday 9.00 a.m.–2.00 p.m.;
   2026 O/L paper discussion @ Science Center, Kuliyapitiya — 4.00 p.m.–9.00 p.m.).
-- `verified: false` — **placeholder**. The Grade 12 theory class and the online
-  class need real days, times and venues. Cards for these show
+- `verified: false` — **placeholder**. The Grade 12 theory class needs real
+  days and times. Cards for these show
   "confirm details" instead of "join this class" until the flag is flipped.
 
 The Saturday/weekend days assigned to the O/L and Grade 12 classes are guesses —

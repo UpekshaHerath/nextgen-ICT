@@ -10,7 +10,7 @@
 
 export type Bi = { si: string; en: string };
 
-export type Mode = "physical" | "online" | "hybrid";
+export type Mode = "physical";
 
 export type ClassInfo = {
   id: string;
@@ -259,36 +259,12 @@ export const classes: ClassInfo[] = [
     ],
     verified: false,
   },
-  {
-    id: "online-island",
-    grade: "all",
-    examYear: 2027,
-    kind: { si: "Online", en: "Online" },
-    title: {
-      si: "Online පන්තිය - දිවයින පුරා",
-      en: "Online Class - Island-wide",
-    },
-    desc: {
-      si: "Zoom හරහා සජීවීව. පන්තියේ recording එක සතියක් බලන්න පුළුවන්, ඕනෑම දිස්ත්‍රික්කයක සිට සම්බන්ධ විය හැක.",
-      en: "Live over Zoom. Recordings available for a week, so students from any district can follow along.",
-    },
-    institute: { si: "Zoom සජීවී පන්තිය", en: "Live on Zoom" },
-    town: { si: "දිවයින පුරා", en: "Island-wide" },
-    day: { si: "සතියේ දිනයක", en: "Weekday" },
-    time: { si: "කාලය තහවුරු කර ගන්න", en: "Please confirm the time" },
-    mode: "online",
-    highlights: [
-      { si: "පන්ති recording", en: "Class recordings" },
-      { si: "WhatsApp group support", en: "WhatsApp group support" },
-    ],
-    verified: false,
-  },
 ];
 
 export const stats: { value: string; label: Bi }[] = [
   { value: "1000+", label: { si: "උගන්වා ඇති සිසුන්", en: "Students taught" } },
   { value: "8+", label: { si: "වසරක අත්දැකීම්", en: "Years of experience" } },
-  { value: "4", label: { si: "පන්ති ආයතන", en: "Class locations" } },
+  { value: "3", label: { si: "පන්ති ආයතන", en: "Class locations" } },
   { value: "100%", label: { si: "Syllabus ආවරණය", en: "Syllabus coverage" } },
 ];
 
@@ -431,11 +407,11 @@ export const whyUs: { icon: string; title: Bi; desc: Bi }[] = [
     },
   },
   {
-    icon: "globe",
-    title: { si: "Online සහ භෞතික පන්ති", en: "Online & physical classes" },
+    icon: "pin",
+    title: { si: "නගර තුනක භෞතික පන්ති", en: "Physical classes in three towns" },
     desc: {
-      si: "මාකඳුර, කුලියාපිටිය පන්ති සහ දිවයින පුරා Zoom පන්ති.",
-      en: "Classes in Makandura and Kuliyapitiya, plus island-wide Zoom classes.",
+      si: "මාකඳුර, කුලියාපිටිය සහ පන්නල භෞතික පන්ති - ගුරුතුමා සමඟ මුහුණට මුහුණ.",
+      en: "Physical classes in Makandura, Kuliyapitiya and Pannala - face to face with sir.",
     },
   },
 ];
@@ -504,8 +480,8 @@ export const faqs: { q: Bi; a: Bi }[] = [
       en: "What if I miss a class?",
     },
     a: {
-      si: "Online පන්ති recording ලබා දේ. භෞතික පන්තියක් මඟ හැරුණොත් එම පාඩමේ tute සහ recording එක ලබා ගත හැක.",
-      en: "Recordings are provided for online classes. If you miss a physical class you can get that lesson's tute and recording.",
+      si: "පන්තියක් මඟ හැරුණොත් එම පාඩමේ tute සහ recording එක ලබා ගත හැක.",
+      en: "If you miss a class you can get that lesson's tute and recording.",
     },
   },
   {
