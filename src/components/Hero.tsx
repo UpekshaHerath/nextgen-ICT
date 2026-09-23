@@ -62,7 +62,8 @@ function subscribeWide(cb: () => void) {
 
 export function Hero() {
   const { t, L } = useLang();
-  const verified = classes.filter((c) => c.verified);
+  // two confirmed classes fill the strip; the timetable lists the rest
+  const verified = classes.filter((c) => c.verified).slice(0, 2);
   const reduce = useReducedMotion();
   // server snapshot = dismissed, so returning visitors never see a flash
   const badgeHidden = useSyncExternalStore(subscribeBadge, badgeDismissed, () => true);

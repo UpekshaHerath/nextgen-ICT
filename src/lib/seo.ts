@@ -1,4 +1,4 @@
-import { classes, faqs, site } from "@/lib/site";
+import { classes, faqs, isOL, site } from "@/lib/site";
 import { siteUrl } from "@/lib/siteUrl";
 
 /**
@@ -137,8 +137,7 @@ export function jsonLdGraph() {
     name: c.title.en,
     description: c.desc.en,
     inLanguage: "si-LK",
-    educationalLevel:
-      c.grade === "11" ? "GCE Ordinary Level" : "GCE Advanced Level",
+    educationalLevel: isOL(c) ? "GCE Ordinary Level" : "GCE Advanced Level",
     teaches: "Information & Communication Technology",
     provider: { "@id": id("organization") },
     hasCourseInstance: {
