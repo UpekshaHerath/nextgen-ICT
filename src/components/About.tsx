@@ -11,7 +11,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="scroll-mt-24 border-b-2 border-[var(--ink)] py-14 sm:scroll-mt-28 sm:py-20"
+      className="border-b-2 border-[var(--ink)] py-14 sm:py-20"
     >
       <div className="shell">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">

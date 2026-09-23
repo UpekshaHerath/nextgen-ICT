@@ -120,7 +120,7 @@ export function Timetable() {
   return (
     <section
       id="timetable"
-      className="scroll-mt-24 border-b-2 border-[var(--ink)] py-14 sm:scroll-mt-28 sm:py-20"
+      className="border-b-2 border-[var(--ink)] py-14 sm:py-20"
     >
       <div className="shell">
         <SectionHead

@@ -110,8 +110,9 @@
 
 html {
   scroll-behavior: smooth;
-  /* matches the sticky header, which grows once the utility bar appears */
-  scroll-padding-top: 76px;
+  /* phones: header hides on the way down and the sections carry their own top
+     padding, so land flush on the section edge */
+  scroll-padding-top: 0;
 }
 
 @media (min-width: 640px) {

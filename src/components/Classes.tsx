@@ -36,7 +36,7 @@ export function Classes() {
   return (
     <section
       id="classes"
-      className="scroll-mt-24 border-b-2 border-[var(--ink)] bg-[var(--paper-2)] py-14 sm:scroll-mt-28 sm:py-20"
+      className="border-b-2 border-[var(--ink)] bg-[var(--paper-2)] py-14 sm:py-20"
     >
       <div className="shell">
         <SectionHead

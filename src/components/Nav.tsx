@@ -15,7 +15,13 @@ const SECTIONS = [
   { id: "faq", key: "faq" },
 ] as const;
 
-function LangSwitch({ className = "" }: { className?: string }) {
+function LangSwitch({
+  className = "",
+  pillId = "lang-pill",
+}: {
+  className?: string;
+  pillId?: string;
+}) {
   const { t, lang, setLang } = useLang();
   return (
     <div
@@ -37,7 +43,7 @@ function LangSwitch({ className = "" }: { className?: string }) {
         >
           {lang === l && (
             <motion.span
-              layoutId="lang-pill"
+              layoutId={pillId}
               className="absolute inset-0 bg-[var(--panel)]"
               transition={{ type: "spring", stiffness: 420, damping: 34 }}
             />
@@ -84,6 +90,23 @@ export function Nav() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  // The sheet locks body scroll while open, and a native anchor jump fired in
+  // that state is swallowed. Unlock first, then scroll on the next frame.
+  const goTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const el = document.getElementById(id);
+    if (!el) {
+      setOpen(false);
+      return;
+    }
+    e.preventDefault();
+    document.body.style.overflow = "";
+    setOpen(false);
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.pushState(null, "", `#${id}`);
+    });
+  };
 
   return (
     <motion.header
@@ -150,9 +173,6 @@ export function Nav() {
           </nav>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
-            <LangSwitch className="sm:hidden" />
-            <ThemeSwitch className="sm:hidden" pillId="theme-pill-compact" />
-
             <a
               href={waLink(t.wa.generic)}
               target="_blank"
@@ -200,7 +220,7 @@ export function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.2, 0.8, 0.3, 1] }}
-            className="overflow-hidden border-b-2 border-[var(--ink)] bg-[var(--paper-2)] lg:hidden"
+            className="absolute inset-x-0 top-full overflow-hidden border-b-2 border-[var(--ink)] bg-[var(--paper-2)] lg:hidden"
           >
             <ul className="shell max-h-[calc(100dvh-140px)] overflow-y-auto py-2">
               {SECTIONS.map((s, i) => (
@@ -213,7 +233,7 @@ export function Nav() {
                 >
                   <a
                     href={`#${s.id}`}
-                    onClick={() => setOpen(false)}
+                    onClick={(e) => goTo(e, s.id)}
                     className="flex items-baseline gap-3 py-3.5 text-[15px]"
                   >
                     <span className="label text-[var(--maroon)]">→</span>
@@ -221,6 +241,11 @@ export function Nav() {
                   </a>
                 </motion.li>
               ))}
+              {/* phones only - from sm up these live in the utility bar */}
+              <li className="flex items-center justify-end gap-3 border-b border-dashed border-[var(--ink)]/40 py-3.5 sm:hidden">
+                <LangSwitch pillId="lang-pill-sheet" />
+                <ThemeSwitch pillId="theme-pill-sheet" />
+              </li>
               <li className="grid gap-3 py-4 sm:flex sm:items-center sm:justify-between">
                 <a href={telLink} className="label text-[var(--ink-soft)]">
                   ☏ {site.phoneDisplay} · {L(site.location)}
