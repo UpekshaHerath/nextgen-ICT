@@ -11,7 +11,7 @@ import {
 } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { StatCounter } from "./StatCounter";
-import { classes, site, stats, tutorPhoto, waLink } from "@/lib/site";
+import { batches, sessionsOf, site, stats, tutorPhoto, waLink } from "@/lib/site";
 
 /** Page-load choreography for the headline column. */
 const container: Variants = {
@@ -62,7 +62,6 @@ function subscribeWide(cb: () => void) {
 
 export function Hero() {
   const { t, L } = useLang();
-  const verified = classes.filter((c) => c.verified);
   const reduce = useReducedMotion();
   // server snapshot = dismissed, so returning visitors never see a flash
   const badgeHidden = useSyncExternalStore(subscribeBadge, badgeDismissed, () => true);
@@ -265,27 +264,41 @@ export function Hero() {
               </a>
             </motion.div>
 
-            {/* torn-ticket strip of confirmed classes */}
+            {/* torn-ticket strip: one stub per batch, with its class days */}
             <motion.ul
               variants={item}
               className="mx-auto mt-7 grid max-w-3xl border-2 border-[var(--ink)] sm:mt-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none"
             >
-              {verified.map((c, i) => (
-                <li
-                  key={c.id}
-                  className={`p-4 ${
-                    i === 0 ? "sm:border-r-2 sm:border-dashed sm:border-[var(--ink)]" : ""
-                  } ${i > 0 ? "border-t-2 border-dashed border-[var(--ink)] sm:border-t-0" : ""}`}
-                >
-                  <p className="label text-[var(--maroon)]">{L(c.kind)}</p>
-                  <p className="mt-1.5 text-[14px] font-semibold leading-snug sm:text-[14.5px]">
-                    {L(c.institute)} - {L(c.town)}
-                  </p>
-                  <p className="font-[family-name:var(--font-mono)] text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
-                    {L(c.day)} · {L(c.time)}
-                  </p>
-                </li>
-              ))}
+              {batches.map((b, i) => {
+                const list = sessionsOf(b.id);
+                const days = [...new Set(list.map((c) => L(c.day)))];
+                const towns = [...new Set(list.map((c) => L(c.town)))];
+                return (
+                  <li
+                    key={b.id}
+                    className={`border-dashed border-[var(--ink)] p-4 ${
+                      i > 0 ? "border-t-2" : ""
+                    } ${i === 1 ? "sm:border-t-0" : ""} ${
+                      i % 2 === 0 ? "sm:border-r-2" : ""
+                    }`}
+                  >
+                    <p className="label flex items-center gap-2 text-[var(--maroon)]">
+                      <span
+                        aria-hidden
+                        className="h-2.5 w-2.5 border border-[var(--ink)]"
+                        style={{ background: `var(--batch-${b.id})` }}
+                      />
+                      {L(b.name)} · {L(b.kind)}
+                    </p>
+                    <p className="mt-1.5 text-[14px] font-semibold leading-snug sm:text-[14.5px]">
+                      {towns.join(", ")}
+                    </p>
+                    <p className="font-[family-name:var(--font-mono)] text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
+                      {days.join(" · ")}
+                    </p>
+                  </li>
+                );
+              })}
             </motion.ul>
           </motion.div>
         </div>
@@ -325,8 +338,9 @@ export function Hero() {
                 "System Analysis",
                 "Past Papers",
                 "Revision",
-                "A/L 2026",
                 "A/L 2027",
+                "A/L 2028",
+                "O/L",
               ].map((w) => (
                 <span key={w} className="label whitespace-nowrap text-[var(--ink-soft)]">
                   {w} <span className="text-[var(--maroon)]">✦</span>

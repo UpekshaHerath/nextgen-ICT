@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Abhaya_Libre, Noto_Sans_Sinhala, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
-import { ThemeProvider, themeScript } from "@/components/ThemeProvider";
+import { ThemeProvider, ThemeScript } from "@/components/ThemeProvider";
 import { site } from "@/lib/site";
 import { siteUrl } from "@/lib/siteUrl";
 import {
@@ -104,7 +104,7 @@ export default function RootLayout({
     <html lang="si" data-lang="si" suppressHydrationWarning>
       <head>
         {/* stamps a stored theme before first paint, so the page never flashes */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <ThemeScript />
       </head>
       {/* Extensions such as Grammarly stamp their own attributes onto <body>
           before React hydrates, which reads as a mismatch. suppressHydration-

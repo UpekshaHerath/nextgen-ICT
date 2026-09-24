@@ -5,7 +5,7 @@ import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
 import { WhatsAppGlyph } from "./Hero";
-import { classes, site, telLink, waLink } from "@/lib/site";
+import { classes, site, telLink, venues, waLink } from "@/lib/site";
 
 /** Paper registration slip — fills a WhatsApp message instead of a database. */
 export function Contact() {
@@ -28,17 +28,15 @@ export function Contact() {
     return waLink(lines.join("\n"));
   }, [classId, name, note, t, L]);
 
-  // One card per venue; prefer the class whose day/time is confirmed.
-  const venues = Array.from(
-    classes
-      .reduce((acc, c) => {
-        const key = `${c.institute.en}-${c.town.en}`;
-        const seen = acc.get(key);
-        if (!seen || (!seen.verified && c.verified)) acc.set(key, c);
-        return acc;
-      }, new Map<string, (typeof classes)[number]>())
-      .values(),
-  );
+  // one row per venue, listing the batches and days held there
+  const venueRows = venues.map((v) => {
+    const list = classes.filter((c) => c.venue.id === v.id);
+    return {
+      v,
+      batchNames: [...new Set(list.map((c) => L(c.batch.name)))].join(", "),
+      dayNames: [...new Set(list.map((c) => L(c.day)))].join(", "),
+    };
+  });
 
   return (
     <section id="contact" className="py-14 sm:py-20">
@@ -85,7 +83,7 @@ export function Contact() {
                   >
                     {classes.map((c) => (
                       <option key={c.id} value={c.id}>
-                        {L(c.title)}
+                        {L(c.title)} · {L(c.day)} · {L(c.town)}
                       </option>
                     ))}
                   </select>
@@ -131,22 +129,24 @@ export function Contact() {
                   {t.contact.locationTitle}
                 </h3>
                 <ul>
-                  {venues.map((v, i) => (
+                  {venueRows.map(({ v, batchNames, dayNames }, i) => (
                     <li
-                      key={`${v.institute.en}-${v.town.en}`}
+                      key={v.id}
                       className={`flex items-baseline gap-3 px-4 py-3.5 sm:gap-4 sm:px-5 sm:py-4 ${
                         i > 0 ? "border-t-2 border-dashed border-[var(--ink)]" : ""
                       }`}
                     >
                       <span className="label shrink-0 text-[var(--maroon)]">
-                        {v.mode === "online" ? "WEB" : String(i + 1).padStart(2, "0")}
+                        {String(i + 1).padStart(2, "0")}
                       </span>
                       <span className="min-w-0">
                         <span className="block text-[14px] font-bold sm:text-[14.5px]">
                           {L(v.institute)}
                         </span>
                         <span className="block text-[12.5px] leading-snug text-[var(--ink-soft)] sm:text-[13px]">
-                          {L(v.town)} · {L(v.day)} · {L(v.time)}
+                          {L(v.town)} · {batchNames}
+                          <br />
+                          {dayNames}
                         </span>
                       </span>
                     </li>

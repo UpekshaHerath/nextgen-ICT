@@ -1,0 +1,31 @@
+Class Timetable – Weekly Schedule
+
+MONDAY
+- 8:00 AM – 3:00 PM | 2027 A/L | Science Center, Kuliyapitiya
+
+TUESDAY
+- 3:00 PM – 5:30 PM | 2028 A/L | Vidupiyasa, Naththandiya
+- 6:00 PM – 11:00 PM | 2027 A/L | Samadhi, Makandura
+
+WEDNESDAY
+- 3:30 PM – 6:00 PM | O/L Grade 10 | Dakma, Pannala
+- 6:30 PM – 8:30 PM | O/L Grade 11 – Group 2 | Science Center, Kuliyapitiya
+
+THURSDAY
+- 4:00 PM – 6:00 PM | O/L Grade 11 – Group 1 | Science Center, Kuliyapitiya
+
+FRIDAY
+- 4:00 PM – 6:30 PM | 2028 A/L | Samadhi, Makandura
+
+SATURDAY
+- No classes
+
+SUNDAY
+- 9:00 AM – 11:30 AM | 2028 A/L | Science Center, Kuliyapitiya
+- 4:00 PM – 9:00 PM | O/L Grade 11 – Paper Class | Science Center, Kuliyapitiya
+- 9:00 PM – 11:00 PM | O/L Grade 10 | Science Center, Kuliyapitiya
+
+Notes:
+- Crossed-out classes on Thursday evening were excluded.
+- Website is bilingual (Sinhala + English) — provide both
+  versions of class names and locations.

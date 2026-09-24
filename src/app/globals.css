@@ -35,6 +35,12 @@
   --mustard: #e3a11b;
   --green: #0f8a4d;
 
+  /* one colour per batch: timetable blocks, legend dots, card stubs */
+  --batch-al-2027: #8e1b2e;
+  --batch-al-2028: #1d5fa6;
+  --batch-ol-11: #0f8a4d;
+  --batch-ol-10: #a86b00;
+
   --panel: #16130f;
   --panel-fg: #f4efe4;
   --on-accent: #16130f;
@@ -67,6 +73,11 @@
     --mustard: #f0b83e;
     --green: #2fbd75;
 
+    --batch-al-2027: #ef6d82;
+    --batch-al-2028: #74aef0;
+    --batch-ol-11: #2fbd75;
+    --batch-ol-10: #f0b83e;
+
     --panel: #272119;
     --panel-fg: #f1eadb;
     --on-accent: #16130f;
@@ -92,6 +103,11 @@
   --maroon: #ef6d82;
   --mustard: #f0b83e;
   --green: #2fbd75;
+
+  --batch-al-2027: #ef6d82;
+  --batch-al-2028: #74aef0;
+  --batch-ol-11: #2fbd75;
+  --batch-ol-10: #f0b83e;
 
   --panel: #272119;
   --panel-fg: #f1eadb;

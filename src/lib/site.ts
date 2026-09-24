@@ -3,32 +3,9 @@
  *
  * Edit THIS file to update class times, institutes, fees, photos and contact
  * details — no component changes needed.
- *
- * `verified: true`  -> taken from the official Facebook page posters.
- * `verified: false` -> placeholder, please confirm the real details.
  */
 
 export type Bi = { si: string; en: string };
-
-export type Mode = "physical" | "online" | "hybrid";
-
-export type ClassInfo = {
-  id: string;
-  /** School grade the class targets. */
-  grade: "12" | "13" | "11" | "all";
-  /** A/L or O/L exam year the batch sits for. */
-  examYear: number;
-  kind: Bi;
-  title: Bi;
-  desc: Bi;
-  institute: Bi;
-  town: Bi;
-  day: Bi;
-  time: Bi;
-  mode: Mode;
-  highlights: Bi[];
-  verified: boolean;
-};
 
 export const site = {
   brand: {
@@ -72,111 +49,254 @@ export function waLink(message: string) {
 
 export const telLink = `tel:+${site.whatsappNumber}`;
 
-export const classes: ClassInfo[] = [
+/* ------------------------------------------------------------------ */
+/*  Classes                                                            */
+/*                                                                     */
+/*  The weekly timetable is built from three lists: batches (who),     */
+/*  venues (where) and sessions (when). To change a class time, edit   */
+/*  its row in `sessions` - every section on the page follows.         */
+/* ------------------------------------------------------------------ */
+
+/** Monday = 0 … Sunday = 6. */
+export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export type BatchId = "al-2027" | "al-2028" | "ol-11" | "ol-10";
+
+export type Batch = {
+  id: BatchId;
+  level: "al" | "ol";
+  /** Short name for chips, calendar blocks and the legend. */
+  name: Bi;
+  kind: Bi;
+  title: Bi;
+  desc: Bi;
+  highlights: Bi[];
+};
+
+export type VenueId = "science-center" | "samadhi" | "vidupiyasa" | "dakma";
+
+export type Venue = { id: VenueId; institute: Bi; town: Bi };
+
+/** One weekly session, with its display strings already worked out. */
+export type ClassInfo = {
+  id: string;
+  batch: Batch;
+  venue: Venue;
+  /** Extra tag inside a batch, e.g. "Group 1" or "Paper class". */
+  label?: Bi;
+  dayIndex: Weekday;
+  /** Minutes from midnight. */
+  start: number;
+  end: number;
+  title: Bi;
+  institute: Bi;
+  town: Bi;
+  day: Bi;
+  time: Bi;
+};
+
+export const days: { short: Bi; long: Bi }[] = [
+  { short: { si: "සඳු", en: "Mon" }, long: { si: "සඳුදා", en: "Monday" } },
+  { short: { si: "අඟ", en: "Tue" }, long: { si: "අඟහරුවාදා", en: "Tuesday" } },
+  { short: { si: "බදා", en: "Wed" }, long: { si: "බදාදා", en: "Wednesday" } },
   {
-    id: "al-2027-revision",
-    grade: "13",
-    examYear: 2027,
+    short: { si: "බ්‍රහ", en: "Thu" },
+    long: { si: "බ්‍රහස්පතින්දා", en: "Thursday" },
+  },
+  { short: { si: "සිකු", en: "Fri" }, long: { si: "සිකුරාදා", en: "Friday" } },
+  { short: { si: "සෙන", en: "Sat" }, long: { si: "සෙනසුරාදා", en: "Saturday" } },
+  { short: { si: "ඉරි", en: "Sun" }, long: { si: "ඉරිදා", en: "Sunday" } },
+];
+
+export const batches: Batch[] = [
+  {
+    id: "al-2027",
+    level: "al",
+    name: { si: "2027 A/L", en: "2027 A/L" },
     kind: { si: "Revision + Paper", en: "Revision + Paper" },
-    title: {
-      si: "2027 A/L ICT - Revision සහ Paper පන්තිය",
-      en: "2027 A/L ICT - Revision & Paper Class",
-    },
+    title: { si: "2027 A/L ICT", en: "2027 A/L ICT" },
     desc: {
       si: "සම්පූර්ණ syllabus එක නැවත ගැඹුරින්, සෑම පාඩමකටම structured paper සාකච්ඡාවක් සමඟ. A සාමාර්ථයක් ඉලක්ක කරන සිසුන්ට අනිවාර්ය පන්තියකි.",
       en: "The full syllabus revisited in depth, with a structured paper discussion after every unit. Built for students targeting an A pass.",
     },
-    institute: { si: "සමාධි උසස් අධ්‍යාපන ආයතනය", en: "Samadhi Higher Education Institute" },
-    town: { si: "මාකඳුර", en: "Makandura" },
-    day: { si: "අඟහරුවාදා", en: "Tuesday" },
-    time: { si: "පෙ.ව. 9.00 - ප.ව. 2.00", en: "9.00 a.m. - 2.00 p.m." },
-    mode: "physical",
     highlights: [
       { si: "සෑම පාඩමකටම past paper සාකච්ඡාව", en: "Past paper discussion per unit" },
       { si: "Model paper + marking scheme", en: "Model papers + marking schemes" },
       { si: "නොමිලේ short note", en: "Free short notes" },
     ],
-    verified: true,
   },
   {
-    id: "ol-2026-paper",
-    grade: "11",
-    examYear: 2026,
-    kind: { si: "ප්‍රශ්න පත්‍ර සාකච්ඡාව", en: "Paper Discussion" },
-    title: {
-      si: "2026 O/L ICT - ප්‍රශ්න පත්‍ර සාකච්ඡාව",
-      en: "2026 O/L ICT - Paper Discussion",
-    },
-    desc: {
-      si: "සාමාන්‍ය පෙළ ICT විෂයට A සාමාර්ථයක් සඳහා අවශ්‍ය ප්‍රශ්න පත්‍ර පුහුණුව, කෙටි සටහන් සහ පිළිතුරු ලිවීමේ ක්‍රම.",
-      en: "Exam-focused paper practice, short notes and answer-writing technique for O/L ICT.",
-    },
-    institute: { si: "Science Center", en: "Science Center" },
-    town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
-    day: { si: "සඳුදා", en: "Monday" },
-    time: { si: "ප.ව. 4.00 - ප.ව. 9.00", en: "4.00 p.m. - 9.00 p.m." },
-    mode: "physical",
-    highlights: [
-      { si: "Past paper 15+ ක් අවසන් කිරීම", en: "15+ past papers completed" },
-      { si: "පිළිතුරු ලිවීමේ ක්‍රමවේදය", en: "Answer-writing method" },
-      { si: "ගාස්තුව රු. 250/=", en: "Fee Rs. 250/=" },
-    ],
-    verified: true,
-  },
-  {
-    id: "al-2027-theory",
-    grade: "12",
-    examYear: 2027,
+    id: "al-2028",
+    level: "al",
+    name: { si: "2028 A/L", en: "2028 A/L" },
     kind: { si: "Theory", en: "Theory" },
-    title: {
-      si: "12 ශ්‍රේණිය - 2027 A/L ICT තියරි පන්තිය",
-      en: "Grade 12 - 2027 A/L ICT Theory Class",
-    },
+    title: { si: "2028 A/L ICT", en: "2028 A/L ICT" },
     desc: {
       si: "මුල සිට පියවරෙන් පියවර. ප්‍රායෝගික උදාහරණ, Python කේතන සහ මාසික tute සමඟ සම්පූර්ණ විෂය නිර්දේශය.",
       en: "From the very first lesson, step by step. Full syllabus coverage with practical examples, Python coding and monthly tutes.",
     },
-    institute: { si: "සමාධි උසස් අධ්‍යාපන ආයතනය", en: "Samadhi Higher Education Institute" },
-    town: { si: "මාකඳුර", en: "Makandura" },
-    day: { si: "සති අන්තයේ", en: "Weekend" },
-    time: { si: "කාලය තහවුරු කර ගන්න", en: "Please confirm the time" },
-    mode: "physical",
     highlights: [
       { si: "මුල සිට ඉගැන්වීම", en: "Taught from scratch" },
       { si: "මාසික tute සහ පරීක්ෂණ", en: "Monthly tutes & tests" },
     ],
-    verified: false,
   },
   {
-    id: "online-island",
-    grade: "all",
-    examYear: 2027,
-    kind: { si: "Online", en: "Online" },
-    title: {
-      si: "Online පන්තිය - දිවයින පුරා",
-      en: "Online Class - Island-wide",
-    },
+    id: "ol-11",
+    level: "ol",
+    name: { si: "O/L 11 ශ්‍රේණිය", en: "O/L Grade 11" },
+    kind: { si: "Theory + Paper", en: "Theory + Paper" },
+    title: { si: "11 ශ්‍රේණිය - O/L ICT", en: "Grade 11 - O/L ICT" },
     desc: {
-      si: "Zoom හරහා සජීවීව. පන්තියේ recording එක සතියක් බලන්න පුළුවන්, ඕනෑම දිස්ත්‍රික්කයක සිට සම්බන්ධ විය හැක.",
-      en: "Live over Zoom. Recordings available for a week, so students from any district can follow along.",
+      si: "සතිය මැද තියරි කණ්ඩායම් දෙකක් සහ ඉරිදා ප්‍රශ්න පත්‍ර පන්තිය. සාමාන්‍ය පෙළ ICT විෂයට A සාමාර්ථයක් සඳහා අවශ්‍ය පුහුණුව, කෙටි සටහන් සහ පිළිතුරු ලිවීමේ ක්‍රම.",
+      en: "Two weekday theory groups plus a Sunday paper class. Exam-focused practice, short notes and answer-writing technique for O/L ICT.",
     },
-    institute: { si: "Zoom සජීවී පන්තිය", en: "Live on Zoom" },
-    town: { si: "දිවයින පුරා", en: "Island-wide" },
-    day: { si: "සතියේ දිනයක", en: "Weekday" },
-    time: { si: "කාලය තහවුරු කර ගන්න", en: "Please confirm the time" },
-    mode: "online",
     highlights: [
-      { si: "පන්ති recording", en: "Class recordings" },
-      { si: "WhatsApp group support", en: "WhatsApp group support" },
+      { si: "Past paper 15+ ක් අවසන් කිරීම", en: "15+ past papers completed" },
+      { si: "පිළිතුරු ලිවීමේ ක්‍රමවේදය", en: "Answer-writing method" },
+      { si: "Paper පන්ති ගාස්තුව රු. 250/=", en: "Paper class fee Rs. 250/=" },
     ],
-    verified: false,
+  },
+  {
+    id: "ol-10",
+    level: "ol",
+    name: { si: "O/L 10 ශ්‍රේණිය", en: "O/L Grade 10" },
+    kind: { si: "Theory", en: "Theory" },
+    title: { si: "10 ශ්‍රේණිය - O/L ICT", en: "Grade 10 - O/L ICT" },
+    desc: {
+      si: "සාමාන්‍ය පෙළ ICT මුල සිටම නිවැරදිව. සෑම පාඩමකටම පැහැදිලි පදනමක් සහ tute සමඟ 11 ශ්‍රේණියට සූදානම් වීම.",
+      en: "O/L ICT started the right way. Clear foundations for every unit, with tutes, ready for Grade 11.",
+    },
+    highlights: [
+      { si: "මුල සිට ඉගැන්වීම", en: "Taught from scratch" },
+      { si: "සෑම පාඩමකටම tute", en: "A tute for every unit" },
+    ],
   },
 ];
+
+export const venues: Venue[] = [
+  {
+    id: "science-center",
+    institute: { si: "Science Center", en: "Science Center" },
+    town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
+  },
+  {
+    id: "samadhi",
+    institute: { si: "සමාධි උසස් අධ්‍යාපන ආයතනය", en: "Samadhi Higher Education Institute" },
+    town: { si: "මාකඳුර", en: "Makandura" },
+  },
+  {
+    id: "vidupiyasa",
+    institute: { si: "විදුපියස", en: "Vidupiyasa" },
+    town: { si: "නාත්තණ්ඩිය", en: "Naththandiya" },
+  },
+  {
+    id: "dakma",
+    institute: { si: "දක්ම", en: "Dakma" },
+    town: { si: "පන්නල", en: "Pannala" },
+  },
+];
+
+/** The finalised weekly timetable. Times are 24-hour "HH:MM". */
+const sessions: {
+  batch: BatchId;
+  venue: VenueId;
+  day: Weekday;
+  from: string;
+  to: string;
+  label?: Bi;
+}[] = [
+  // Monday
+  { batch: "al-2027", venue: "science-center", day: 0, from: "08:00", to: "15:00" },
+  // Tuesday
+  { batch: "al-2028", venue: "vidupiyasa", day: 1, from: "15:00", to: "17:30" },
+  { batch: "al-2027", venue: "samadhi", day: 1, from: "18:00", to: "23:00" },
+  // Wednesday
+  { batch: "ol-10", venue: "dakma", day: 2, from: "15:30", to: "18:00" },
+  {
+    batch: "ol-11",
+    venue: "science-center",
+    day: 2,
+    from: "18:30",
+    to: "20:30",
+    label: { si: "2 කණ්ඩායම", en: "Group 2" },
+  },
+  // Thursday
+  {
+    batch: "ol-11",
+    venue: "science-center",
+    day: 3,
+    from: "16:00",
+    to: "18:00",
+    label: { si: "1 කණ්ඩායම", en: "Group 1" },
+  },
+  // Friday
+  { batch: "al-2028", venue: "samadhi", day: 4, from: "16:00", to: "18:30" },
+  // Saturday - no classes
+  // Sunday
+  { batch: "al-2028", venue: "science-center", day: 6, from: "09:00", to: "11:30" },
+  {
+    batch: "ol-11",
+    venue: "science-center",
+    day: 6,
+    from: "16:00",
+    to: "21:00",
+    label: { si: "Paper පන්තිය", en: "Paper class" },
+  },
+  { batch: "ol-10", venue: "science-center", day: 6, from: "21:00", to: "23:00" },
+];
+
+const toMinutes = (hhmm: string) => {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + m;
+};
+
+/** 900 -> { si: "ප.ව. 3.00", en: "3.00 p.m." } */
+export function clockLabel(minutes: number): Bi {
+  const h = Math.floor(minutes / 60) % 24;
+  const m = String(minutes % 60).padStart(2, "0");
+  const h12 = h % 12 || 12;
+  const am = h < 12;
+  return {
+    si: `${am ? "පෙ.ව." : "ප.ව."} ${h12}.${m}`,
+    en: `${h12}.${m} ${am ? "a.m." : "p.m."}`,
+  };
+}
+
+export const classes: ClassInfo[] = sessions.map((s) => {
+  const batch = batches.find((b) => b.id === s.batch)!;
+  const venue = venues.find((v) => v.id === s.venue)!;
+  const start = toMinutes(s.from);
+  const end = toMinutes(s.to);
+  const from = clockLabel(start);
+  const to = clockLabel(end);
+  return {
+    id: `${s.batch}-${s.venue}-${s.day}-${s.from.replace(":", "")}`,
+    batch,
+    venue,
+    label: s.label,
+    dayIndex: s.day,
+    start,
+    end,
+    title: {
+      si: s.label ? `${batch.title.si} - ${s.label.si}` : batch.title.si,
+      en: s.label ? `${batch.title.en} - ${s.label.en}` : batch.title.en,
+    },
+    institute: venue.institute,
+    town: venue.town,
+    day: days[s.day].long,
+    time: { si: `${from.si} - ${to.si}`, en: `${from.en} - ${to.en}` },
+  };
+});
+
+/** Sessions of one batch, in week order. */
+export function sessionsOf(batch: BatchId) {
+  return classes.filter((c) => c.batch.id === batch);
+}
 
 export const stats: { value: string; label: Bi }[] = [
   { value: "1000+", label: { si: "උගන්වා ඇති සිසුන්", en: "Students taught" } },
   { value: "8+", label: { si: "වසරක අත්දැකීම්", en: "Years of experience" } },
-  { value: "4", label: { si: "පන්ති ආයතන", en: "Class locations" } },
+  { value: String(venues.length), label: { si: "පන්ති ආයතන", en: "Class locations" } },
   { value: "100%", label: { si: "Syllabus ආවරණය", en: "Syllabus coverage" } },
 ];
 
@@ -320,10 +440,10 @@ export const whyUs: { icon: string; title: Bi; desc: Bi }[] = [
   },
   {
     icon: "globe",
-    title: { si: "Online සහ භෞතික පන්ති", en: "Online & physical classes" },
+    title: { si: "ඔබට ළඟම පන්තිය", en: "A class near you" },
     desc: {
-      si: "මාකඳුර, කුලියාපිටිය පන්ති සහ දිවයින පුරා Zoom පන්ති.",
-      en: "Classes in Makandura and Kuliyapitiya, plus island-wide Zoom classes.",
+      si: "කුලියාපිටිය, මාකඳුර, නාත්තණ්ඩිය සහ පන්නල - ස්ථාන හතරක පන්ති.",
+      en: "Classes at four venues - Kuliyapitiya, Makandura, Naththandiya and Pannala.",
     },
   },
 ];
@@ -372,8 +492,8 @@ export const faqs: { q: Bi; a: Bi }[] = [
       en: "Can I join without any prior ICT knowledge?",
     },
     a: {
-      si: "පුළුවන්. 12 ශ්‍රේණියේ පන්තිය මුල සිටම ආරම්භ වේ. O/L වලදී ICT නොකළ සිසුන්ටත් පහසුවෙන් අනුගමනය කළ හැක.",
-      en: "Absolutely. The Grade 12 class starts from the basics, so students who did not do ICT for O/L can follow easily.",
+      si: "පුළුවන්. 2028 A/L පන්තිය මුල සිටම ආරම්භ වේ. O/L වලදී ICT නොකළ සිසුන්ටත් පහසුවෙන් අනුගමනය කළ හැක.",
+      en: "Absolutely. The 2028 A/L class starts from the basics, so students who did not do ICT for O/L can follow easily.",
     },
   },
   {
@@ -392,8 +512,8 @@ export const faqs: { q: Bi; a: Bi }[] = [
       en: "What if I miss a class?",
     },
     a: {
-      si: "Online පන්ති recording ලබා දේ. භෞතික පන්තියක් මඟ හැරුණොත් එම පාඩමේ tute සහ recording එක ලබා ගත හැක.",
-      en: "Recordings are provided for online classes. If you miss a physical class you can get that lesson's tute and recording.",
+      si: "පන්තියක් මඟ හැරුණොත් එම පාඩමේ tute සහ recording එක ලබා ගත හැක.",
+      en: "If you miss a class you can get that lesson's tute and recording.",
     },
   },
   {
@@ -402,8 +522,8 @@ export const faqs: { q: Bi; a: Bi }[] = [
       en: "Is the paper class separate?",
     },
     a: {
-      si: "2027 A/L Revision පන්තියට paper සාකච්ඡාව ඇතුළත් වේ. වෙනම paper class සඳහා විමසන්න.",
-      en: "Paper discussion is included in the 2027 A/L revision class. Contact us about standalone paper classes.",
+      si: "O/L 11 ශ්‍රේණියට වෙනම paper පන්තියක් ඉරිදා ප.ව. 4.00 - 9.00 කුලියාපිටිය Science Center හි පැවැත්වේ. 2027 A/L පන්තියට paper සාකච්ඡාව ඇතුළත් වේ.",
+      en: "O/L Grade 11 has a separate paper class on Sundays, 4.00 - 9.00 p.m. at Science Center, Kuliyapitiya. Paper discussion is built into the 2027 A/L class.",
     },
   },
 ];

@@ -119,10 +119,10 @@ export default async function OpengraphImage() {
                   fontWeight: 700,
                 }}
               >
-                Makandura · Kuliyapitiya
+                Kuliyapitiya · Makandura
               </div>
               <div style={{ display: "flex", fontSize: 22 }}>
-                + Online island-wide
+                + Naththandiya · Pannala
               </div>
             </div>
           </div>

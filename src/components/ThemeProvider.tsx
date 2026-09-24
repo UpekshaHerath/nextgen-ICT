@@ -35,6 +35,22 @@ export const themeScript = `(function(){try{var t=localStorage.getItem(${JSON.st
   THEME_STORAGE_KEY,
 )});if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;}}catch(e){}})();`;
 
+/**
+ * Renders themeScript into <head>. React warns when it renders an executable
+ * <script> on the client (it would never run there), so the client copy gets
+ * an inert type. The server HTML keeps the real one, which the browser has
+ * already run before hydration — and ThemeProvider stamps the theme anyway.
+ */
+export function ThemeScript() {
+  return (
+    <script
+      type={typeof window === "undefined" ? undefined : "text/plain"}
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{ __html: themeScript }}
+    />
+  );
+}
+
 /*
   The preference lives outside React — half in localStorage, half in the OS —
   so it is read as an external store rather than mirrored into state. The
