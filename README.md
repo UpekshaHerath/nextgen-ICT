@@ -47,7 +47,7 @@ split layouts). Specific adaptations worth knowing before editing:
 - **Hero** — headline always comes first; the portrait is capped at `72vw` on
   phones so it never eats the first screen.
 - **Timetable** — stacked day cards below `lg`, the printed table at `lg` and up.
-  Both render from the same data; edit `classes[]` only.
+  Both render from the same data; edit `sessions` in `site.ts` only.
 - **Class cards** — one column until `lg`; the filter rail scrolls sideways
   instead of wrapping.
 - **Form fields** — 16px text, which stops iOS Safari zooming in on focus.
@@ -73,7 +73,9 @@ Almost everything lives in **`src/lib/site.ts`** — one file, no component edit
 | --- | --- |
 | Phone / WhatsApp number | `site.phone`, `site.whatsappNumber` (international, no `+`) |
 | Facebook / TikTok links | `site.facebook`, `site.tiktok` |
-| Classes, institutes, days, times | `classes[]` |
+| Class batches (who) | `batches[]` |
+| Institutes and towns (where) | `venues[]` |
+| Weekly days and times (when) | `sessions` |
 | Stats shown in the hero | `stats[]` |
 | Syllabus units | `syllabus[]` |
 | "Why us" cards | `whyUs[]` |
@@ -85,19 +87,18 @@ UI labels (buttons, headings) live in **`src/lib/i18n.ts`**, with a `si` and an 
 copy of every string. Sinhala is the default; the toggle in the navbar switches
 language instantly and remembers the choice in `localStorage`.
 
-### ⚠ Details that still need confirming
+### How the class data fits together
 
-Entries in `classes[]` carry a `verified` flag:
+The weekly timetable is built from three lists in `site.ts`:
 
-- `verified: true` — read off the official Facebook page posters
-  (2027 A/L Revision + Paper @ Samadhi, Makandura — Tuesday 9.00 a.m.–2.00 p.m.;
-  2026 O/L paper discussion @ Science Center, Kuliyapitiya — 4.00 p.m.–9.00 p.m.).
-- `verified: false` — **placeholder**. The Grade 12 theory class needs real
-  days and times. Cards for these show
-  "confirm details" instead of "join this class" until the flag is flipped.
+- `batches[]` — who: each A/L or O/L batch with its title, description and highlights.
+- `venues[]` — where: each institute and its town.
+- `sessions` — when: one row per weekly class, pointing at a batch and a venue,
+  with a weekday (Monday = 0) and 24-hour `from` / `to` times.
 
-The Saturday/weekend days assigned to the O/L and Grade 12 classes are guesses —
-correct them in `classes[].day`.
+`classes[]` is derived from `sessions` — day names, time labels and IDs are
+worked out automatically. To change a class time, edit its row in `sessions`;
+the class cards, the timetable and the SEO data all follow.
 
 ### Images in `public/images/`
 

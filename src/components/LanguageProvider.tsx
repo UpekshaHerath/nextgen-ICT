@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+} from "react";
 import { dict, type Dict, type Lang } from "@/lib/i18n";
 import type { Bi } from "@/lib/site";
 
@@ -17,17 +23,39 @@ const LanguageContext = createContext<Ctx | null>(null);
 
 const STORAGE_KEY = "nextgen-lang";
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("si");
+/*
+  The choice lives in localStorage, outside React, so it is read as an
+  external store rather than copied into state after mount.
+*/
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === "si" || saved === "en") setLangState(saved);
-    } catch {
-      // storage blocked — stay on the default language
-    }
-  }, []);
+const listeners = new Set<() => void>();
+
+function subscribe(onChange: () => void) {
+  listeners.add(onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    listeners.delete(onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function getSnapshot(): Lang {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === "si" || saved === "en") return saved;
+  } catch {
+    // storage blocked — stay on the default language
+  }
+  return "si";
+}
+
+/** The server cannot see storage, so it renders the default language. */
+function getServerSnapshot(): Lang {
+  return "si";
+}
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const lang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -35,12 +63,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [lang]);
 
   const setLang = useCallback((l: Lang) => {
-    setLangState(l);
     try {
       localStorage.setItem(STORAGE_KEY, l);
     } catch {
       // ignore
     }
+    listeners.forEach((fn) => fn());
   }, []);
 
   const toggle = useCallback(

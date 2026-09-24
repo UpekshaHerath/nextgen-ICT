@@ -15,6 +15,11 @@ const SECTIONS = [
   { id: "faq", key: "faq" },
 ] as const;
 
+/** Lets the page scroll again after the mobile sheet locked it. */
+function unlockScroll() {
+  document.body.style.overflow = "";
+}
+
 function LangSwitch({
   className = "",
   pillId = "lang-pill",
@@ -86,9 +91,7 @@ export function Nav() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return unlockScroll;
   }, [open]);
 
   // The sheet locks body scroll while open, and a native anchor jump fired in
@@ -100,7 +103,7 @@ export function Nav() {
       return;
     }
     e.preventDefault();
-    document.body.style.overflow = "";
+    unlockScroll();
     setOpen(false);
     requestAnimationFrame(() => {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
