@@ -295,7 +295,7 @@ export function sessionsOf(batch: BatchId) {
 
 export const stats: { value: string; label: Bi }[] = [
   { value: "1000+", label: { si: "උගන්වා ඇති සිසුන්", en: "Students taught" } },
-  { value: "8+", label: { si: "වසරක අත්දැකීම්", en: "Years of experience" } },
+  { value: "4+", label: { si: "වසරක අත්දැකීම්", en: "Years of experience" } },
   { value: String(venues.length), label: { si: "පන්ති ආයතන", en: "Class locations" } },
   { value: "100%", label: { si: "Syllabus ආවරණය", en: "Syllabus coverage" } },
 ];
