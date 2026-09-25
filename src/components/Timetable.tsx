@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
-import { WhatsAppGlyph } from "./Hero";
+import { WhatsAppLogo } from "./Hero";
 import { MINUTES_PER_DAY, useWeekMinute } from "./useWeekMinute";
 import {
   batches,
@@ -209,9 +209,9 @@ function NextUp({ next }: { next: { c: ClassInfo; live: boolean } | null }) {
             href={message(next.c)}
             target="_blank"
             rel="noopener noreferrer"
-            className="press btn-primary inline-flex items-center justify-self-start gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
+            className="press btn-wa-soft inline-flex items-center justify-self-start gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
           >
-            <WhatsAppGlyph className="h-3.5 w-3.5 shrink-0" />
+            <WhatsAppLogo className="h-[18px] w-[18px] shrink-0" />
             {t.timetable.join}
           </a>
         </motion.div>
@@ -480,9 +480,9 @@ function CalendarEvent({
                 href={message(c)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press btn-primary mt-3.5 flex items-center justify-center gap-2 rounded-full px-3 py-2.5 text-[13px] font-semibold"
+                className="press btn-wa-soft mt-3.5 flex items-center justify-center gap-2 rounded-full px-3 py-2.5 text-[13px] font-semibold"
               >
-                <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+                <WhatsAppLogo className="h-5 w-5 shrink-0" />
                 {t.timetable.join}
               </a>
             </div>
@@ -808,9 +808,9 @@ function AgendaItem({ c, live }: { c: ClassInfo; live: boolean }) {
           href={message(c)}
           target="_blank"
           rel="noopener noreferrer"
-          className="press btn-primary mt-3 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
+          className="press btn-wa-soft mt-3 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
         >
-          <WhatsAppGlyph className="h-3.5 w-3.5 shrink-0" />
+          <WhatsAppLogo className="h-[18px] w-[18px] shrink-0" />
           {t.timetable.join}
         </a>
       </div>

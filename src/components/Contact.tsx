@@ -4,7 +4,7 @@ import { useId, useMemo, useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
-import { WhatsAppGlyph } from "./Hero";
+import { WhatsAppLogo } from "./Hero";
 import { ClassSelect } from "./ClassSelect";
 import { ChannelBadge, PhoneGlyph, type Channel } from "./BrandIcons";
 import { classes, site, telLink, venues, waLink } from "@/lib/site";
@@ -101,9 +101,9 @@ export function Contact() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="press btn-primary inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[14.5px] font-semibold sm:flex-1 sm:px-6 sm:text-[15px]"
+                    className="press btn-wa-soft inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[14.5px] font-semibold sm:flex-1 sm:px-6 sm:text-[15px]"
                   >
-                    <WhatsAppGlyph className="h-5 w-5 shrink-0" />
+                    <WhatsAppLogo className="h-6 w-6 shrink-0" />
                     {t.contact.send}
                   </a>
                   <a
