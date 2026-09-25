@@ -1,19 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
 import { WhatsAppGlyph } from "./Hero";
+import { ClassSelect } from "./ClassSelect";
 import { CHANNEL_TINT, ChannelBadge, PhoneGlyph, type Channel } from "./BrandIcons";
 import { classes, site, telLink, venues, waLink } from "@/lib/site";
 
-/** Paper registration slip — fills a WhatsApp message instead of a database. */
+/** Registration form — fills a WhatsApp message instead of a database. */
 export function Contact() {
   const { t, L, lang } = useLang();
   const [name, setName] = useState("");
   const [classId, setClassId] = useState(classes[0].id);
   const [note, setNote] = useState("");
+  const classLabelId = useId();
 
   const href = useMemo(() => {
     const c = classes.find((x) => x.id === classId) ?? classes[0];
@@ -40,7 +42,8 @@ export function Contact() {
   });
 
   return (
-    <section id="contact" className="py-14 sm:py-20">
+    <section id="contact" className="relative isolate overflow-hidden py-16 sm:py-24">
+      <div aria-hidden className="orb -right-40 top-20 -z-10 h-[420px] w-[420px] bg-[var(--brand)] !opacity-20" />
       <div className="shell">
         <SectionHead
           no="08"
@@ -50,54 +53,47 @@ export function Contact() {
         />
 
         <div className="mt-8 grid gap-7 sm:mt-9 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
-          {/* the slip */}
+          {/* the form */}
           <Reveal>
-            <div className="hard border-2 border-[var(--ink)] bg-[var(--paper)]">
-              <div className="flex items-center justify-between gap-3 border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 sm:px-5 sm:py-3">
-                <span className="label text-[var(--mustard)]">
-                  {lang === "si" ? "ලියාපදිංචි පත්‍රය" : "Registration slip"}
-                </span>
-                <span className="label shrink-0 text-[var(--panel-fg)] opacity-60">
-                  No. ___
+            <div className="card rounded-3xl shadow-[var(--shadow-lg)]">
+              <div className="flex items-center gap-3 rounded-t-3xl border-b border-[var(--line)] bg-[var(--bg-soft)] px-5 py-4 sm:px-7">
+                <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[image:var(--grad)]" />
+                <span className="text-[14px] font-semibold">
+                  {lang === "si" ? "ලියාපදිංචි පත්‍රය" : "Registration form"}
                 </span>
               </div>
 
               <div className="grid gap-5 p-5 sm:gap-6 sm:p-7">
-                <label className="grid gap-1">
-                  <span className="label text-[var(--ink-soft)]">{t.contact.name}</span>
+                <label className="grid gap-1.5">
+                  <span className="text-[13px] font-semibold">{t.contact.name}</span>
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t.contact.namePh}
-                    className="underline-field w-full text-[16px] placeholder:text-[var(--ink-soft)]/45"
+                    className="underline-field w-full text-[16px] placeholder:text-[var(--muted)]/60"
                   />
                 </label>
 
-                <label className="grid gap-1">
-                  <span className="label text-[var(--ink-soft)]">
+                <div className="grid gap-1.5">
+                  <span id={classLabelId} className="text-[13px] font-semibold">
                     {t.contact.classLabel}
                   </span>
-                  <select
+                  <ClassSelect
+                    options={classes}
                     value={classId}
-                    onChange={(e) => setClassId(e.target.value)}
-                    className="underline-field w-full text-[16px]"
-                  >
-                    {classes.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {L(c.title)} · {L(c.day)} · {L(c.town)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                    onChange={setClassId}
+                    labelId={classLabelId}
+                  />
+                </div>
 
-                <label className="grid gap-1">
-                  <span className="label text-[var(--ink-soft)]">{t.contact.note}</span>
+                <label className="grid gap-1.5">
+                  <span className="text-[13px] font-semibold">{t.contact.note}</span>
                   <textarea
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     rows={2}
                     placeholder={t.contact.notePh}
-                    className="underline-field w-full resize-none text-[16px] placeholder:text-[var(--ink-soft)]/45"
+                    className="underline-field w-full resize-none text-[16px] placeholder:text-[var(--muted)]/60"
                   />
                 </label>
 
@@ -106,14 +102,14 @@ export function Contact() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--green)] px-5 py-3.5 text-[14.5px] font-bold text-[var(--paper)] sm:flex-1 sm:px-6 sm:text-[15px]"
+                    className="press btn-green inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[14.5px] font-semibold sm:flex-1 sm:px-6 sm:text-[15px]"
                   >
                     <WhatsAppGlyph className="h-5 w-5 shrink-0" />
                     {t.contact.send}
                   </a>
                   <a
                     href={telLink}
-                    className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--mustard)] px-5 py-3.5 text-[14.5px] font-semibold text-[var(--on-accent)] sm:px-6 sm:text-[15px]"
+                    className="press btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[14.5px] font-semibold sm:px-6 sm:text-[15px]"
                   >
                     <PhoneGlyph className="h-[18px] w-[18px] shrink-0" />
                     {t.contact.call}
@@ -126,26 +122,26 @@ export function Contact() {
           {/* venues + channels */}
           <div className="grid content-start gap-6">
             <Reveal delay={60}>
-              <div className="border-2 border-[var(--ink)] bg-[var(--paper-2)]">
-                <h3 className="display border-b-2 border-[var(--ink)] px-4 py-2.5 text-[17px] sm:px-5 sm:py-3 sm:text-[19px]">
+              <div className="card overflow-hidden rounded-3xl">
+                <h3 className="display border-b border-[var(--line)] px-5 py-4 text-[17px] sm:text-[19px]">
                   {t.contact.locationTitle}
                 </h3>
                 <ul>
                   {venueRows.map(({ v, batchNames, dayNames }, i) => (
                     <li
                       key={v.id}
-                      className={`flex items-baseline gap-3 px-4 py-3.5 sm:gap-4 sm:px-5 sm:py-4 ${
-                        i > 0 ? "border-t-2 border-dashed border-[var(--ink)]" : ""
+                      className={`flex items-start gap-3 px-5 py-4 sm:gap-4 ${
+                        i > 0 ? "border-t border-[var(--line)]" : ""
                       }`}
                     >
-                      <span className="label shrink-0 text-[var(--maroon)]">
+                      <span className="display grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[color-mix(in_srgb,var(--brand)_12%,transparent)] text-[12px] text-[var(--brand)]">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span className="min-w-0">
                         <span className="block text-[14px] font-bold sm:text-[14.5px]">
                           {L(v.institute)}
                         </span>
-                        <span className="block text-[12.5px] leading-snug text-[var(--ink-soft)] sm:text-[13px]">
+                        <span className="block text-[12.5px] leading-snug text-[var(--muted)] sm:text-[13px]">
                           {L(v.town)} · {batchNames}
                           <br />
                           {dayNames}
@@ -193,7 +189,7 @@ export function Contact() {
                       target={item.href.startsWith("tel:") ? undefined : "_blank"}
                       rel="noopener noreferrer"
                       style={{ "--tint": CHANNEL_TINT[item.channel] } as React.CSSProperties}
-                      className="press hard-sm group flex h-full flex-col items-center justify-center border-2 border-[var(--ink)] bg-[color-mix(in_srgb,var(--tint)_13%,var(--paper))] px-3 py-5 text-center transition-colors hover:bg-[color-mix(in_srgb,var(--tint)_24%,var(--paper))] sm:px-4 sm:py-6"
+                      className="press group flex h-full flex-col items-center justify-center rounded-3xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--tint)_8%,var(--surface))] px-3 py-5 text-center shadow-[var(--shadow-sm)] hover:bg-[color-mix(in_srgb,var(--tint)_16%,var(--surface))] sm:px-4 sm:py-6"
                     >
                       <ChannelBadge
                         channel={item.channel}
@@ -202,7 +198,7 @@ export function Contact() {
                       <span className="mt-3 block text-[13.5px] font-bold leading-snug sm:text-[14.5px]">
                         {item.label}
                       </span>
-                      <span className="mt-0.5 block max-w-full break-words text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
+                      <span className="mt-0.5 block max-w-full break-words text-[12px] text-[var(--muted)] sm:text-[12.5px]">
                         {item.sub}
                       </span>
                     </a>

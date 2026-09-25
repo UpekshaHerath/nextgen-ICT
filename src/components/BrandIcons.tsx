@@ -68,7 +68,7 @@ export const CHANNEL_TINT: Record<Channel, string> = {
 export function ChannelBadge({ channel, className = "" }: { channel: Channel; className?: string }) {
   return (
     <span
-      className={`grid shrink-0 place-items-center rounded-xl text-white shadow-[0_2px_0_rgba(0,0,0,0.25)] ${BADGE[channel]} ${className}`}
+      className={`grid shrink-0 place-items-center rounded-xl text-white shadow-[0_6px_16px_-6px_rgba(0,0,0,0.35)] ${BADGE[channel]} ${className}`}
     >
       {channel === "whatsapp" && <WhatsAppGlyph className="h-[58%] w-[58%]" />}
       {channel === "phone" && <PhoneGlyph className="h-[52%] w-[52%]" />}

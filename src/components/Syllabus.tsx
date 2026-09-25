@@ -5,15 +5,12 @@ import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
 import { syllabus } from "@/lib/site";
 
-/** Book contents page: number, title, keywords. */
+/** Syllabus units as a grid of cards: number, title, keywords. */
 export function Syllabus() {
   const { t, L } = useLang();
 
   return (
-    <section
-      id="syllabus"
-      className="border-b-2 border-[var(--ink)] bg-[var(--paper-2)] py-14 sm:py-20"
-    >
+    <section id="syllabus" className="bg-[var(--bg-soft)] py-16 sm:py-24">
       <div className="shell">
         <SectionHead
           no="04"
@@ -22,27 +19,21 @@ export function Syllabus() {
           sub={t.syllabus.sub}
         />
 
-        <ol className="mt-7 grid gap-x-10 border-t-2 border-[var(--ink)] sm:mt-8 lg:grid-cols-2 lg:gap-x-12">
+        <ol className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
           {syllabus.map((u, i) => (
-            <Reveal as="li" key={u.no} delay={(i % 2) * 40}>
-              <div className="group flex items-baseline gap-3.5 border-b-2 border-[var(--ink)] py-3.5 sm:gap-4 sm:py-4">
-                <span className="display w-8 shrink-0 text-[1.3rem] leading-none text-[var(--maroon)] sm:w-9 sm:text-[1.5rem]">
+            <Reveal as="li" key={u.no} delay={(i % 3) * 40}>
+              <div className="card ring-grad press group flex h-full items-start gap-4 p-4 sm:p-5">
+                <span className="display grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[color-mix(in_srgb,var(--brand)_12%,transparent)] text-[14px] text-[var(--brand)] transition-colors group-hover:bg-[image:var(--grad)] group-hover:text-[var(--on-brand)]">
                   {u.no}
                 </span>
                 <div className="min-w-0 flex-1">
                   <h3 className="text-[14.5px] font-bold leading-snug sm:text-[15px]">
                     {L(u.title)}
                   </h3>
-                  <p className="mt-0.5 text-[12.5px] leading-snug text-[var(--ink-soft)] sm:text-[13px]">
+                  <p className="mt-1 text-[12.5px] leading-relaxed text-[var(--muted)] sm:text-[13px]">
                     {L(u.points)}
                   </p>
                 </div>
-                <span
-                  className="label hidden shrink-0 self-center text-[var(--ink-soft)] opacity-0 transition-opacity group-hover:opacity-100 lg:block"
-                  aria-hidden
-                >
-                  ✓
-                </span>
               </div>
             </Reveal>
           ))}
