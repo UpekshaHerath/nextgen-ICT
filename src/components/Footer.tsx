@@ -1,7 +1,8 @@
 "use client";
 
 import { useLang } from "./LanguageProvider";
-import { site, telLink } from "@/lib/site";
+import { ChannelBadge } from "./BrandIcons";
+import { site, telLink, waLink } from "@/lib/site";
 
 export function Footer() {
   const { t, L } = useLang();
@@ -49,8 +50,20 @@ export function Footer() {
           </h3>
           <ul className="mt-3 grid gap-2 text-[13.5px]">
             <li>
-              <a href={telLink} className="hover:text-[var(--mustard)]">
-                ☏ {site.phoneDisplay}
+              <a href={telLink} className="inline-flex items-center gap-2.5 hover:text-[var(--mustard)]">
+                <ChannelBadge channel="phone" className="h-7 w-7 !rounded-lg" />
+                {site.phoneDisplay}
+              </a>
+            </li>
+            <li>
+              <a
+                href={waLink(t.wa.generic)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 hover:text-[var(--mustard)]"
+              >
+                <ChannelBadge channel="whatsapp" className="h-7 w-7 !rounded-lg" />
+                {site.phoneDisplay}
               </a>
             </li>
             <li>
@@ -58,8 +71,9 @@ export function Footer() {
                 href={site.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[var(--mustard)]"
+                className="inline-flex items-center gap-2.5 hover:text-[var(--mustard)]"
               >
+                <ChannelBadge channel="facebook" className="h-7 w-7 !rounded-lg" />
                 Facebook
               </a>
             </li>
@@ -68,8 +82,9 @@ export function Footer() {
                 href={site.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="break-all hover:text-[var(--mustard)]"
+                className="inline-flex items-center gap-2.5 break-all hover:text-[var(--mustard)]"
               >
+                <ChannelBadge channel="tiktok" className="h-7 w-7 !rounded-lg" />
                 TikTok @{site.tiktokHandle}
               </a>
             </li>

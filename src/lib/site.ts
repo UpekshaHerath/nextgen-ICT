@@ -36,8 +36,8 @@ export const site = {
   whatsappNumber: "94761140551",
   facebook:
     "https://web.facebook.com/people/NextGen-ICT-with-Subhashana/61579961380323/",
-  tiktok: "https://www.tiktok.com/@chamindu_subhashana",
-  tiktokHandle: "chamindu_subhashana",
+  tiktok: "https://www.tiktok.com/@subhashana_karunanayake",
+  tiktokHandle: "subhashana_karunanayake",
   location: { si: "කුලියාපිටිය, ශ්‍රී ලංකාව", en: "Kuliyapitiya, Sri Lanka" },
   medium: { si: "සිංහල මාධ්‍යය", en: "Sinhala medium" },
 };

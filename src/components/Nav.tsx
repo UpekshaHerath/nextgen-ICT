@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { ThemeSwitch } from "./ThemeSwitch";
+import { PhoneGlyph } from "./BrandIcons";
 import { site, telLink, waLink } from "@/lib/site";
 
 const SECTIONS = [
@@ -124,8 +125,12 @@ export function Nav() {
             {L(site.location)} · {L(site.medium)}
           </p>
           <div className="flex shrink-0 items-center gap-4">
-            <a href={telLink} className="label whitespace-nowrap hover:text-[var(--maroon)]">
-              ☏ {site.phoneDisplay}
+            <a
+              href={telLink}
+              className="label inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[var(--maroon)]"
+            >
+              <PhoneGlyph className="h-3.5 w-3.5" />
+              {site.phoneDisplay}
             </a>
             <LangSwitch />
             <ThemeSwitch />
@@ -250,8 +255,9 @@ export function Nav() {
                 <ThemeSwitch pillId="theme-pill-sheet" />
               </li>
               <li className="grid gap-3 py-4 sm:flex sm:items-center sm:justify-between">
-                <a href={telLink} className="label text-[var(--ink-soft)]">
-                  ☏ {site.phoneDisplay} · {L(site.location)}
+                <a href={telLink} className="label inline-flex items-center gap-1.5 text-[var(--ink-soft)]">
+                  <PhoneGlyph className="h-3.5 w-3.5 shrink-0" />
+                  {site.phoneDisplay} · {L(site.location)}
                 </a>
                 <a
                   href={waLink(t.wa.generic)}
