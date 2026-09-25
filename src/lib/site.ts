@@ -147,8 +147,8 @@ export const batches: Batch[] = [
     kind: { si: "Theory + Paper", en: "Theory + Paper" },
     title: { si: "11 ශ්‍රේණිය - O/L ICT", en: "Grade 11 - O/L ICT" },
     desc: {
-      si: "සතිය මැද තියරි කණ්ඩායම් දෙකක් සහ ඉරිදා ප්‍රශ්න පත්‍ර පන්තිය. සාමාන්‍ය පෙළ ICT විෂයට A සාමාර්ථයක් සඳහා අවශ්‍ය පුහුණුව, කෙටි සටහන් සහ පිළිතුරු ලිවීමේ ක්‍රම.",
-      en: "Two weekday theory groups plus a Sunday paper class. Exam-focused practice, short notes and answer-writing technique for O/L ICT.",
+      si: "සතිය මැද තියරි කණ්ඩායම් දෙකක් සහ සඳුදා ප්‍රශ්න පත්‍ර පන්තිය. සාමාන්‍ය පෙළ ICT විෂයට A සාමාර්ථයක් සඳහා අවශ්‍ය පුහුණුව, කෙටි සටහන් සහ පිළිතුරු ලිවීමේ ක්‍රම.",
+      en: "Two weekday theory groups plus a Monday paper class. Exam-focused practice, short notes and answer-writing technique for O/L ICT.",
     },
     highlights: [
       { si: "Past paper 15+ ක් අවසන් කිරීම", en: "15+ past papers completed" },
@@ -207,6 +207,14 @@ const sessions: {
 }[] = [
   // Monday
   { batch: "al-2027", venue: "science-center", day: 0, from: "08:00", to: "15:00" },
+  {
+    batch: "ol-11",
+    venue: "science-center",
+    day: 0,
+    from: "16:00",
+    to: "21:00",
+    label: { si: "Paper පන්තිය", en: "Paper class" },
+  },
   // Tuesday
   { batch: "al-2028", venue: "vidupiyasa", day: 1, from: "15:00", to: "17:30" },
   { batch: "al-2027", venue: "samadhi", day: 1, from: "18:00", to: "23:00" },
@@ -234,15 +242,7 @@ const sessions: {
   // Saturday - no classes
   // Sunday
   { batch: "al-2028", venue: "science-center", day: 6, from: "09:00", to: "11:30" },
-  {
-    batch: "ol-11",
-    venue: "science-center",
-    day: 6,
-    from: "16:00",
-    to: "21:00",
-    label: { si: "Paper පන්තිය", en: "Paper class" },
-  },
-  { batch: "ol-10", venue: "science-center", day: 6, from: "21:00", to: "23:00" },
+  { batch: "ol-10", venue: "science-center", day: 6, from: "11:30", to: "13:30" },
 ];
 
 const toMinutes = (hhmm: string) => {
@@ -530,8 +530,8 @@ export const faqs: { q: Bi; a: Bi }[] = [
       en: "Is the paper class separate?",
     },
     a: {
-      si: "O/L 11 ශ්‍රේණියට වෙනම paper පන්තියක් ඉරිදා ප.ව. 4.00 - 9.00 කුලියාපිටිය Science Center හි පැවැත්වේ. 2027 A/L පන්තියට paper සාකච්ඡාව ඇතුළත් වේ.",
-      en: "O/L Grade 11 has a separate paper class on Sundays, 4.00 - 9.00 p.m. at Science Center, Kuliyapitiya. Paper discussion is built into the 2027 A/L class.",
+      si: "O/L 11 ශ්‍රේණියට වෙනම paper පන්තියක් සඳුදා ප.ව. 4.00 - 9.00 කුලියාපිටිය Science Center හි පැවැත්වේ. 2027 A/L පන්තියට paper සාකච්ඡාව ඇතුළත් වේ.",
+      en: "O/L Grade 11 has a separate paper class on Mondays, 4.00 - 9.00 p.m. at Science Center, Kuliyapitiya. Paper discussion is built into the 2027 A/L class.",
     },
   },
 ];
