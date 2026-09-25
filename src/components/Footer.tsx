@@ -10,12 +10,11 @@ export function Footer() {
 
   return (
     <footer className="relative isolate overflow-hidden bg-[var(--panel)] text-[var(--panel-fg)]">
-      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-[image:var(--grad)]" />
-      <div aria-hidden className="orb -left-32 -top-40 -z-10 h-[360px] w-[360px] bg-[var(--brand)] !opacity-25" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-[var(--panel-fg)]/10" />
       <div className="shell grid gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
         <div className="sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[image:var(--grad)] font-[family-name:var(--font-mono)] text-[11px] font-bold text-white">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[var(--brand)] font-[family-name:var(--font-mono)] text-[11px] font-bold text-white">
               ICT
             </span>
             <span className="leading-none">
@@ -26,7 +25,7 @@ export function Footer() {
           <p className="mt-4 max-w-[40ch] text-[13px] leading-relaxed opacity-75 sm:text-[13.5px]">
             {L(site.tutor.role)} · {L(site.location)}
           </p>
-          <p className="display mt-4 bg-gradient-to-r from-[#b3a6ff] to-[#6ee0f2] bg-clip-text text-[clamp(1.1rem,4.4vw,1.7rem)] text-transparent sm:mt-5">
+          <p className="display mt-4 text-[clamp(1.1rem,4.4vw,1.7rem)] sm:mt-5">
             {L(site.tutor.tagline)}
           </p>
         </div>

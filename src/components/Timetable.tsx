@@ -209,7 +209,7 @@ function NextUp({ next }: { next: { c: ClassInfo; live: boolean } | null }) {
             href={message(next.c)}
             target="_blank"
             rel="noopener noreferrer"
-            className="press btn-green inline-flex items-center justify-self-start gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
+            className="press btn-primary inline-flex items-center justify-self-start gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
           >
             <WhatsAppGlyph className="h-3.5 w-3.5 shrink-0" />
             {t.timetable.join}
@@ -355,7 +355,7 @@ function WeekCalendar({
                 nowInDay <= LAST_HOUR * 60 && (
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-x-0 z-20 h-0.5 bg-[image:var(--grad)]"
+                    className="pointer-events-none absolute inset-x-0 z-20 h-0.5 bg-[var(--brand)]"
                     style={{ top: toPx(nowInDay) }}
                   >
                     <span className="absolute -left-1.5 -top-[5px] h-3 w-3 rounded-full bg-[var(--brand)]" />
@@ -480,7 +480,7 @@ function CalendarEvent({
                 href={message(c)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press btn-green mt-3.5 flex items-center justify-center gap-2 rounded-full px-3 py-2.5 text-[13px] font-semibold"
+                className="press btn-primary mt-3.5 flex items-center justify-center gap-2 rounded-full px-3 py-2.5 text-[13px] font-semibold"
               >
                 <WhatsAppGlyph className="h-4 w-4 shrink-0" />
                 {t.timetable.join}
@@ -582,7 +582,7 @@ function MobileSchedule({
                   onClick={() => go(i)}
                   className={`relative flex flex-col items-center gap-1.5 rounded-2xl border px-0.5 pb-2 pt-2.5 transition-colors ${
                     active
-                      ? "border-transparent bg-[image:var(--grad)] text-[var(--on-brand)] shadow-[var(--glow)]"
+                      ? "border-transparent bg-[var(--fg)] text-[var(--bg)]"
                       : dots.length === 0
                         ? "border-[var(--line)] bg-transparent text-[var(--muted)]"
                         : "border-[var(--line)] bg-[var(--surface)]"
@@ -808,7 +808,7 @@ function AgendaItem({ c, live }: { c: ClassInfo; live: boolean }) {
           href={message(c)}
           target="_blank"
           rel="noopener noreferrer"
-          className="press btn-green mt-3 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
+          className="press btn-primary mt-3 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
         >
           <WhatsAppGlyph className="h-3.5 w-3.5 shrink-0" />
           {t.timetable.join}

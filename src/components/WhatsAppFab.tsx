@@ -33,7 +33,7 @@ export function WhatsAppFab() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
           transition={{ type: "spring", stiffness: 320, damping: 24 }}
-          className="btn-green fixed bottom-5 right-5 z-50 flex items-center gap-2.5 rounded-full px-4 py-3 font-semibold"
+          className="btn-whatsapp fixed bottom-5 right-5 z-50 flex items-center gap-2.5 rounded-full px-4 py-3 font-semibold"
         >
           <WhatsAppGlyph className="h-6 w-6" />
           <span className="hidden text-[14px] sm:inline">{t.common.whatsapp}</span>

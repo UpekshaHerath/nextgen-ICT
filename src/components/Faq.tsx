@@ -42,7 +42,7 @@ export function Faq() {
                       transition={{ type: "spring", stiffness: 380, damping: 24 }}
                       className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[18px] leading-none transition-colors ${
                         isOpen
-                          ? "bg-[image:var(--grad)] text-[var(--on-brand)]"
+                          ? "bg-[var(--brand)] text-[var(--on-brand)]"
                           : "bg-[var(--bg-soft)] text-[var(--fg)]"
                       }`}
                       aria-hidden

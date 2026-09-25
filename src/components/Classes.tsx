@@ -151,14 +151,14 @@ function FilterBar<K extends string>({
             aria-pressed={value === o.key}
             className={`relative whitespace-nowrap rounded-full border px-4 py-2 text-[13px] font-semibold transition-colors sm:px-5 sm:text-[13.5px] ${
               value === o.key
-                ? "border-transparent text-[var(--on-brand)]"
+                ? "border-transparent text-[var(--bg)]"
                 : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--fg)]"
             }`}
           >
             {value === o.key && (
               <motion.span
                 layoutId={id}
-                className="absolute -inset-px rounded-full bg-[image:var(--grad)] shadow-[var(--glow)]"
+                className="absolute -inset-px rounded-full bg-[var(--fg)]"
                 transition={{ type: "spring", stiffness: 400, damping: 34 }}
               />
             )}
@@ -170,7 +170,7 @@ function FilterBar<K extends string>({
   );
 }
 
-/** Batch card: coloured header glow, weekly sessions, one call to action. */
+/** Batch card: batch label, weekly sessions, one call to action. */
 function BatchCard({ b, sessions }: { b: Batch; sessions: ClassInfo[] }) {
   const { t, L } = useLang();
   const reduce = useReducedMotion();
@@ -192,15 +192,6 @@ function BatchCard({ b, sessions }: { b: Batch; sessions: ClassInfo[] }) {
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
       className="card ring-grad relative flex h-full flex-col overflow-hidden rounded-3xl hover:shadow-[var(--shadow-lg)]"
     >
-      {/* soft batch-coloured wash across the top */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-40 opacity-70"
-        style={{
-          background: `radial-gradient(120% 100% at 0% 0%, color-mix(in srgb, ${color} 22%, transparent), transparent 70%)`,
-        }}
-      />
-
       <div className="relative flex flex-wrap items-center justify-between gap-2 px-5 pt-5 sm:px-6 sm:pt-6">
         <span
           className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[12px] font-semibold"
@@ -266,7 +257,7 @@ function BatchCard({ b, sessions }: { b: Batch; sessions: ClassInfo[] }) {
           href={waLink(message)}
           target="_blank"
           rel="noopener noreferrer"
-          className="press btn-green flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-semibold"
+          className="press btn-primary flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-semibold"
         >
           <WhatsAppGlyph className="h-4 w-4 shrink-0" />
           {t.classes.join}
