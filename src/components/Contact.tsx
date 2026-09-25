@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
+import Image from "next/image";
 import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
@@ -129,12 +130,18 @@ export function Contact() {
                   {venueRows.map(({ v, batchNames, dayNames }, i) => (
                     <li
                       key={v.id}
-                      className={`flex items-start gap-3 px-5 py-4 sm:gap-4 ${
+                      className={`flex items-center gap-3.5 px-5 py-3.5 sm:gap-4 ${
                         i > 0 ? "border-t border-[var(--line)]" : ""
                       }`}
                     >
-                      <span className="display grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[color-mix(in_srgb,var(--brand)_12%,transparent)] text-[12px] text-[var(--brand)]">
-                        {String(i + 1).padStart(2, "0")}
+                      <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-[var(--line)] bg-white">
+                        <Image
+                          src={v.logo}
+                          alt={`${L(v.institute)} logo`}
+                          fill
+                          sizes="56px"
+                          className="object-contain p-1"
+                        />
                       </span>
                       <span className="min-w-0">
                         <span className="block text-[14px] font-bold sm:text-[14.5px]">

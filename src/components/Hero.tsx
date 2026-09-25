@@ -11,7 +11,8 @@ import {
 } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { StatCounter } from "./StatCounter";
-import { batches, sessionsOf, site, stats, tutorPhoto, waLink } from "@/lib/site";
+import { classes, site, stats, tutorPhoto, venues, waLink } from "@/lib/site";
+import { PinGlyph } from "./BrandIcons";
 
 /** Page-load choreography for the headline column. */
 const container: Variants = {
@@ -263,40 +264,63 @@ export function Hero() {
               </a>
             </motion.div>
 
-            {/* one glass card per batch, with its class days */}
-            <motion.ul
-              variants={item}
-              className="mx-auto mt-8 grid max-w-3xl gap-3 sm:mt-9 sm:grid-cols-2 lg:mx-0 lg:max-w-none"
-            >
-              {batches.map((b) => {
-                const list = sessionsOf(b.id);
-                const days = [...new Set(list.map((c) => L(c.day)))];
-                const towns = [...new Set(list.map((c) => L(c.town)))];
-                return (
-                  <li
-                    key={b.id}
-                    className="glass press flex items-start gap-3 rounded-2xl border border-[var(--line)] p-3.5 text-left shadow-[var(--shadow-sm)]"
-                  >
-                    <span
-                      aria-hidden
-                      className="mt-1 h-8 w-1 shrink-0 rounded-full"
-                      style={{ background: `var(--batch-${b.id})` }}
-                    />
-                    <span className="min-w-0">
-                      <span className="block text-[12px] font-semibold" style={{ color: `var(--batch-${b.id})` }}>
-                        {L(b.name)} · {L(b.kind)}
+            {/* where the classes are held: one card per institute, with its own logo */}
+            <motion.div variants={item} className="mx-auto mt-8 max-w-3xl sm:mt-9 lg:mx-0 lg:max-w-none">
+              <p className="label mb-3 text-center text-[var(--muted)] lg:text-left">
+                {t.contact.locationTitle}
+              </p>
+              <ul className="grid gap-3 sm:grid-cols-2">
+                {venues.map((v) => {
+                  const list = classes.filter((c) => c.venue.id === v.id);
+                  const venueBatches = [...new Map(list.map((c) => [c.batch.id, c.batch])).values()];
+                  const days = [...new Set(list.map((c) => L(c.day)))];
+                  return (
+                    <li
+                      key={v.id}
+                      className="glass press flex items-start gap-3.5 rounded-2xl border border-[var(--line)] p-2.5 pr-3.5 text-left shadow-[var(--shadow-sm)]"
+                    >
+                      <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-[var(--line)] bg-white sm:h-[72px] sm:w-[72px]">
+                        <Image
+                          src={v.logo}
+                          alt={`${L(v.institute)} logo`}
+                          fill
+                          sizes="72px"
+                          className="object-contain p-1.5"
+                        />
                       </span>
-                      <span className="mt-0.5 block text-[14px] font-semibold leading-snug">
-                        {towns.join(", ")}
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[14px] font-bold leading-snug">
+                          {L(v.institute)}
+                        </span>
+                        <span className="mt-0.5 flex items-center gap-1 text-[12.5px] text-[var(--muted)]">
+                          <PinGlyph className="h-3 w-3 shrink-0 text-[var(--brand)]" />
+                          {L(v.town)}
+                        </span>
+                        <span className="block text-[12px] leading-snug text-[var(--muted)]">
+                          {days.join(" · ")}
+                        </span>
+                        <span className="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1">
+                          {venueBatches.map((b) => (
+                            <span
+                              key={b.id}
+                              className="inline-flex items-center gap-1 text-[11.5px] font-semibold"
+                              style={{ color: `var(--batch-${b.id})` }}
+                            >
+                              <span
+                                aria-hidden
+                                className="h-1.5 w-1.5 rounded-full"
+                                style={{ background: `var(--batch-${b.id})` }}
+                              />
+                              {L(b.name)}
+                            </span>
+                          ))}
+                        </span>
                       </span>
-                      <span className="block text-[12.5px] text-[var(--muted)]">
-                        {days.join(" · ")}
-                      </span>
-                    </span>
-                  </li>
-                );
-              })}
-            </motion.ul>
+                    </li>
+                  );
+                })}
+              </ul>
+            </motion.div>
           </motion.div>
         </div>
       </div>

@@ -75,7 +75,8 @@ export type Batch = {
 
 export type VenueId = "science-center" | "samadhi" | "vidupiyasa" | "dakma";
 
-export type Venue = { id: VenueId; institute: Bi; town: Bi };
+/** `logo` is the institute's own mark, trimmed onto white, under public/images/institutes. */
+export type Venue = { id: VenueId; institute: Bi; town: Bi; logo: string };
 
 /** One weekly session, with its display strings already worked out. */
 export type ClassInfo = {
@@ -176,21 +177,25 @@ export const batches: Batch[] = [
 export const venues: Venue[] = [
   {
     id: "science-center",
+    logo: "/images/institutes/science-center.png",
     institute: { si: "Science Center", en: "Science Center" },
     town: { si: "කුලියාපිටිය", en: "Kuliyapitiya" },
   },
   {
     id: "samadhi",
+    logo: "/images/institutes/samadhi.png",
     institute: { si: "සමාධි උසස් අධ්‍යාපන ආයතනය", en: "Samadhi Higher Education Institute" },
     town: { si: "මාකඳුර", en: "Makandura" },
   },
   {
     id: "vidupiyasa",
+    logo: "/images/institutes/vidupiyasa.png",
     institute: { si: "විදුපියස", en: "Vidupiyasa" },
     town: { si: "නාත්තණ්ඩිය", en: "Naththandiya" },
   },
   {
     id: "dakma",
+    logo: "/images/institutes/dakma.png",
     institute: { si: "දක්ම", en: "Dakma" },
     town: { si: "පන්නල", en: "Pannala" },
   },
