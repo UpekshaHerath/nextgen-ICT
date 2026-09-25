@@ -135,17 +135,24 @@ export function Hero() {
               </motion.div>
             )}
 
-            <h1 className="display text-[clamp(2.3rem,8.4vw,5.2rem)]">
+            <h1 className="display">
               <motion.span
                 variants={item}
-                className="block text-[0.4em] font-semibold tracking-[0.02em] text-[var(--muted)]"
+                className="flex items-center justify-center gap-3 text-[clamp(1.4rem,4.8vw,2.3rem)] font-extrabold leading-tight lg:justify-start"
               >
+                <span aria-hidden className="h-[0.18em] w-[1.4em] shrink-0 rounded-full bg-[image:var(--grad)]" />
                 {t.hero.titleTop}
               </motion.span>
-              <motion.span variants={item} className="grad-text mt-2 block pb-1">
+              <motion.span
+                variants={item}
+                className="grad-text block pb-2 text-[clamp(6rem,27vw,11rem)] font-extrabold leading-[0.9] tracking-[-0.06em] drop-shadow-[0_12px_40px_rgba(91,61,245,0.35)]"
+              >
                 {t.hero.titleMain}
               </motion.span>
-              <motion.span variants={item} className="mt-1 block text-[0.46em] font-semibold">
+              <motion.span
+                variants={item}
+                className="block text-[clamp(1.5rem,5.4vw,2.6rem)] font-extrabold leading-tight"
+              >
                 {t.hero.titleBottom}
               </motion.span>
             </h1>
@@ -160,17 +167,16 @@ export function Hero() {
             className="relative mx-auto w-full max-w-[min(320px,76vw)] sm:max-w-[360px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-[480px]"
           >
             <div className="relative aspect-[4/5]">
-              {/* gradient disc behind the cut-out, with a slow-turning conic ring */}
-              <div
-                aria-hidden
-                className="absolute inset-x-[4%] bottom-[4%] top-[14%] rounded-[2.5rem] bg-[image:var(--grad)] opacity-90 shadow-[var(--shadow-lg)]"
-              />
-              <motion.div
-                aria-hidden
-                className="absolute -inset-2 rounded-full opacity-40 [background:conic-gradient(from_0deg,transparent,var(--brand),transparent_40%)] [mask-image:radial-gradient(circle,transparent_62%,#000_63%,#000_64%,transparent_65%)]"
-                animate={reduce ? undefined : { rotate: 360 }}
-                transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-              />
+              {/* morphing gradient blob behind the cut-out, with a blurred glow of itself */}
+              <div aria-hidden className="absolute inset-x-[10%] bottom-[8%] top-[18%]">
+                <div className="hero-blob absolute inset-0 bg-[image:var(--grad)] opacity-60 blur-2xl" />
+                <div className="hero-blob absolute inset-[6%] bg-[image:var(--grad)] opacity-90" />
+              </div>
+
+              {/* two orbits of tech tokens circling the portrait */}
+              <Orbit radius={50} seconds={46} tokens={OUTER_TOKENS} reduce={!!reduce} />
+              <Orbit radius={36} seconds={34} tokens={INNER_TOKENS} reduce={!!reduce} reverse />
+
               {tutorPhoto ? (
                 <motion.div
                   className="absolute inset-0"
@@ -182,7 +188,7 @@ export function Hero() {
                     alt={`${L(site.tutor.name)} — ${L(site.tutor.role)}, ${L(site.location)}`}
                     fill
                     priority
-                    className="object-contain object-bottom [mask-image:linear-gradient(to_bottom,#000_82%,transparent_97%)]"
+                    className="object-contain object-bottom"
                     sizes="(max-width: 1024px) 80vw, 480px"
                   />
                 </motion.div>
@@ -367,6 +373,76 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+type Token = { label: string; angle: number; color: string };
+
+const OUTER_TOKENS: Token[] = [
+  { label: "</>", angle: 200, color: "var(--brand)" },
+  { label: "Py", angle: 320, color: "var(--batch-al-2028)" },
+  { label: "SQL", angle: 80, color: "var(--batch-ol-11)" },
+];
+
+const INNER_TOKENS: Token[] = [
+  { label: "{ }", angle: 20, color: "var(--batch-ol-10)" },
+];
+
+/**
+ * A dashed ring centred on the portrait that turns slowly; each token rides
+ * the ring but counter-turns so its label always reads upright.
+ */
+function Orbit({
+  radius,
+  seconds,
+  tokens,
+  reduce,
+  reverse = false,
+}: {
+  radius: number;
+  seconds: number;
+  tokens: Token[];
+  reduce: boolean;
+  reverse?: boolean;
+}) {
+  const turn = reverse ? -360 : 360;
+  const spin = reduce
+    ? {}
+    : { animate: { rotate: turn }, transition: { duration: seconds, repeat: Infinity, ease: "linear" as const } };
+  const counter = reduce
+    ? {}
+    : { animate: { rotate: -turn }, transition: { duration: seconds, repeat: Infinity, ease: "linear" as const } };
+
+  return (
+    <motion.div
+      aria-hidden
+      {...spin}
+      className="absolute left-1/2 top-[46%] aspect-square rounded-full border border-dashed border-[var(--line-strong)]"
+      style={{ width: `${radius * 2}%`, x: "-50%", y: "-50%" }}
+    >
+      {tokens.map((tk) => {
+        const rad = (tk.angle * Math.PI) / 180;
+        return (
+          <span
+            key={tk.label}
+            className="absolute"
+            style={{
+              left: `${50 + 50 * Math.cos(rad)}%`,
+              top: `${50 + 50 * Math.sin(rad)}%`,
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <motion.span
+              {...counter}
+              className="glass grid h-9 min-w-9 place-items-center rounded-full border border-[var(--line)] px-2 font-[family-name:var(--font-mono)] text-[11px] font-bold shadow-[var(--shadow)] sm:h-11 sm:min-w-11 sm:text-[12.5px]"
+              style={{ color: tk.color }}
+            >
+              {tk.label}
+            </motion.span>
+          </span>
+        );
+      })}
+    </motion.div>
   );
 }
 

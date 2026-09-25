@@ -26,7 +26,7 @@ const display = Plus_Jakarta_Sans({
 const sinhala = Noto_Sans_Sinhala({
   variable: "--font-sinhala",
   subsets: ["sinhala", "latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 

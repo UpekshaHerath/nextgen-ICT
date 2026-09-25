@@ -98,7 +98,7 @@ export function Timetable() {
           <div
             role="group"
             aria-label={t.timetable.filterLabel}
-            className="thin-scroll -mx-[clamp(1rem,4vw,1.5rem)] flex gap-2 overflow-x-auto px-[clamp(1rem,4vw,1.5rem)] pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
+            className="flex flex-wrap gap-2"
           >
             <FilterChip
               active={filter === "all"}

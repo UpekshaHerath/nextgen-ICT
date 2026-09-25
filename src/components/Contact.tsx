@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
 import { WhatsAppGlyph } from "./Hero";
+import { ClassSelect } from "./ClassSelect";
 import { CHANNEL_TINT, ChannelBadge, PhoneGlyph, type Channel } from "./BrandIcons";
 import { classes, site, telLink, venues, waLink } from "@/lib/site";
 
@@ -14,6 +15,7 @@ export function Contact() {
   const [name, setName] = useState("");
   const [classId, setClassId] = useState(classes[0].id);
   const [note, setNote] = useState("");
+  const classLabelId = useId();
 
   const href = useMemo(() => {
     const c = classes.find((x) => x.id === classId) ?? classes[0];
@@ -53,8 +55,8 @@ export function Contact() {
         <div className="mt-8 grid gap-7 sm:mt-9 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
           {/* the form */}
           <Reveal>
-            <div className="card overflow-hidden rounded-3xl shadow-[var(--shadow-lg)]">
-              <div className="flex items-center gap-3 border-b border-[var(--line)] bg-[var(--bg-soft)] px-5 py-4 sm:px-7">
+            <div className="card rounded-3xl shadow-[var(--shadow-lg)]">
+              <div className="flex items-center gap-3 rounded-t-3xl border-b border-[var(--line)] bg-[var(--bg-soft)] px-5 py-4 sm:px-7">
                 <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[image:var(--grad)]" />
                 <span className="text-[14px] font-semibold">
                   {lang === "si" ? "ලියාපදිංචි පත්‍රය" : "Registration form"}
@@ -72,22 +74,17 @@ export function Contact() {
                   />
                 </label>
 
-                <label className="grid gap-1.5">
-                  <span className="text-[13px] font-semibold">
+                <div className="grid gap-1.5">
+                  <span id={classLabelId} className="text-[13px] font-semibold">
                     {t.contact.classLabel}
                   </span>
-                  <select
+                  <ClassSelect
+                    options={classes}
                     value={classId}
-                    onChange={(e) => setClassId(e.target.value)}
-                    className="underline-field w-full text-[16px]"
-                  >
-                    {classes.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {L(c.title)} · {L(c.day)} · {L(c.town)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                    onChange={setClassId}
+                    labelId={classLabelId}
+                  />
+                </div>
 
                 <label className="grid gap-1.5">
                   <span className="text-[13px] font-semibold">{t.contact.note}</span>

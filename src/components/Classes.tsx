@@ -123,7 +123,7 @@ export function Classes() {
   );
 }
 
-/** Segmented filter; scrolls sideways on phones rather than wrapping into rows. */
+/** Pill filter; wraps onto a second row on phones instead of scrolling sideways. */
 function FilterBar<K extends string>({
   id,
   label,
@@ -142,33 +142,29 @@ function FilterBar<K extends string>({
       <span className="w-20 shrink-0 text-[12.5px] font-semibold text-[var(--muted)]">
         {label}
       </span>
-      <div className="thin-scroll -mx-[clamp(1rem,4vw,1.5rem)] min-w-0 overflow-x-auto px-[clamp(1rem,4vw,1.5rem)] pb-1 sm:mx-0 sm:px-0 sm:pb-0">
-        <div
-          role="group"
-          aria-label={label}
-          className="flex w-max rounded-full border border-[var(--line)] bg-[var(--surface)] p-1 shadow-[var(--shadow-sm)]"
-        >
-          {options.map((o) => (
-            <button
-              key={o.key}
-              type="button"
-              onClick={() => onChange(o.key)}
-              aria-pressed={value === o.key}
-              className={`relative shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold transition-colors sm:px-5 sm:text-[13.5px] ${
-                value === o.key ? "text-[var(--on-brand)]" : "text-[var(--muted)] hover:text-[var(--fg)]"
-              }`}
-            >
-              {value === o.key && (
-                <motion.span
-                  layoutId={id}
-                  className="absolute inset-0 rounded-full bg-[image:var(--grad)] shadow-[var(--glow)]"
-                  transition={{ type: "spring", stiffness: 400, damping: 34 }}
-                />
-              )}
-              <span className="relative z-10">{o.label}</span>
-            </button>
-          ))}
-        </div>
+      <div role="group" aria-label={label} className="flex min-w-0 flex-wrap gap-2">
+        {options.map((o) => (
+          <button
+            key={o.key}
+            type="button"
+            onClick={() => onChange(o.key)}
+            aria-pressed={value === o.key}
+            className={`relative whitespace-nowrap rounded-full border px-4 py-2 text-[13px] font-semibold transition-colors sm:px-5 sm:text-[13.5px] ${
+              value === o.key
+                ? "border-transparent text-[var(--on-brand)]"
+                : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--fg)]"
+            }`}
+          >
+            {value === o.key && (
+              <motion.span
+                layoutId={id}
+                className="absolute -inset-px rounded-full bg-[image:var(--grad)] shadow-[var(--glow)]"
+                transition={{ type: "spring", stiffness: 400, damping: 34 }}
+              />
+            )}
+            <span className="relative z-10">{o.label}</span>
+          </button>
+        ))}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import { faqs } from "@/lib/site";
 
 export function Faq() {
   const { t, L } = useLang();
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState(0);
 
   return (
     <section id="faq" className="py-16 sm:py-24">
@@ -30,7 +30,7 @@ export function Faq() {
                 >
                   <button
                     type="button"
-                    onClick={() => setOpen(isOpen ? null : i)}
+                    onClick={() => setOpen(i)}
                     aria-expanded={isOpen}
                     className="flex w-full items-center gap-4 px-4 py-4 text-left sm:px-5 sm:py-5"
                   >
@@ -38,7 +38,7 @@ export function Faq() {
                       {L(f.q)}
                     </span>
                     <motion.span
-                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      animate={{ rotate: isOpen ? 180 : 0 }}
                       transition={{ type: "spring", stiffness: 380, damping: 24 }}
                       className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[18px] leading-none transition-colors ${
                         isOpen
@@ -47,7 +47,7 @@ export function Faq() {
                       }`}
                       aria-hidden
                     >
-                      +
+                      {isOpen ? "−" : "+"}
                     </motion.span>
                   </button>
 
