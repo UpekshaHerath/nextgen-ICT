@@ -255,6 +255,17 @@ html[data-lang="si"] body {
   backdrop-filter: saturate(160%) blur(16px);
 }
 
+/* light maroon wash for the institute cards, tuned from the one accent */
+.card-rose {
+  background: color-mix(in srgb, var(--brand) 6%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+.card-rose:hover {
+  background: color-mix(in srgb, var(--brand) 9%, var(--surface));
+  border-color: color-mix(in srgb, var(--brand) 26%, transparent);
+}
+
 /* soft lift for anything clickable */
 .press {
   transition:
