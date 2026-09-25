@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/
 import { useLang } from "./LanguageProvider";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { PhoneGlyph } from "./BrandIcons";
+import { BrandMark } from "./BrandMark";
 import { site, telLink, waLink } from "@/lib/site";
 
 const SECTIONS = [
@@ -127,22 +128,8 @@ export function Nav() {
               : "border-[var(--line)] shadow-[var(--shadow-sm)]"
           }`}
         >
-          <a href="#home" className="flex min-w-0 items-center gap-2.5">
-            <motion.span
-              whileHover={{ rotate: -8, scale: 1.06 }}
-              transition={{ type: "spring", stiffness: 400, damping: 18 }}
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--brand)] font-[family-name:var(--font-mono)] text-[10.5px] font-bold text-[var(--on-brand)] sm:h-10 sm:w-10 sm:text-[11px]"
-            >
-              ICT
-            </motion.span>
-            <span className="min-w-0 leading-none">
-              <span className="display block truncate text-[16px] sm:text-[17px]">
-                NextGen ICT
-              </span>
-              <span className="mt-0.5 block truncate text-[11px] font-medium text-[var(--muted)]">
-                with Subhashana
-              </span>
-            </span>
+          <a href="#home" aria-label="NextGen ICT with Subhashana" className="flex min-w-0">
+            <BrandMark />
           </a>
 
           <nav className="mx-auto hidden items-center xl:flex">
