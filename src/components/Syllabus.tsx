@@ -23,7 +23,7 @@ export function Syllabus() {
           {syllabus.map((u, i) => (
             <Reveal as="li" key={u.no} delay={(i % 3) * 40}>
               <div className="card ring-grad press group flex h-full items-start gap-4 p-4 sm:p-5">
-                <span className="display grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[color-mix(in_srgb,var(--brand)_12%,transparent)] text-[14px] text-[var(--brand)] transition-colors group-hover:bg-[image:var(--grad)] group-hover:text-[var(--on-brand)]">
+                <span className="display grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[color-mix(in_srgb,var(--brand)_12%,transparent)] text-[14px] text-[var(--brand)] transition-colors group-hover:bg-[var(--brand)] group-hover:text-[var(--on-brand)]">
                   {u.no}
                 </span>
                 <div className="min-w-0 flex-1">

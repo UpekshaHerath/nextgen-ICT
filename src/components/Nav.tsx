@@ -131,7 +131,7 @@ export function Nav() {
             <motion.span
               whileHover={{ rotate: -8, scale: 1.06 }}
               transition={{ type: "spring", stiffness: 400, damping: 18 }}
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[image:var(--grad)] font-[family-name:var(--font-mono)] text-[10.5px] font-bold text-[var(--on-brand)] shadow-[var(--glow)] sm:h-10 sm:w-10 sm:text-[11px]"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--brand)] font-[family-name:var(--font-mono)] text-[10.5px] font-bold text-[var(--on-brand)] sm:h-10 sm:w-10 sm:text-[11px]"
             >
               ICT
             </motion.span>

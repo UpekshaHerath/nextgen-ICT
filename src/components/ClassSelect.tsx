@@ -187,7 +187,7 @@ export function ClassSelect({
                     </span>
                   </span>
                   {isSelected && (
-                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[image:var(--grad)] text-[10px] font-bold text-[var(--on-brand)]">
+                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[var(--brand)] text-[10px] font-bold text-[var(--on-brand)]">
                       ✓
                     </span>
                   )}

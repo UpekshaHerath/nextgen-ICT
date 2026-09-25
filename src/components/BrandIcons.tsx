@@ -56,14 +56,6 @@ const BADGE: Record<Channel, string> = {
   tiktok: "bg-[#010101]",
 };
 
-/** Colour used to tint a channel's card. TikTok uses its pink, as black would vanish in dark mode. */
-export const CHANNEL_TINT: Record<Channel, string> = {
-  whatsapp: "#25D366",
-  phone: "#0A84FF",
-  facebook: "#1877F2",
-  tiktok: "#FE2C55",
-};
-
 /** Rounded app-style badge in the channel's real brand colour. */
 export function ChannelBadge({ channel, className = "" }: { channel: Channel; className?: string }) {
   return (

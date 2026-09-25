@@ -28,14 +28,14 @@ export function Testimonials() {
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className="card ring-grad relative flex h-full flex-col rounded-3xl p-6 hover:shadow-[var(--shadow-lg)] sm:p-7"
               >
-                <span aria-hidden className="display grad-text text-[3.2rem] leading-[0.6]">
+                <span aria-hidden className="display text-[3.2rem] text-[var(--brand)] leading-[0.6]">
                   &ldquo;
                 </span>
                 <blockquote className="mt-4 flex-1 text-[14.5px] leading-relaxed sm:text-[15px]">
                   {L(tm.quote)}
                 </blockquote>
                 <figcaption className="mt-6 flex items-center gap-3 border-t border-[var(--line)] pt-5">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[image:var(--grad)] font-[family-name:var(--font-display)] text-[17px] font-bold text-[var(--on-brand)]">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[var(--brand)] font-[family-name:var(--font-display)] text-[17px] font-bold text-[var(--on-brand)]">
                     {L(tm.name).charAt(0)}
                   </span>
                   <span className="min-w-0">

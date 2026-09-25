@@ -6,7 +6,7 @@ import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
 import { WhatsAppGlyph } from "./Hero";
 import { ClassSelect } from "./ClassSelect";
-import { CHANNEL_TINT, ChannelBadge, PhoneGlyph, type Channel } from "./BrandIcons";
+import { ChannelBadge, PhoneGlyph, type Channel } from "./BrandIcons";
 import { classes, site, telLink, venues, waLink } from "@/lib/site";
 
 /** Registration form — fills a WhatsApp message instead of a database. */
@@ -43,7 +43,6 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative isolate overflow-hidden py-16 sm:py-24">
-      <div aria-hidden className="orb -right-40 top-20 -z-10 h-[420px] w-[420px] bg-[var(--brand)] !opacity-20" />
       <div className="shell">
         <SectionHead
           no="08"
@@ -57,7 +56,7 @@ export function Contact() {
           <Reveal>
             <div className="card rounded-3xl shadow-[var(--shadow-lg)]">
               <div className="flex items-center gap-3 rounded-t-3xl border-b border-[var(--line)] bg-[var(--bg-soft)] px-5 py-4 sm:px-7">
-                <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[image:var(--grad)]" />
+                <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[var(--brand)]" />
                 <span className="text-[14px] font-semibold">
                   {lang === "si" ? "ලියාපදිංචි පත්‍රය" : "Registration form"}
                 </span>
@@ -102,7 +101,7 @@ export function Contact() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="press btn-green inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[14.5px] font-semibold sm:flex-1 sm:px-6 sm:text-[15px]"
+                    className="press btn-primary inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[14.5px] font-semibold sm:flex-1 sm:px-6 sm:text-[15px]"
                   >
                     <WhatsAppGlyph className="h-5 w-5 shrink-0" />
                     {t.contact.send}
@@ -188,8 +187,7 @@ export function Contact() {
                       href={item.href}
                       target={item.href.startsWith("tel:") ? undefined : "_blank"}
                       rel="noopener noreferrer"
-                      style={{ "--tint": CHANNEL_TINT[item.channel] } as React.CSSProperties}
-                      className="press group flex h-full flex-col items-center justify-center rounded-3xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--tint)_8%,var(--surface))] px-3 py-5 text-center shadow-[var(--shadow-sm)] hover:bg-[color-mix(in_srgb,var(--tint)_16%,var(--surface))] sm:px-4 sm:py-6"
+                      className="press group flex h-full flex-col items-center justify-center rounded-3xl border border-[var(--line)] bg-[var(--surface)] px-3 py-5 text-center shadow-[var(--shadow-sm)] hover:border-[var(--line-strong)] sm:px-4 sm:py-6"
                     >
                       <ChannelBadge
                         channel={item.channel}

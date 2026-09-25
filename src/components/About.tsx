@@ -30,7 +30,7 @@ export function About() {
                     key={p}
                     className="flex items-start gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3.5 sm:items-center sm:px-5"
                   >
-                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[image:var(--grad)] text-[11px] font-bold text-[var(--on-brand)] sm:mt-0">
+                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--brand)] text-[11px] font-bold text-[var(--on-brand)] sm:mt-0">
                       ✓
                     </span>
                     <span className="text-[14px] font-medium sm:text-[14.5px]">{p}</span>
@@ -66,7 +66,7 @@ export function About() {
               {whyUs.map((w, i) => (
                 <Reveal as="li" key={w.icon} delay={i * 50}>
                   <div className="card ring-grad press group h-full p-5">
-                    <span className="display grid h-10 w-10 place-items-center rounded-xl bg-[color-mix(in_srgb,var(--brand)_12%,transparent)] text-[15px] text-[var(--brand)] transition-colors group-hover:bg-[image:var(--grad)] group-hover:text-[var(--on-brand)]">
+                    <span className="display grid h-10 w-10 place-items-center rounded-xl bg-[color-mix(in_srgb,var(--brand)_12%,transparent)] text-[15px] text-[var(--brand)] transition-colors group-hover:bg-[var(--brand)] group-hover:text-[var(--on-brand)]">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h4 className="mt-4 text-[15px] font-bold leading-snug sm:text-[15.5px]">

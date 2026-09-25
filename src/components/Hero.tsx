@@ -82,24 +82,9 @@ export function Hero() {
 
   return (
     <section id="home" ref={sectionRef} className="relative isolate -mt-[68px] overflow-hidden pt-[68px] sm:-mt-[76px] sm:pt-[76px]">
-      {/* backdrop: faint grid and three drifting colour orbs */}
+      {/* backdrop: a faint grid, faded at the edges */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="grid-bg absolute inset-0" />
-        <motion.div
-          className="orb left-[-10%] top-[-8%] h-[420px] w-[420px] bg-[var(--brand)]"
-          animate={reduce ? undefined : { x: [0, 40, 0], y: [0, 30, 0] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="orb right-[-8%] top-[10%] h-[380px] w-[380px] bg-[var(--brand-2)]"
-          animate={reduce ? undefined : { x: [0, -30, 0], y: [0, 40, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="orb bottom-[5%] left-[35%] h-[300px] w-[300px] bg-[#ec4899]"
-          animate={reduce ? undefined : { x: [0, 30, 0], y: [0, -20, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        />
       </div>
 
       <div className="shell pb-14 pt-10 sm:pb-16 sm:pt-16">
@@ -140,12 +125,12 @@ export function Hero() {
                 variants={item}
                 className="flex items-center justify-center gap-3 text-[clamp(1.4rem,4.8vw,2.3rem)] font-extrabold leading-tight lg:justify-start"
               >
-                <span aria-hidden className="h-[0.18em] w-[1.4em] shrink-0 rounded-full bg-[image:var(--grad)]" />
+                <span aria-hidden className="h-[0.18em] w-[1.4em] shrink-0 rounded-full bg-[var(--brand)]" />
                 {t.hero.titleTop}
               </motion.span>
               <motion.span
                 variants={item}
-                className="grad-text block pb-2 text-[clamp(6rem,27vw,11rem)] font-extrabold leading-[0.9] tracking-[-0.06em] drop-shadow-[0_12px_40px_rgba(91,61,245,0.35)]"
+                className="block pb-2 text-[var(--brand)] text-[clamp(6rem,27vw,11rem)] font-extrabold leading-[0.9] tracking-[-0.06em]"
               >
                 {t.hero.titleMain}
               </motion.span>
@@ -167,10 +152,9 @@ export function Hero() {
             className="relative mx-auto w-full max-w-[min(320px,76vw)] sm:max-w-[360px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-[480px]"
           >
             <div className="relative aspect-[4/5]">
-              {/* morphing gradient blob behind the cut-out, with a blurred glow of itself */}
+              {/* soft, slowly morphing tinted shape behind the cut-out */}
               <div aria-hidden className="absolute inset-x-[10%] bottom-[8%] top-[18%]">
-                <div className="hero-blob absolute inset-0 bg-[image:var(--grad)] opacity-60 blur-2xl" />
-                <div className="hero-blob absolute inset-[6%] bg-[image:var(--grad)] opacity-90" />
+                <div className="hero-blob absolute inset-[6%] border border-[var(--line)] bg-[color-mix(in_srgb,var(--brand)_9%,var(--bg-soft))]" />
               </div>
 
               {/* two orbits of tech tokens circling the portrait */}
@@ -208,7 +192,7 @@ export function Hero() {
                 transition={{ duration: 0.7, delay: 0.9, ease: [0.2, 0.8, 0.3, 1] }}
                 className="glass absolute right-[-4%] top-[22%] hidden items-center gap-2 rounded-2xl border border-[var(--line)] px-3 py-2 text-left shadow-[var(--shadow)] sm:flex"
               >
-                <span className="grid h-8 w-8 place-items-center rounded-xl bg-[color-mix(in_srgb,var(--green)_16%,transparent)] text-[15px]">
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-[var(--bg-soft)] text-[var(--brand)] text-[15px]">
                   ✓
                 </span>
                 <span className="leading-tight">
@@ -225,7 +209,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.65, ease: [0.2, 0.8, 0.3, 1] }}
               className="glass relative z-10 mx-auto -mt-12 flex w-[90%] items-center gap-3 rounded-2xl border border-[var(--line)] px-4 py-3 text-left shadow-[var(--shadow-lg)] sm:-mt-14 sm:px-5 sm:py-3.5"
             >
-              <span aria-hidden className="h-10 w-1 shrink-0 rounded-full bg-[image:var(--grad)]" />
+              <span aria-hidden className="h-10 w-1 shrink-0 rounded-full bg-[var(--brand)]" />
               <span className="min-w-0">
                 <span className="display block text-[18px] leading-tight sm:text-[20px]">
                   {L(site.tutor.name)}
@@ -259,7 +243,7 @@ export function Hero() {
                 href={waLink(t.wa.generic)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press btn-green inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-[14.5px] font-semibold sm:text-[15px]"
+                className="press btn-primary inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-[14.5px] font-semibold sm:text-[15px]"
               >
                 <WhatsAppGlyph className="h-5 w-5 shrink-0" />
                 {t.hero.ctaPrimary}
@@ -327,7 +311,7 @@ export function Hero() {
                 i >= 2 ? "border-t border-[var(--line)] sm:border-t-0" : ""
               } ${i === 2 ? "sm:border-l" : ""}`}
             >
-              <dt className="display grad-text text-[clamp(1.8rem,6vw,2.8rem)]">
+              <dt className="display text-[clamp(1.8rem,6vw,2.8rem)]">
                 <StatCounter value={s.value} />
               </dt>
               <dd className="mt-1 text-[12.5px] font-medium leading-snug text-[var(--muted)] sm:text-[13px]">
@@ -379,13 +363,13 @@ export function Hero() {
 type Token = { label: string; angle: number; color: string };
 
 const OUTER_TOKENS: Token[] = [
-  { label: "</>", angle: 200, color: "var(--brand)" },
-  { label: "Py", angle: 320, color: "var(--batch-al-2028)" },
-  { label: "SQL", angle: 80, color: "var(--batch-ol-11)" },
+  { label: "</>", angle: 200, color: "var(--muted)" },
+  { label: "Py", angle: 320, color: "var(--muted)" },
+  { label: "SQL", angle: 80, color: "var(--muted)" },
 ];
 
 const INNER_TOKENS: Token[] = [
-  { label: "{ }", angle: 20, color: "var(--batch-ol-10)" },
+  { label: "{ }", angle: 20, color: "var(--muted)" },
 ];
 
 /**

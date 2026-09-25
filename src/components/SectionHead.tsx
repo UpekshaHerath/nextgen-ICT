@@ -19,7 +19,7 @@ export function SectionHead({
   return (
     <Reveal className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-3xl"}>
       <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] py-1 pl-1 pr-3 shadow-[var(--shadow-sm)]">
-        <span className="label shrink-0 rounded-full bg-[image:var(--grad)] px-2 py-0.5 text-[10px] text-[var(--on-brand)]">
+        <span className="label shrink-0 rounded-full bg-[var(--brand)] px-2 py-0.5 text-[10px] text-[var(--on-brand)]">
           {no}
         </span>
         <span className="label min-w-0 truncate text-[var(--brand)]">{eyebrow}</span>
