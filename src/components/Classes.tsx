@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { SectionHead } from "./SectionHead";
-import { WhatsAppGlyph } from "./Hero";
+import { WhatsAppLogo } from "./Hero";
 import {
   batches,
   classes,
@@ -257,9 +257,9 @@ function BatchCard({ b, sessions }: { b: Batch; sessions: ClassInfo[] }) {
           href={waLink(message)}
           target="_blank"
           rel="noopener noreferrer"
-          className="press btn-primary flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-semibold"
+          className="press btn-wa-soft flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-semibold"
         >
-          <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+          <WhatsAppLogo className="h-5 w-5 shrink-0" />
           {t.classes.join}
         </a>
       </div>

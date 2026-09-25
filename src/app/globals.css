@@ -273,16 +273,6 @@ html[data-lang="si"] body {
   transform: translateY(0);
 }
 
-/* solid ink: the primary action */
-.btn-primary {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.btn-primary:hover {
-  background: color-mix(in srgb, var(--fg) 86%, var(--bg));
-}
-
 /* solid accent, used once per view (the header call to action) */
 .btn-brand {
   background: var(--brand);

@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useLang } from "./LanguageProvider";
 import { ThemeSwitch } from "./ThemeSwitch";
-import { PhoneGlyph } from "./BrandIcons";
 import { BrandMark } from "./BrandMark";
-import { site, telLink, waLink } from "@/lib/site";
+import { waLink } from "@/lib/site";
 
 const SECTIONS = [
   { id: "about", key: "about" },
@@ -61,7 +60,7 @@ function LangSwitch({
 }
 
 export function Nav() {
-  const { t, L } = useLang();
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
   const [hidden, setHidden] = useState(false);
@@ -235,20 +234,13 @@ export function Nav() {
                   <LangSwitch pillId="lang-pill-sheet" />
                   <ThemeSwitch pillId="theme-pill-sheet" />
                 </li>
-                <li className="mt-1 grid gap-3 border-t border-[var(--line)] px-2 pb-2 pt-3 sm:flex sm:items-center sm:justify-between">
-                  <a
-                    href={telLink}
-                    className="inline-flex items-center gap-2 text-[13px] text-[var(--muted)]"
-                  >
-                    <PhoneGlyph className="h-3.5 w-3.5 shrink-0" />
-                    {site.phoneDisplay} · {L(site.location)}
-                  </a>
+                <li className="mt-1 border-t border-[var(--line)] px-2 pb-2 pt-3">
                   <a
                     href={waLink(t.wa.generic)}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setOpen(false)}
-                    className="press btn-brand block rounded-full px-5 py-3 text-center text-[14px] font-semibold sm:inline-block"
+                    className="press btn-brand block rounded-full px-5 py-3 text-center text-[14px] font-semibold"
                   >
                     {t.nav.join}
                   </a>
