@@ -277,7 +277,7 @@ export function Hero() {
                   return (
                     <li
                       key={v.id}
-                      className="glass press flex items-start gap-3.5 rounded-2xl border border-[var(--line)] p-2.5 pr-3.5 text-left shadow-[var(--shadow-sm)]"
+                      className="card-rose press flex items-start gap-3.5 rounded-2xl p-2.5 pr-3.5 text-left shadow-[var(--shadow-sm)]"
                     >
                       <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-[var(--line)] bg-white sm:h-[72px] sm:w-[72px]">
                         <Image

@@ -52,7 +52,7 @@ export function Contact() {
           sub={t.contact.sub}
         />
 
-        <div className="mt-8 grid gap-7 sm:mt-9 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+        <div className="mt-8 grid grid-cols-1 gap-7 sm:mt-9 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8">
           {/* the form */}
           <Reveal>
             <div className="card rounded-3xl shadow-[var(--shadow-lg)]">
@@ -63,8 +63,8 @@ export function Contact() {
                 </span>
               </div>
 
-              <div className="grid gap-5 p-5 sm:gap-6 sm:p-7">
-                <label className="grid gap-1.5">
+              <div className="grid grid-cols-1 gap-5 p-5 sm:gap-6 sm:p-7">
+                <label className="grid grid-cols-1 gap-1.5">
                   <span className="text-[13px] font-semibold">{t.contact.name}</span>
                   <input
                     value={name}
@@ -74,7 +74,7 @@ export function Contact() {
                   />
                 </label>
 
-                <div className="grid gap-1.5">
+                <div className="grid grid-cols-1 gap-1.5">
                   <span id={classLabelId} className="text-[13px] font-semibold">
                     {t.contact.classLabel}
                   </span>
@@ -86,7 +86,7 @@ export function Contact() {
                   />
                 </div>
 
-                <label className="grid gap-1.5">
+                <label className="grid grid-cols-1 gap-1.5">
                   <span className="text-[13px] font-semibold">{t.contact.note}</span>
                   <textarea
                     value={note}
@@ -122,8 +122,8 @@ export function Contact() {
           {/* venues + channels */}
           <div className="grid content-start gap-6">
             <Reveal delay={60}>
-              <div className="card overflow-hidden rounded-3xl">
-                <h3 className="display border-b border-[var(--line)] px-5 py-4 text-[17px] sm:text-[19px]">
+              <div className="card-rose overflow-hidden rounded-3xl shadow-[var(--shadow-sm)]">
+                <h3 className="display border-b border-[color-mix(in_srgb,var(--brand)_14%,transparent)] px-5 py-4 text-[17px] sm:text-[19px]">
                   {t.contact.locationTitle}
                 </h3>
                 <ul>
@@ -131,7 +131,7 @@ export function Contact() {
                     <li
                       key={v.id}
                       className={`flex items-center gap-3.5 px-5 py-3.5 sm:gap-4 ${
-                        i > 0 ? "border-t border-[var(--line)]" : ""
+                        i > 0 ? "border-t border-[color-mix(in_srgb,var(--brand)_12%,transparent)]" : ""
                       }`}
                     >
                       <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-[var(--line)] bg-white">

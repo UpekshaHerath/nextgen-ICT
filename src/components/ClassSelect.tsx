@@ -99,7 +99,7 @@ export function ClassSelect({
   };
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className="relative min-w-0">
       <button
         ref={buttonRef}
         type="button"
@@ -120,7 +120,7 @@ export function ClassSelect({
           <span className="block truncate text-[15px] font-semibold leading-tight">
             {L(selected.title)}
           </span>
-          <span className="mt-0.5 block truncate text-[12.5px] text-[var(--muted)]">
+          <span className="mt-0.5 block text-[12.5px] leading-snug text-[var(--muted)]">
             {L(selected.day)} · {L(selected.time)} · {L(selected.town)}
           </span>
         </span>
@@ -182,7 +182,7 @@ export function ClassSelect({
                     >
                       {L(c.title)}
                     </span>
-                    <span className="mt-0.5 block truncate text-[12px] text-[var(--muted)]">
+                    <span className="mt-0.5 block text-[12px] leading-snug text-[var(--muted)]">
                       {L(c.day)} · {L(c.time)} · {L(c.institute)}, {L(c.town)}
                     </span>
                   </span>

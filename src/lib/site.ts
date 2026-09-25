@@ -196,7 +196,7 @@ export const venues: Venue[] = [
   {
     id: "dakma",
     logo: "/images/institutes/dakma.png",
-    institute: { si: "දක්ම", en: "Dakma" },
+    institute: { si: "දැක්ම", en: "Dakma" },
     town: { si: "පන්නල", en: "Pannala" },
   },
 ];
