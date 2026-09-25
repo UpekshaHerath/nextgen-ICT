@@ -79,13 +79,12 @@ export function Hero() {
   });
   // gentle parallax on laptops only - stacked, the portrait would drift over the copy below it
   const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce || !wide ? 0 : 60]);
-  const stickerRotate = useTransform(scrollYProgress, [0, 1], [-12, reduce ? -12 : 16]);
 
   return (
     <section id="home" ref={sectionRef} className="relative">
       <div className="shell pb-12 pt-8 sm:pb-14 sm:pt-14">
         {/* phones/tablets: headline > portrait > rest, centred. laptops: text column left, portrait right. */}
-        <div className="grid items-start gap-9 text-center sm:gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-x-10 lg:gap-y-0 lg:text-left">
+        <div className="grid items-start gap-9 text-center sm:gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-x-10 lg:gap-y-0 lg:text-left">
           {/* 1. headline - the message comes first */}
           <motion.div
             className="lg:col-start-1 lg:row-start-1"
@@ -137,80 +136,53 @@ export function Hero() {
             initial={reduce ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.95, delay: 0.3, ease: [0.2, 0.8, 0.3, 1] }}
-            className="relative mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-3 lg:max-w-[400px]"
+            className="relative mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:max-w-[500px]"
           >
-            <div
-              className="dots absolute -left-3 -top-3 h-20 w-20 opacity-25 sm:-left-5 sm:-top-5 sm:h-32 sm:w-32"
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0 translate-x-2 translate-y-2 bg-[var(--maroon)] sm:translate-x-3 sm:translate-y-3"
-              aria-hidden
-            />
-
-            <figure className="relative border-2 border-[var(--ink)] bg-[var(--paper-2)]">
-              <div className="relative aspect-[4/5] overflow-hidden">
-                {tutorPhoto ? (
+            {/* cut-out portrait - no frame */}
+            <div className="relative aspect-[4/5]">
+              {/* dots drift against the portrait's float for a touch of depth */}
+              <motion.div
+                className="dots absolute -right-2 top-[6%] h-[46%] w-[46%] opacity-30 sm:-right-4"
+                aria-hidden
+                animate={reduce ? undefined : { x: [0, 6, 0], y: [0, 8, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              {tutorPhoto ? (
+                <motion.div
+                  className="absolute inset-0"
+                  animate={reduce ? undefined : { y: [0, -8, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+                >
                   <Image
                     src={tutorPhoto}
                     alt={`${L(site.tutor.name)} — ${L(site.tutor.role)}, ${L(site.location)}`}
                     fill
                     priority
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 80vw, 400px"
+                    className="object-contain object-bottom [mask-image:linear-gradient(to_bottom,#000_80%,transparent_98%)]"
+                    sizes="(max-width: 1024px) 80vw, 500px"
                   />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center">
-                    <TeacherGlyph className="h-32 w-32 text-[var(--ink)] opacity-20 sm:h-48 sm:w-48" />
-                    <p className="label absolute bottom-4 px-3 text-center text-[var(--ink-soft)]">
-                      public/images/tutor.jpg
-                    </p>
-                  </div>
-                )}
-              </div>
-              <figcaption className="border-t-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-3">
-                <p className="display text-[19px] sm:text-[22px]">{L(site.tutor.name)}</p>
-                <p className="mt-1 text-[12px] leading-snug text-[var(--ink-soft)] sm:text-[12.5px]">
-                  {L(site.tutor.subject)}
-                </p>
-                <p className="label mt-1.5 text-[var(--maroon)]">
-                  {L(site.tutor.qualification)}
-                </p>
-              </figcaption>
-            </figure>
+                </motion.div>
+              ) : (
+                <div className="absolute inset-0 grid place-items-center">
+                  <TeacherGlyph className="h-32 w-32 text-[var(--ink)] opacity-20 sm:h-48 sm:w-48" />
+                  <p className="label absolute bottom-4 px-3 text-center text-[var(--ink-soft)]">
+                    public/images/tutor.jpg
+                  </p>
+                </div>
+              )}
+            </div>
 
-            {/* second photo, tucked under the main frame like a loose print */}
-            <motion.figure
-              initial={reduce ? false : { opacity: 0, x: -24, rotate: -12 }}
-              animate={{ opacity: 1, x: 0, rotate: -4 }}
-              transition={{ duration: 0.85, delay: 0.7, ease: [0.2, 0.8, 0.3, 1] }}
-              whileHover={{ rotate: 0, scale: 1.04 }}
-              className="hard-sm absolute -left-10 -top-8 z-10 hidden w-[36%] border-2 border-[var(--ink)] bg-[var(--paper)] p-1.5 sm:block"
-            >
-              <div className="relative aspect-square">
-                <Image
-                  src="/images/tutor-2.jpg"
-                  alt={`${L(site.tutor.name)} — ${L(site.tutor.subject)} ${L(site.medium)}`}
-                  fill
-                  className="object-cover"
-                  sizes="200px"
-                />
-              </div>
-            </motion.figure>
-
-            {/* rotated sticker */}
+            {/* name plate, pinned over the foot of the photo */}
             <motion.div
-              style={{ rotate: stickerRotate }}
-              initial={reduce ? false : { scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.55 }}
-              className="absolute -right-2 -top-4 grid h-[72px] w-[72px] place-items-center rounded-full border-2 border-[var(--ink)] bg-[var(--mustard)] text-center text-[var(--on-accent)] sm:-right-3 sm:-top-6 sm:h-24 sm:w-24"
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.65, ease: [0.2, 0.8, 0.3, 1] }}
+              className="hard-sm relative z-10 mx-auto -mt-12 w-[90%] border-2 border-l-[6px] border-[var(--ink)] border-l-[var(--maroon)] bg-[var(--paper)] px-4 py-3 text-left sm:-mt-14 sm:px-5 sm:py-3.5"
             >
-              <span className="display text-[11px] leading-tight sm:text-[13px]">
-                2027
-                <br />
-                BATCH
-              </span>
+              <p className="display text-[19px] leading-tight sm:text-[22px]">{L(site.tutor.name)}</p>
+              <p className="mt-1 text-[12.5px] leading-snug text-[var(--ink-soft)] sm:text-[13px]">
+                {L(site.tutor.subject)}
+              </p>
             </motion.div>
           </motion.div>
 

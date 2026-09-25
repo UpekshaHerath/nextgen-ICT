@@ -595,5 +595,5 @@ export const gallery: { id: string; src?: string; wide?: boolean; caption: Bi }[
   },
 ];
 
-/** Hero portrait — teaching with a mic, from the page's profile-pictures album. */
-export const tutorPhoto: string | undefined = "/images/tutor-1.jpg";
+/** Hero portrait — background-removed cut-out (transparent PNG). */
+export const tutorPhoto: string | undefined = "/images/tutor-hero.png";
