@@ -36,8 +36,8 @@ export const site = {
   whatsappNumber: "94761140551",
   facebook:
     "https://web.facebook.com/people/NextGen-ICT-with-Subhashana/61579961380323/",
-  tiktok: "https://www.tiktok.com/@chamindu_subhashana",
-  tiktokHandle: "chamindu_subhashana",
+  tiktok: "https://www.tiktok.com/@subhashana_karunanayake",
+  tiktokHandle: "subhashana_karunanayake",
   location: { si: "කුලියාපිටිය, ශ්‍රී ලංකාව", en: "Kuliyapitiya, Sri Lanka" },
   medium: { si: "සිංහල මාධ්‍යය", en: "Sinhala medium" },
 };
@@ -147,8 +147,8 @@ export const batches: Batch[] = [
     kind: { si: "Theory + Paper", en: "Theory + Paper" },
     title: { si: "11 ශ්‍රේණිය - O/L ICT", en: "Grade 11 - O/L ICT" },
     desc: {
-      si: "සතිය මැද තියරි කණ්ඩායම් දෙකක් සහ ඉරිදා ප්‍රශ්න පත්‍ර පන්තිය. සාමාන්‍ය පෙළ ICT විෂයට A සාමාර්ථයක් සඳහා අවශ්‍ය පුහුණුව, කෙටි සටහන් සහ පිළිතුරු ලිවීමේ ක්‍රම.",
-      en: "Two weekday theory groups plus a Sunday paper class. Exam-focused practice, short notes and answer-writing technique for O/L ICT.",
+      si: "සතිය මැද තියරි කණ්ඩායම් දෙකක් සහ සඳුදා ප්‍රශ්න පත්‍ර පන්තිය. සාමාන්‍ය පෙළ ICT විෂයට A සාමාර්ථයක් සඳහා අවශ්‍ය පුහුණුව, කෙටි සටහන් සහ පිළිතුරු ලිවීමේ ක්‍රම.",
+      en: "Two weekday theory groups plus a Monday paper class. Exam-focused practice, short notes and answer-writing technique for O/L ICT.",
     },
     highlights: [
       { si: "Past paper 15+ ක් අවසන් කිරීම", en: "15+ past papers completed" },
@@ -207,6 +207,14 @@ const sessions: {
 }[] = [
   // Monday
   { batch: "al-2027", venue: "science-center", day: 0, from: "08:00", to: "15:00" },
+  {
+    batch: "ol-11",
+    venue: "science-center",
+    day: 0,
+    from: "16:00",
+    to: "21:00",
+    label: { si: "Paper පන්තිය", en: "Paper class" },
+  },
   // Tuesday
   { batch: "al-2028", venue: "vidupiyasa", day: 1, from: "15:00", to: "17:30" },
   { batch: "al-2027", venue: "samadhi", day: 1, from: "18:00", to: "23:00" },
@@ -234,15 +242,7 @@ const sessions: {
   // Saturday - no classes
   // Sunday
   { batch: "al-2028", venue: "science-center", day: 6, from: "09:00", to: "11:30" },
-  {
-    batch: "ol-11",
-    venue: "science-center",
-    day: 6,
-    from: "16:00",
-    to: "21:00",
-    label: { si: "Paper පන්තිය", en: "Paper class" },
-  },
-  { batch: "ol-10", venue: "science-center", day: 6, from: "21:00", to: "23:00" },
+  { batch: "ol-10", venue: "science-center", day: 6, from: "11:30", to: "13:30" },
 ];
 
 const toMinutes = (hhmm: string) => {
@@ -295,7 +295,7 @@ export function sessionsOf(batch: BatchId) {
 
 export const stats: { value: string; label: Bi }[] = [
   { value: "1000+", label: { si: "උගන්වා ඇති සිසුන්", en: "Students taught" } },
-  { value: "8+", label: { si: "වසරක අත්දැකීම්", en: "Years of experience" } },
+  { value: "4+", label: { si: "වසරක අත්දැකීම්", en: "Years of experience" } },
   { value: String(venues.length), label: { si: "පන්ති ආයතන", en: "Class locations" } },
   { value: "100%", label: { si: "Syllabus ආවරණය", en: "Syllabus coverage" } },
 ];
@@ -312,6 +312,14 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
   },
   {
     no: "02",
+    title: { si: "පරිගණක ඉතිහාසය", en: "Computer history" },
+    points: {
+      si: "ගණනය කිරීමේ උපාංගවල පරිණාමය, පරිගණක පරම්පරා, පරිගණක වර්ගීකරණය",
+      en: "Evolution of computing devices, computer generations, classification of computers",
+    },
+  },
+  {
+    no: "03",
     title: { si: "පරිගණක පද්ධතියේ මූලිකාංග", en: "Fundamentals of a computer system" },
     points: {
       si: "දෘඩාංග, මෘදුකාංග, මතක ධුරාවලිය, CPU ක්‍රියාවලිය",
@@ -319,7 +327,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "03",
+    no: "04",
     title: { si: "දත්ත නිරූපණය", en: "Data representation" },
     points: {
       si: "සංඛ්‍යා පද්ධති, පරිවර්තන, ද්විමය අංක ගණිතය",
@@ -327,7 +335,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "04",
+    no: "05",
     title: { si: "තර්ක ද්වාර හා බූලීය වීජ ගණිතය", en: "Logic gates & Boolean algebra" },
     points: {
       si: "Truth tables, K-map, combinational පරිපථ",
@@ -335,7 +343,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "05",
+    no: "06",
     title: { si: "මෙහෙයුම් පද්ධති", en: "Operating systems" },
     points: {
       si: "ක්‍රියාවලි කළමනාකරණය, මතක කළමනාකරණය, ගොනු පද්ධති",
@@ -343,7 +351,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "06",
+    no: "07",
     title: { si: "පරිගණක ජාල", en: "Computer networks" },
     points: {
       si: "OSI/TCP-IP, IP ලිපින, subnetting, ජාල උපාංග",
@@ -351,7 +359,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "07",
+    no: "08",
     title: { si: "ක්‍රමලේඛනය (Python & C)", en: "Programming (Python & C)" },
     points: {
       si: "Algorithm, flowchart, පාලන ව්‍යුහ, ශ්‍රිත",
@@ -359,7 +367,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "08",
+    no: "09",
     title: { si: "දත්ත සමුදාය", en: "Database management" },
     points: {
       si: "ER රූප, සාමාන්‍යකරණය, SQL විමසුම්",
@@ -367,12 +375,12 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "09",
+    no: "10",
     title: { si: "වෙබ් සංවර්ධනය", en: "Web development" },
     points: { si: "HTML, CSS, PHP මූලිකාංග", en: "HTML, CSS, PHP basics" },
   },
   {
-    no: "10",
+    no: "11",
     title: { si: "පද්ධති විශ්ලේෂණය හා නිර්මාණය", en: "System analysis & design" },
     points: {
       si: "SDLC, DFD, පද්ධති පරීක්ෂාව හා නඩත්තුව",
@@ -380,7 +388,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "11",
+    no: "12",
     title: { si: "ව්‍යාපාරයේ ICT", en: "ICT in business" },
     points: {
       si: "e-commerce, ගෙවීම් ක්‍රම, ව්‍යාපාර ක්‍රියාවලි",
@@ -388,7 +396,7 @@ export const syllabus: { no: string; title: Bi; points: Bi }[] = [
     },
   },
   {
-    no: "12",
+    no: "13",
     title: { si: "නව ප්‍රවණතා හා ආරක්ෂාව", en: "New trends & ICT security" },
     points: {
       si: "Cloud, IoT, AI, cyber ආරක්ෂණය හා ආචාර ධර්ම",
@@ -522,8 +530,8 @@ export const faqs: { q: Bi; a: Bi }[] = [
       en: "Is the paper class separate?",
     },
     a: {
-      si: "O/L 11 ශ්‍රේණියට වෙනම paper පන්තියක් ඉරිදා ප.ව. 4.00 - 9.00 කුලියාපිටිය Science Center හි පැවැත්වේ. 2027 A/L පන්තියට paper සාකච්ඡාව ඇතුළත් වේ.",
-      en: "O/L Grade 11 has a separate paper class on Sundays, 4.00 - 9.00 p.m. at Science Center, Kuliyapitiya. Paper discussion is built into the 2027 A/L class.",
+      si: "O/L 11 ශ්‍රේණියට වෙනම paper පන්තියක් සඳුදා ප.ව. 4.00 - 9.00 කුලියාපිටිය Science Center හි පැවැත්වේ. 2027 A/L පන්තියට paper සාකච්ඡාව ඇතුළත් වේ.",
+      en: "O/L Grade 11 has a separate paper class on Mondays, 4.00 - 9.00 p.m. at Science Center, Kuliyapitiya. Paper discussion is built into the 2027 A/L class.",
     },
   },
 ];
@@ -587,5 +595,5 @@ export const gallery: { id: string; src?: string; wide?: boolean; caption: Bi }[
   },
 ];
 
-/** Hero portrait — teaching with a mic, from the page's profile-pictures album. */
-export const tutorPhoto: string | undefined = "/images/tutor-1.jpg";
+/** Hero portrait — background-removed cut-out (transparent PNG). */
+export const tutorPhoto: string | undefined = "/images/tutor-hero.png";

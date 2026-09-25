@@ -3,6 +3,7 @@
 import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
+import { PhoneGlyph, PinGlyph } from "./BrandIcons";
 import { site, whyUs } from "@/lib/site";
 
 export function About() {
@@ -45,11 +46,13 @@ export function About() {
 
             <Reveal delay={150}>
               <div className="mt-5 flex flex-wrap gap-3 sm:mt-6">
-                <span className="border-2 border-[var(--ink)] px-3.5 py-2.5 text-[13px] sm:px-4 sm:text-[13.5px]">
-                  ☖ {L(site.location)}
+                <span className="inline-flex items-center gap-2 border-2 border-[var(--ink)] px-3.5 py-2.5 text-[13px] sm:px-4 sm:text-[13.5px]">
+                  <PinGlyph className="h-4 w-4 shrink-0 text-[var(--maroon)]" />
+                  {L(site.location)}
                 </span>
-                <span className="border-2 border-[var(--ink)] bg-[var(--mustard)] px-3.5 py-2.5 text-[13px] font-semibold text-[var(--on-accent)] sm:px-4 sm:text-[13.5px]">
-                  ☏ {site.phoneDisplay}
+                <span className="inline-flex items-center gap-2 border-2 border-[var(--ink)] bg-[var(--mustard)] px-3.5 py-2.5 text-[13px] font-semibold text-[var(--on-accent)] sm:px-4 sm:text-[13.5px]">
+                  <PhoneGlyph className="h-4 w-4 shrink-0" />
+                  {site.phoneDisplay}
                 </span>
               </div>
             </Reveal>

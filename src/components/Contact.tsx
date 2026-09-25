@@ -5,6 +5,7 @@ import { useLang } from "./LanguageProvider";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
 import { WhatsAppGlyph } from "./Hero";
+import { CHANNEL_TINT, ChannelBadge, PhoneGlyph, type Channel } from "./BrandIcons";
 import { classes, site, telLink, venues, waLink } from "@/lib/site";
 
 /** Paper registration slip — fills a WhatsApp message instead of a database. */
@@ -114,7 +115,8 @@ export function Contact() {
                     href={telLink}
                     className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--mustard)] px-5 py-3.5 text-[14.5px] font-semibold text-[var(--on-accent)] sm:px-6 sm:text-[15px]"
                   >
-                    ☏ {t.contact.call}
+                    <PhoneGlyph className="h-[18px] w-[18px] shrink-0" />
+                    {t.contact.call}
                   </a>
                 </div>
               </div>
@@ -156,52 +158,51 @@ export function Contact() {
             </Reveal>
 
             <Reveal delay={110}>
-              <ul className="grid grid-cols-2 border-2 border-[var(--ink)]">
-                {[
+              <ul className="grid grid-cols-2 gap-3 sm:gap-4">
+                {(
+                  [
                   {
                     href: waLink(t.wa.generic),
                     label: t.contact.whatsapp,
                     sub: site.phoneDisplay,
-                    mark: "✆",
+                    channel: "whatsapp",
                   },
                   {
                     href: telLink,
                     label: t.contact.callNow,
                     sub: site.phoneDisplay,
-                    mark: "☏",
+                    channel: "phone",
                   },
                   {
                     href: site.facebook,
                     label: t.contact.facebook,
                     sub: "NextGen ICT",
-                    mark: "f",
+                    channel: "facebook",
                   },
                   {
                     href: site.tiktok,
                     label: t.contact.tiktok,
                     sub: `@${site.tiktokHandle}`,
-                    mark: "♪",
+                    channel: "tiktok",
                   },
-                ].map((item, i) => (
-                  <li
-                    key={item.label}
-                    className={`${i % 2 === 0 ? "border-r-2" : ""} ${
-                      i < 2 ? "border-b-2" : ""
-                    } border-[var(--ink)]`}
-                  >
+                  ] satisfies { href: string; label: string; sub: string; channel: Channel }[]
+                ).map((item) => (
+                  <li key={item.label}>
                     <a
                       href={item.href}
                       target={item.href.startsWith("tel:") ? undefined : "_blank"}
                       rel="noopener noreferrer"
-                      className="block h-full px-4 py-4 transition-colors hover:bg-[var(--mustard)] hover:text-[var(--on-accent)] sm:px-5 sm:py-5"
+                      style={{ "--tint": CHANNEL_TINT[item.channel] } as React.CSSProperties}
+                      className="press hard-sm group flex h-full flex-col items-center justify-center border-2 border-[var(--ink)] bg-[color-mix(in_srgb,var(--tint)_13%,var(--paper))] px-3 py-5 text-center transition-colors hover:bg-[color-mix(in_srgb,var(--tint)_24%,var(--paper))] sm:px-4 sm:py-6"
                     >
-                      <span className="display block text-[1.3rem] leading-none text-[var(--maroon)] sm:text-[1.5rem]">
-                        {item.mark}
-                      </span>
-                      <span className="mt-2 block text-[13.5px] font-bold sm:text-[14px]">
+                      <ChannelBadge
+                        channel={item.channel}
+                        className="h-12 w-12 !rounded-2xl transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-105 sm:h-14 sm:w-14"
+                      />
+                      <span className="mt-3 block text-[13.5px] font-bold leading-snug sm:text-[14.5px]">
                         {item.label}
                       </span>
-                      <span className="block break-words text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
+                      <span className="mt-0.5 block max-w-full break-words text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
                         {item.sub}
                       </span>
                     </a>

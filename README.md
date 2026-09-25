@@ -107,8 +107,9 @@ Captured from the official Facebook page (logged-in session), downscaled to
 
 | File | Use |
 | --- | --- |
-| `tutor-1.jpg` | Hero portrait — mic, whiteboard (`tutorPhoto`) |
-| `tutor-2.jpg` | Hero inset — mid-lesson, tucked under the main frame |
+| `tutor-hero.png` | Hero portrait — background removed (`tutorPhoto`) |
+| `tutor-1.jpg` | Social share image and structured-data photo |
+| `tutor-2.jpg` | Not used on the page |
 | `group-batch-full.jpg` | Gallery lead — whole 2026 batch, 16:9 (wide tile) |
 | `group-01.jpg` | Gallery — 2026 batch group photo (wide tile) |
 | `group-06.jpg` | Gallery — cake moment with sir (wide tile) |
