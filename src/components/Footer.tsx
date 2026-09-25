@@ -9,34 +9,36 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t-2 border-[var(--ink)] bg-[var(--panel)] text-[var(--panel-fg)]">
+    <footer className="relative isolate overflow-hidden bg-[var(--panel)] text-[var(--panel-fg)]">
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-[image:var(--grad)]" />
+      <div aria-hidden className="orb -left-32 -top-40 -z-10 h-[360px] w-[360px] bg-[var(--brand)] !opacity-25" />
       <div className="shell grid gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
         <div className="sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <span className="grid h-11 w-11 shrink-0 place-items-center border-2 border-[var(--panel-fg)] bg-[var(--maroon)] font-[family-name:var(--font-mono)] text-[12px]">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[image:var(--grad)] font-[family-name:var(--font-mono)] text-[11px] font-bold text-white">
               ICT
             </span>
             <span className="leading-none">
               <span className="display block text-[20px]">NextGen ICT</span>
-              <span className="label mt-1 block opacity-70">with Subhashana</span>
+              <span className="mt-1 block text-[12px] opacity-60">with Subhashana</span>
             </span>
           </div>
           <p className="mt-4 max-w-[40ch] text-[13px] leading-relaxed opacity-75 sm:text-[13.5px]">
             {L(site.tutor.role)} · {L(site.location)}
           </p>
-          <p className="display mt-4 text-[clamp(1.1rem,4.4vw,1.7rem)] text-[var(--mustard)] sm:mt-5">
+          <p className="display mt-4 bg-gradient-to-r from-[#b3a6ff] to-[#6ee0f2] bg-clip-text text-[clamp(1.1rem,4.4vw,1.7rem)] text-transparent sm:mt-5">
             {L(site.tutor.tagline)}
           </p>
         </div>
 
         <div>
-          <h3 className="label border-b border-[var(--panel-fg)]/30 pb-2 opacity-70">
+          <h3 className="label pb-1 opacity-60">
             {t.footer.quick}
           </h3>
           <ul className="mt-3 grid gap-2 text-[13.5px]">
             {(["about", "classes", "timetable", "syllabus", "faq"] as const).map((k) => (
               <li key={k}>
-                <a href={`#${k}`} className="hover:text-[var(--mustard)]">
+                <a href={`#${k}`} className="opacity-80 transition-opacity hover:opacity-100">
                   {t.nav[k]}
                 </a>
               </li>
@@ -45,12 +47,12 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="label border-b border-[var(--panel-fg)]/30 pb-2 opacity-70">
+          <h3 className="label pb-1 opacity-60">
             {t.footer.contact}
           </h3>
           <ul className="mt-3 grid gap-2 text-[13.5px]">
             <li>
-              <a href={telLink} className="inline-flex items-center gap-2.5 hover:text-[var(--mustard)]">
+              <a href={telLink} className="inline-flex items-center gap-2.5 opacity-80 transition-opacity hover:opacity-100">
                 <ChannelBadge channel="phone" className="h-7 w-7 !rounded-lg" />
                 {site.phoneDisplay}
               </a>
@@ -60,7 +62,7 @@ export function Footer() {
                 href={waLink(t.wa.generic)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 hover:text-[var(--mustard)]"
+                className="inline-flex items-center gap-2.5 opacity-80 transition-opacity hover:opacity-100"
               >
                 <ChannelBadge channel="whatsapp" className="h-7 w-7 !rounded-lg" />
                 {site.phoneDisplay}
@@ -71,7 +73,7 @@ export function Footer() {
                 href={site.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 hover:text-[var(--mustard)]"
+                className="inline-flex items-center gap-2.5 opacity-80 transition-opacity hover:opacity-100"
               >
                 <ChannelBadge channel="facebook" className="h-7 w-7 !rounded-lg" />
                 Facebook
@@ -82,7 +84,7 @@ export function Footer() {
                 href={site.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 break-all hover:text-[var(--mustard)]"
+                className="inline-flex items-center gap-2.5 break-all opacity-80 transition-opacity hover:opacity-100"
               >
                 <ChannelBadge channel="tiktok" className="h-7 w-7 !rounded-lg" />
                 TikTok @{site.tiktokHandle}
@@ -92,12 +94,12 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[var(--panel-fg)]/25">
+      <div className="border-t border-[var(--panel-fg)]/10">
         <div className="shell flex flex-wrap items-center justify-between gap-2 py-4">
-          <p className="label opacity-60">
+          <p className="text-[12px] opacity-50">
             © {year} NextGen ICT. {t.footer.rights}
           </p>
-          <p className="label opacity-60">{t.footer.built}</p>
+          <p className="text-[12px] opacity-50">{t.footer.built}</p>
         </div>
       </div>
     </footer>

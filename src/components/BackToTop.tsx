@@ -32,14 +32,15 @@ export function BackToTop() {
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.94 }}
           transition={{ type: "spring", stiffness: 320, damping: 24 }}
-          className="hard-sm fixed bottom-[5.5rem] right-[26px] z-50 grid h-12 w-12 place-items-center border-2 border-[var(--ink)] bg-[var(--paper)] text-[var(--ink)] sm:right-5"
+          className="glass fixed bottom-[5.5rem] right-[26px] z-50 grid h-12 w-12 place-items-center rounded-full border border-[var(--line-strong)] text-[var(--fg)] shadow-[var(--shadow)] sm:right-5"
         >
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden>
             <path
               d="M12 19V5M5 12l7-7 7 7"
               stroke="currentColor"
               strokeWidth="2.4"
-              strokeLinecap="square"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </motion.button>

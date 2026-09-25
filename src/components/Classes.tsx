@@ -52,7 +52,7 @@ export function Classes() {
   return (
     <section
       id="classes"
-      className="border-b-2 border-[var(--ink)] bg-[var(--paper-2)] py-14 sm:py-20"
+      className="bg-[var(--bg-soft)] py-16 sm:py-24"
     >
       <div className="shell">
         <SectionHead
@@ -104,7 +104,7 @@ export function Classes() {
         </motion.ul>
 
         {cards.length === 0 && (
-          <div className="mt-7 border-2 border-dashed border-[var(--ink)]/50 px-5 py-8 text-center">
+          <div className="mt-7 rounded-3xl border border-dashed border-[var(--line-strong)] px-5 py-10 text-center">
             <p className="text-[14px]">{t.classes.empty}</p>
             <button
               type="button"
@@ -112,7 +112,7 @@ export function Classes() {
                 setBatch("all");
                 setVenue("all");
               }}
-              className="mt-3 text-[13px] font-semibold text-[var(--maroon)] underline decoration-dotted underline-offset-4"
+              className="press btn-ghost mt-4 rounded-full px-4 py-2 text-[13px] font-semibold"
             >
               {t.classes.reset}
             </button>
@@ -139,33 +139,29 @@ function FilterBar<K extends string>({
 }) {
   return (
     <div className="flex min-w-0 flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
-      <span className="label w-20 shrink-0 text-[var(--ink-soft)]">
+      <span className="w-20 shrink-0 text-[12.5px] font-semibold text-[var(--muted)]">
         {label}
       </span>
       <div className="thin-scroll -mx-[clamp(1rem,4vw,1.5rem)] min-w-0 overflow-x-auto px-[clamp(1rem,4vw,1.5rem)] pb-1 sm:mx-0 sm:px-0 sm:pb-0">
         <div
           role="group"
           aria-label={label}
-          className="flex w-max border-2 border-[var(--ink)] bg-[var(--paper)]"
+          className="flex w-max rounded-full border border-[var(--line)] bg-[var(--surface)] p-1 shadow-[var(--shadow-sm)]"
         >
-          {options.map((o, i) => (
+          {options.map((o) => (
             <button
               key={o.key}
               type="button"
               onClick={() => onChange(o.key)}
               aria-pressed={value === o.key}
-              className={`relative shrink-0 whitespace-nowrap px-4 py-2.5 text-[13px] font-semibold transition-colors sm:px-5 sm:text-[13.5px] ${
-                i > 0 ? "border-l-2 border-[var(--ink)]" : ""
-              } ${
-                value === o.key
-                  ? "text-[var(--panel-fg)]"
-                  : "hover:bg-[var(--mustard)] hover:text-[var(--on-accent)]"
+              className={`relative shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-semibold transition-colors sm:px-5 sm:text-[13.5px] ${
+                value === o.key ? "text-[var(--on-brand)]" : "text-[var(--muted)] hover:text-[var(--fg)]"
               }`}
             >
               {value === o.key && (
                 <motion.span
                   layoutId={id}
-                  className="absolute inset-0 bg-[var(--panel)]"
+                  className="absolute inset-0 rounded-full bg-[image:var(--grad)] shadow-[var(--glow)]"
                   transition={{ type: "spring", stiffness: 400, damping: 34 }}
                 />
               )}
@@ -178,7 +174,7 @@ function FilterBar<K extends string>({
   );
 }
 
-/** Admission-ticket card: stub header, perforated split, weekly sessions below. */
+/** Batch card: coloured header glow, weekly sessions, one call to action. */
 function BatchCard({ b, sessions }: { b: Batch; sessions: ClassInfo[] }) {
   const { t, L } = useLang();
   const reduce = useReducedMotion();
@@ -196,82 +192,85 @@ function BatchCard({ b, sessions }: { b: Batch; sessions: ClassInfo[] }) {
 
   return (
     <motion.article
-      whileHover={reduce ? {} : { y: -5 }}
+      whileHover={reduce ? {} : { y: -6 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="ticket hard flex h-full flex-col border-2 border-[var(--ink)] bg-[var(--paper)]"
+      className="card ring-grad relative flex h-full flex-col overflow-hidden rounded-3xl hover:shadow-[var(--shadow-lg)]"
     >
-      {/* stub */}
-      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 sm:px-5 sm:py-3">
-        <span className="label inline-flex items-center gap-2 text-[var(--mustard)]">
-          <span
-            aria-hidden
-            className="h-3 w-3 border border-[var(--panel-fg)]/60"
-            style={{ background: color }}
-          />
+      {/* soft batch-coloured wash across the top */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-40 opacity-70"
+        style={{
+          background: `radial-gradient(120% 100% at 0% 0%, color-mix(in srgb, ${color} 22%, transparent), transparent 70%)`,
+        }}
+      />
+
+      <div className="relative flex flex-wrap items-center justify-between gap-2 px-5 pt-5 sm:px-6 sm:pt-6">
+        <span
+          className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[12px] font-semibold"
+          style={{ color, background: `color-mix(in srgb, ${color} 14%, transparent)` }}
+        >
+          <span aria-hidden className="h-2 w-2 rounded-full" style={{ background: color }} />
           {L(b.kind)}
         </span>
-        <span className="label text-[var(--panel-fg)] opacity-70">
+        <span className="label text-[var(--muted)]">
           {b.level === "al" ? "G.C.E. A/L" : "G.C.E. O/L"}
         </span>
       </div>
 
-      <div className="px-4 pb-4 pt-4 sm:px-5 sm:pb-5 sm:pt-5">
-        <h3 className="display text-[clamp(1.15rem,4.4vw,1.6rem)]">
-          {L(b.title)}
-        </h3>
-        <p className="mt-2 text-[13px] leading-relaxed text-[var(--ink-soft)] sm:mt-2.5 sm:text-[13.5px]">
+      <div className="relative px-5 pt-4 sm:px-6">
+        <h3 className="display text-[clamp(1.2rem,4.4vw,1.6rem)]">{L(b.title)}</h3>
+        <p className="mt-2 text-[13.5px] leading-relaxed text-[var(--muted)] sm:text-[14px]">
           {L(b.desc)}
         </p>
       </div>
 
-      <div className="dashed-rule mx-4 sm:mx-5" />
-
-      <p className="label px-4 pt-3.5 text-[var(--ink-soft)] sm:px-5">
-        {t.classes.weekly}
-      </p>
-      <ul className="px-4 sm:px-5">
-        {sessions.map((c) => (
-          <li
-            key={c.id}
-            className="grid grid-cols-[5.5rem_1fr] gap-x-3 border-b border-dotted border-[var(--ink)]/40 py-2.5 text-[13px] last:border-b-0 sm:grid-cols-[6.5rem_1fr] sm:text-[13.5px]"
-          >
-            <span className="font-bold" style={{ color }}>
-              {L(c.day)}
-            </span>
-            <span className="min-w-0">
-              <span className="block font-[family-name:var(--font-mono)] text-[12.5px]">
-                {L(c.time)}
-                {c.label && (
-                  <span className="ml-2 border border-[var(--ink)]/50 px-1.5 py-px font-[family-name:var(--font-ui)] text-[11px] font-semibold">
-                    {L(c.label)}
-                  </span>
-                )}
+      <div className="relative mx-5 mt-5 rounded-2xl border border-[var(--line)] bg-[var(--bg)] sm:mx-6">
+        <p className="label px-4 pt-3 text-[var(--muted)]">{t.classes.weekly}</p>
+        <ul className="px-4 pb-1">
+          {sessions.map((c) => (
+            <li
+              key={c.id}
+              className="grid grid-cols-[5.5rem_1fr] gap-x-3 border-b border-[var(--line)] py-3 text-[13px] last:border-b-0 sm:grid-cols-[6.5rem_1fr] sm:text-[13.5px]"
+            >
+              <span className="font-bold" style={{ color }}>
+                {L(c.day)}
               </span>
-              <span className="block text-[var(--ink-soft)]">
-                {L(c.institute)} - {L(c.town)}
+              <span className="min-w-0">
+                <span className="block font-[family-name:var(--font-mono)] text-[12.5px] font-medium">
+                  {L(c.time)}
+                  {c.label && (
+                    <span className="ml-2 rounded-full bg-[var(--bg-soft)] px-2 py-0.5 font-[family-name:var(--font-ui)] text-[11px] font-semibold">
+                      {L(c.label)}
+                    </span>
+                  )}
+                </span>
+                <span className="block text-[var(--muted)]">
+                  {L(c.institute)} - {L(c.town)}
+                </span>
               </span>
-            </span>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <ul className="mt-3.5 flex flex-wrap gap-2 px-4 sm:mt-4 sm:px-5">
+      <ul className="relative mt-4 flex flex-wrap gap-2 px-5 sm:px-6">
         {b.highlights.map((h) => (
           <li
             key={h.en}
-            className="border border-[var(--ink)] bg-[var(--paper-2)] px-2.5 py-1 text-[11.5px]"
+            className="rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-[12px] font-medium text-[var(--muted)]"
           >
             {L(h)}
           </li>
         ))}
       </ul>
 
-      <div className="mt-auto p-4 sm:p-5">
+      <div className="relative mt-auto p-5 sm:p-6">
         <a
           href={waLink(message)}
           target="_blank"
           rel="noopener noreferrer"
-          className="press hard-sm flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--green)] px-4 py-3 text-[13.5px] font-bold text-[var(--paper)] sm:px-5 sm:text-[14px]"
+          className="press btn-green flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-semibold"
         >
           <WhatsAppGlyph className="h-4 w-4 shrink-0" />
           {t.classes.join}

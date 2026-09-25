@@ -81,10 +81,30 @@ export function Hero() {
   const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduce || !wide ? 0 : 60]);
 
   return (
-    <section id="home" ref={sectionRef} className="relative">
-      <div className="shell pb-12 pt-8 sm:pb-14 sm:pt-14">
+    <section id="home" ref={sectionRef} className="relative isolate -mt-[68px] overflow-hidden pt-[68px] sm:-mt-[76px] sm:pt-[76px]">
+      {/* backdrop: faint grid and three drifting colour orbs */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="grid-bg absolute inset-0" />
+        <motion.div
+          className="orb left-[-10%] top-[-8%] h-[420px] w-[420px] bg-[var(--brand)]"
+          animate={reduce ? undefined : { x: [0, 40, 0], y: [0, 30, 0] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="orb right-[-8%] top-[10%] h-[380px] w-[380px] bg-[var(--brand-2)]"
+          animate={reduce ? undefined : { x: [0, -30, 0], y: [0, 40, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="orb bottom-[5%] left-[35%] h-[300px] w-[300px] bg-[#ec4899]"
+          animate={reduce ? undefined : { x: [0, 30, 0], y: [0, -20, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      <div className="shell pb-14 pt-10 sm:pb-16 sm:pt-16">
         {/* phones/tablets: headline > portrait > rest, centred. laptops: text column left, portrait right. */}
-        <div className="grid items-start gap-9 text-center sm:gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-x-10 lg:gap-y-0 lg:text-left">
+        <div className="grid items-start gap-10 text-center sm:gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-x-12 lg:gap-y-0 lg:text-left">
           {/* 1. headline - the message comes first */}
           <motion.div
             className="lg:col-start-1 lg:row-start-1"
@@ -95,36 +115,37 @@ export function Hero() {
             {!badgeHidden && (
               <motion.div
                 variants={item}
-                className="mb-5 inline-flex items-stretch border-2 border-[var(--ink)] bg-[var(--mustard)] text-[var(--on-accent)] sm:mb-6"
+                className="glass mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--line)] py-1 pl-3 pr-1 shadow-[var(--shadow-sm)] sm:mb-7"
               >
-                <p className="label px-2.5 py-1.5 text-left leading-relaxed sm:px-3">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--brand)] opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--brand)]" />
+                </span>
+                <p className="min-w-0 text-left text-[12.5px] font-medium leading-snug sm:text-[13px]">
                   {t.hero.badge}
                 </p>
                 <button
                   type="button"
                   onClick={dismissBadge}
                   aria-label={t.hero.badgeClose}
-                  className="grid w-8 shrink-0 place-items-center border-l-2 border-[var(--ink)] text-[15px] font-bold leading-none hover:bg-[var(--ink)] hover:text-[var(--mustard)]"
+                  className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] text-[var(--muted)] transition-colors hover:bg-[var(--bg-soft)] hover:text-[var(--fg)]"
                 >
                   <span aria-hidden>✕</span>
                 </button>
               </motion.div>
             )}
 
-            <h1 className="display text-[clamp(2.2rem,8.6vw,5.4rem)]">
+            <h1 className="display text-[clamp(2.3rem,8.4vw,5.2rem)]">
               <motion.span
                 variants={item}
-                className="block text-[0.44em] font-semibold tracking-[0.14em] text-[var(--maroon)] sm:tracking-[0.18em]"
+                className="block text-[0.4em] font-semibold tracking-[0.02em] text-[var(--muted)]"
               >
                 {t.hero.titleTop}
               </motion.span>
-              <motion.span variants={item} className="mt-1.5 block sm:mt-2">
+              <motion.span variants={item} className="grad-text mt-2 block pb-1">
                 {t.hero.titleMain}
               </motion.span>
-              <motion.span
-                variants={item}
-                className="mt-1 block text-[0.5em] font-semibold"
-              >
+              <motion.span variants={item} className="mt-1 block text-[0.46em] font-semibold">
                 {t.hero.titleBottom}
               </motion.span>
             </h1>
@@ -136,16 +157,19 @@ export function Hero() {
             initial={reduce ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.95, delay: 0.3, ease: [0.2, 0.8, 0.3, 1] }}
-            className="relative mx-auto w-full max-w-[min(320px,72vw)] sm:max-w-[340px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:max-w-[500px]"
+            className="relative mx-auto w-full max-w-[min(320px,76vw)] sm:max-w-[360px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-[480px]"
           >
-            {/* cut-out portrait - no frame */}
             <div className="relative aspect-[4/5]">
-              {/* dots drift against the portrait's float for a touch of depth */}
-              <motion.div
-                className="dots absolute -right-2 top-[6%] h-[46%] w-[46%] opacity-30 sm:-right-4"
+              {/* gradient disc behind the cut-out, with a slow-turning conic ring */}
+              <div
                 aria-hidden
-                animate={reduce ? undefined : { x: [0, 6, 0], y: [0, 8, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-x-[4%] bottom-[4%] top-[14%] rounded-[2.5rem] bg-[image:var(--grad)] opacity-90 shadow-[var(--shadow-lg)]"
+              />
+              <motion.div
+                aria-hidden
+                className="absolute -inset-2 rounded-full opacity-40 [background:conic-gradient(from_0deg,transparent,var(--brand),transparent_40%)] [mask-image:radial-gradient(circle,transparent_62%,#000_63%,#000_64%,transparent_65%)]"
+                animate={reduce ? undefined : { rotate: 360 }}
+                transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
               />
               {tutorPhoto ? (
                 <motion.div
@@ -158,18 +182,34 @@ export function Hero() {
                     alt={`${L(site.tutor.name)} — ${L(site.tutor.role)}, ${L(site.location)}`}
                     fill
                     priority
-                    className="object-contain object-bottom [mask-image:linear-gradient(to_bottom,#000_80%,transparent_98%)]"
-                    sizes="(max-width: 1024px) 80vw, 500px"
+                    className="object-contain object-bottom [mask-image:linear-gradient(to_bottom,#000_82%,transparent_97%)]"
+                    sizes="(max-width: 1024px) 80vw, 480px"
                   />
                 </motion.div>
               ) : (
                 <div className="absolute inset-0 grid place-items-center">
-                  <TeacherGlyph className="h-32 w-32 text-[var(--ink)] opacity-20 sm:h-48 sm:w-48" />
-                  <p className="label absolute bottom-4 px-3 text-center text-[var(--ink-soft)]">
+                  <TeacherGlyph className="h-32 w-32 text-white opacity-60 sm:h-48 sm:w-48" />
+                  <p className="label absolute bottom-4 px-3 text-center text-white/80">
                     public/images/tutor.jpg
                   </p>
                 </div>
               )}
+
+              {/* floating chip */}
+              <motion.div
+                initial={reduce ? false : { opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.9, ease: [0.2, 0.8, 0.3, 1] }}
+                className="glass absolute right-[-4%] top-[22%] hidden items-center gap-2 rounded-2xl border border-[var(--line)] px-3 py-2 text-left shadow-[var(--shadow)] sm:flex"
+              >
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-[color-mix(in_srgb,var(--green)_16%,transparent)] text-[15px]">
+                  ✓
+                </span>
+                <span className="leading-tight">
+                  <span className="block text-[12.5px] font-bold">A/L · O/L</span>
+                  <span className="block text-[11px] text-[var(--muted)]">{L(site.medium)}</span>
+                </span>
+              </motion.div>
             </div>
 
             {/* name plate, pinned over the foot of the photo */}
@@ -177,53 +217,50 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.65, ease: [0.2, 0.8, 0.3, 1] }}
-              className="hard-sm relative z-10 mx-auto -mt-12 w-[90%] border-2 border-l-[6px] border-[var(--ink)] border-l-[var(--maroon)] bg-[var(--paper)] px-4 py-3 text-left sm:-mt-14 sm:px-5 sm:py-3.5"
+              className="glass relative z-10 mx-auto -mt-12 flex w-[90%] items-center gap-3 rounded-2xl border border-[var(--line)] px-4 py-3 text-left shadow-[var(--shadow-lg)] sm:-mt-14 sm:px-5 sm:py-3.5"
             >
-              <p className="display text-[19px] leading-tight sm:text-[22px]">{L(site.tutor.name)}</p>
-              <p className="mt-1 text-[12.5px] leading-snug text-[var(--ink-soft)] sm:text-[13px]">
-                {L(site.tutor.subject)}
-              </p>
+              <span aria-hidden className="h-10 w-1 shrink-0 rounded-full bg-[image:var(--grad)]" />
+              <span className="min-w-0">
+                <span className="display block text-[18px] leading-tight sm:text-[20px]">
+                  {L(site.tutor.name)}
+                </span>
+                <span className="mt-0.5 block text-[12.5px] leading-snug text-[var(--muted)] sm:text-[13px]">
+                  {L(site.tutor.subject)}
+                </span>
+              </span>
             </motion.div>
           </motion.div>
 
           {/* 3. everything else: pitch, calls to action, confirmed classes */}
           <motion.div
-            className="w-full lg:col-start-1 lg:row-start-2 lg:mt-6"
+            className="w-full lg:col-start-1 lg:row-start-2 lg:mt-7"
             variants={container}
             initial={reduce ? false : "hidden"}
             animate="show"
           >
-            <motion.div
+            <motion.p
               variants={item}
-              className="mx-auto flex max-w-3xl items-start justify-center gap-4 border-t-2 border-[var(--ink)] pt-5 sm:gap-5 lg:mx-0 lg:max-w-none lg:justify-start"
+              className="mx-auto max-w-[56ch] text-[15px] leading-relaxed text-[var(--muted)] sm:text-[16.5px] lg:mx-0"
             >
-              <span className="display hidden shrink-0 text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
-                &ldquo;
-              </span>
-              <p className="max-w-[54ch] text-[14.5px] text-[var(--ink-soft)] sm:text-[15.5px]">
-                {t.hero.sub}
-              </p>
-              <span className="display hidden shrink-0 self-end text-[3.4rem] leading-none text-[var(--maroon)] sm:block">
-                &rdquo;
-              </span>
-            </motion.div>
+              {t.hero.sub}
+            </motion.p>
 
             <motion.div
               variants={item}
-              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3 lg:justify-start"
+              className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start"
             >
               <a
                 href={waLink(t.wa.generic)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press hard inline-flex items-center justify-center gap-2.5 border-2 border-[var(--ink)] bg-[var(--green)] px-5 py-3.5 text-[14.5px] font-bold text-[var(--paper)] sm:px-6 sm:text-[15px]"
+                className="press btn-green inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-[14.5px] font-semibold sm:text-[15px]"
               >
                 <WhatsAppGlyph className="h-5 w-5 shrink-0" />
                 {t.hero.ctaPrimary}
               </a>
               <a
                 href="#timetable"
-                className="press hard-sm inline-flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--paper)] px-5 py-3.5 text-[14.5px] font-semibold sm:px-6 sm:text-[15px]"
+                className="press btn-ghost inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[14.5px] font-semibold sm:text-[15px]"
               >
                 {t.hero.ctaSecondary}
                 <motion.span
@@ -236,38 +273,36 @@ export function Hero() {
               </a>
             </motion.div>
 
-            {/* torn-ticket strip: one stub per batch, with its class days */}
+            {/* one glass card per batch, with its class days */}
             <motion.ul
               variants={item}
-              className="mx-auto mt-7 grid max-w-3xl border-2 border-[var(--ink)] sm:mt-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none"
+              className="mx-auto mt-8 grid max-w-3xl gap-3 sm:mt-9 sm:grid-cols-2 lg:mx-0 lg:max-w-none"
             >
-              {batches.map((b, i) => {
+              {batches.map((b) => {
                 const list = sessionsOf(b.id);
                 const days = [...new Set(list.map((c) => L(c.day)))];
                 const towns = [...new Set(list.map((c) => L(c.town)))];
                 return (
                   <li
                     key={b.id}
-                    className={`border-dashed border-[var(--ink)] p-4 ${
-                      i > 0 ? "border-t-2" : ""
-                    } ${i === 1 ? "sm:border-t-0" : ""} ${
-                      i % 2 === 0 ? "sm:border-r-2" : ""
-                    }`}
+                    className="glass press flex items-start gap-3 rounded-2xl border border-[var(--line)] p-3.5 text-left shadow-[var(--shadow-sm)]"
                   >
-                    <p className="label flex items-center gap-2 text-[var(--maroon)]">
-                      <span
-                        aria-hidden
-                        className="h-2.5 w-2.5 border border-[var(--ink)]"
-                        style={{ background: `var(--batch-${b.id})` }}
-                      />
-                      {L(b.name)} · {L(b.kind)}
-                    </p>
-                    <p className="mt-1.5 text-[14px] font-semibold leading-snug sm:text-[14.5px]">
-                      {towns.join(", ")}
-                    </p>
-                    <p className="font-[family-name:var(--font-mono)] text-[12px] text-[var(--ink-soft)] sm:text-[12.5px]">
-                      {days.join(" · ")}
-                    </p>
+                    <span
+                      aria-hidden
+                      className="mt-1 h-8 w-1 shrink-0 rounded-full"
+                      style={{ background: `var(--batch-${b.id})` }}
+                    />
+                    <span className="min-w-0">
+                      <span className="block text-[12px] font-semibold" style={{ color: `var(--batch-${b.id})` }}>
+                        {L(b.name)} · {L(b.kind)}
+                      </span>
+                      <span className="mt-0.5 block text-[14px] font-semibold leading-snug">
+                        {towns.join(", ")}
+                      </span>
+                      <span className="block text-[12.5px] text-[var(--muted)]">
+                        {days.join(" · ")}
+                      </span>
+                    </span>
                   </li>
                 );
               })}
@@ -276,15 +311,20 @@ export function Hero() {
         </div>
       </div>
 
-      {/* stat band */}
-      <div className="border-y-2 border-[var(--ink)] bg-[var(--panel)]">
-        <dl className="shell grid grid-cols-2 divide-x divide-y divide-[var(--panel-fg)]/20 sm:grid-cols-4 sm:divide-y-0">
-          {stats.map((s) => (
-            <div key={s.value} className="px-2 py-4 text-center sm:py-5">
-              <dt className="display text-[clamp(1.7rem,6vw,2.7rem)] text-[var(--mustard)]">
+      {/* stats */}
+      <div className="shell">
+        <dl className="grid grid-cols-2 overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow)] sm:grid-cols-4">
+          {stats.map((s, i) => (
+            <div
+              key={s.value}
+              className={`px-3 py-5 text-center sm:py-7 ${i % 2 === 1 ? "border-l border-[var(--line)]" : ""} ${
+                i >= 2 ? "border-t border-[var(--line)] sm:border-t-0" : ""
+              } ${i === 2 ? "sm:border-l" : ""}`}
+            >
+              <dt className="display grad-text text-[clamp(1.8rem,6vw,2.8rem)]">
                 <StatCounter value={s.value} />
               </dt>
-              <dd className="label mt-1 leading-relaxed text-[var(--panel-fg)] opacity-80">
+              <dd className="mt-1 text-[12.5px] font-medium leading-snug text-[var(--muted)] sm:text-[13px]">
                 {L(s.label)}
               </dd>
             </div>
@@ -292,13 +332,13 @@ export function Hero() {
         </dl>
       </div>
 
-      {/* printed ticker */}
-      <div className="overflow-hidden border-b-2 border-[var(--ink)] bg-[var(--paper-2)] py-2">
-        <div className="marquee-track gap-6">
+      {/* topic ticker */}
+      <div className="marquee-mask mt-10 overflow-hidden py-2 sm:mt-12">
+        <div className="marquee-track gap-3">
           {[0, 1].map((dup) => (
             <div
               key={dup}
-              className="flex shrink-0 items-center gap-6 pr-6"
+              className="flex shrink-0 items-center gap-3 pr-3"
               aria-hidden={dup === 1}
             >
               {[
@@ -314,8 +354,12 @@ export function Hero() {
                 "A/L 2028",
                 "O/L",
               ].map((w) => (
-                <span key={w} className="label whitespace-nowrap text-[var(--ink-soft)]">
-                  {w} <span className="text-[var(--maroon)]">✦</span>
+                <span
+                  key={w}
+                  className="whitespace-nowrap rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-[13px] font-medium text-[var(--muted)]"
+                >
+                  <span className="mr-2 text-[var(--brand)]">✦</span>
+                  {w}
                 </span>
               ))}
             </div>

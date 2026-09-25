@@ -33,7 +33,7 @@ const freeDays = days.filter((_, i) => !classes.some((c) => c.dayIndex === i));
 
 const batchColor = (c: ClassInfo) => `var(--batch-${c.batch.id})`;
 const tint = (c: ClassInfo, pct = 14) =>
-  `color-mix(in srgb, ${batchColor(c)} ${pct}%, var(--paper))`;
+  `color-mix(in srgb, ${batchColor(c)} ${pct}%, var(--surface))`;
 
 /** The class running now, or the next one to start (wrapping to next week). */
 function upcoming(list: ClassInfo[], now: number | null) {
@@ -83,7 +83,7 @@ export function Timetable() {
   return (
     <section
       id="timetable"
-      className="border-b-2 border-[var(--ink)] py-14 sm:py-20"
+      className="py-16 sm:py-24"
     >
       <div className="shell">
         <SectionHead
@@ -127,7 +127,7 @@ export function Timetable() {
           <WeekCalendar highlight={filter} now={now} />
         </Reveal>
 
-        <p className="mt-4 text-[12.5px] text-[var(--ink-soft)]">
+        <p className="mt-4 text-[13px] text-[var(--muted)]">
           {freeDays.length > 0 &&
             (lang === "si"
               ? `${freeDays.map((d) => d.long.si).join(", ")} දිනට පන්ති නැත. `
@@ -155,16 +155,16 @@ function FilterChip({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap border-2 border-[var(--ink)] px-3.5 py-2 text-[13px] font-semibold transition-colors ${
+      className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-[13px] font-semibold transition-all ${
         active
-          ? "bg-[var(--panel)] text-[var(--panel-fg)]"
-          : "bg-[var(--paper)] hover:bg-[var(--paper-2)]"
+          ? "border-transparent bg-[var(--fg)] text-[var(--bg)] shadow-[var(--shadow)]"
+          : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--fg)]"
       }`}
     >
       {color && (
         <span
           aria-hidden
-          className="h-3 w-3 shrink-0 border border-[var(--ink)]"
+          className="h-2.5 w-2.5 shrink-0 rounded-full"
           style={{ background: color }}
         />
       )}
@@ -185,21 +185,21 @@ function NextUp({ next }: { next: { c: ClassInfo; live: boolean } | null }) {
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           key={next.c.id}
-          className="grid gap-2 border-2 border-[var(--ink)] px-4 py-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:py-2.5"
-          style={{ background: tint(next.c, 18) }}
+          className="grid gap-2 rounded-2xl border border-[var(--line)] px-4 py-3 shadow-[var(--shadow-sm)] sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:rounded-full sm:py-2 sm:pl-5 sm:pr-2"
+          style={{ background: tint(next.c, 12) }}
         >
-          <span className="label inline-flex items-center gap-2 text-[var(--maroon)]">
+          <span className="label inline-flex items-center gap-2 text-[var(--brand)]">
             {next.live && (
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--maroon)] opacity-60" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--maroon)]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--brand)] opacity-60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--brand)]" />
               </span>
             )}
             {next.live ? t.timetable.now : t.timetable.next}
           </span>
           <span className="min-w-0 text-[13.5px] leading-snug sm:flex-1">
             <b>{L(next.c.title)}</b>
-            <span className="text-[var(--ink-soft)]">
+            <span className="text-[var(--muted)]">
               {" "}
               · {L(next.c.day)} · {L(next.c.time)} · {L(next.c.institute)},{" "}
               {L(next.c.town)}
@@ -209,7 +209,7 @@ function NextUp({ next }: { next: { c: ClassInfo; live: boolean } | null }) {
             href={message(next.c)}
             target="_blank"
             rel="noopener noreferrer"
-            className="press inline-flex items-center justify-self-start gap-1.5 border-2 border-[var(--ink)] bg-[var(--green)] px-3 py-1.5 text-[12.5px] font-bold text-[var(--paper)]"
+            className="press btn-green inline-flex items-center justify-self-start gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
           >
             <WhatsAppGlyph className="h-3.5 w-3.5 shrink-0" />
             {t.timetable.join}
@@ -258,9 +258,9 @@ function WeekCalendar({
   );
 
   return (
-    <div className="hard border-2 border-[var(--ink)] bg-[var(--paper)]">
+    <div className="card rounded-3xl shadow-[var(--shadow)]">
       {/* day header */}
-      <div className="grid grid-cols-[64px_repeat(7,minmax(0,1fr))] border-b-2 border-[var(--ink)] bg-[var(--panel)] text-[var(--panel-fg)]">
+      <div className="grid grid-cols-[64px_repeat(7,minmax(0,1fr))] rounded-t-3xl border-b border-[var(--line)] bg-[var(--bg-soft)]">
         <span aria-hidden />
         {days.map((d, i) => {
           const count = classes.filter((c) => c.dayIndex === i).length;
@@ -268,12 +268,14 @@ function WeekCalendar({
           return (
             <div
               key={d.long.en}
-              className={`border-l-2 border-[var(--panel-fg)]/15 px-3 py-2.5 ${
-                isToday ? "bg-[var(--mustard)] text-[var(--on-accent)]" : ""
-              }`}
+              className={`border-l border-[var(--line)] px-3 py-3 ${
+                isToday ? "bg-[color-mix(in_srgb,var(--brand)_10%,transparent)]" : ""
+              } ${i === 6 ? "rounded-tr-3xl" : ""}`}
             >
-              <p className="display text-[16px] leading-tight">{L(d.long)}</p>
-              <p className="label mt-0.5 opacity-75">
+              <p className={`display text-[15px] leading-tight ${isToday ? "text-[var(--brand)]" : ""}`}>
+                {L(d.long)}
+              </p>
+              <p className="mt-0.5 text-[11.5px] font-medium text-[var(--muted)]">
                 {isToday
                   ? t.timetable.today
                   : count === 0
@@ -294,7 +296,7 @@ function WeekCalendar({
           {hours.map((h) => (
             <span
               key={h}
-              className={`absolute right-2 font-[family-name:var(--font-mono)] text-[11px] text-[var(--ink-soft)] ${
+              className={`absolute right-2 whitespace-nowrap font-[family-name:var(--font-mono)] text-[10.5px] text-[var(--muted)] ${
                 h === FIRST_HOUR ? "translate-y-1" : "-translate-y-1/2"
               }`}
               style={{ top: (h - FIRST_HOUR) * HOUR_PX }}
@@ -312,21 +314,21 @@ function WeekCalendar({
               key={d.long.en}
               role="group"
               aria-label={L(d.long)}
-              className="relative border-l-2 border-[var(--ink)]"
+              className={`relative border-l border-[var(--line)] ${i === 6 ? "rounded-br-3xl" : ""}`}
               style={{
                 height: GRID_PX,
                 backgroundImage: `repeating-linear-gradient(to bottom, transparent 0, transparent ${
                   HOUR_PX - 1
                 }px, var(--rule-line) ${HOUR_PX - 1}px, var(--rule-line) ${HOUR_PX}px)`,
                 backgroundColor: isToday
-                  ? "color-mix(in srgb, var(--mustard) 9%, var(--paper))"
+                  ? "color-mix(in srgb, var(--brand) 5%, var(--surface))"
                   : list.length === 0
-                    ? "var(--paper-2)"
+                    ? "color-mix(in srgb, var(--bg-soft) 60%, var(--surface))"
                     : undefined,
               }}
             >
               {list.length === 0 && (
-                <p className="label absolute inset-x-0 top-1/2 -translate-y-1/2 -rotate-90 text-center text-[var(--ink-soft)] opacity-60">
+                <p className="label absolute inset-x-0 top-1/2 -translate-y-1/2 -rotate-90 text-center text-[var(--muted)] opacity-60">
                   {t.timetable.noClass}
                 </p>
               )}
@@ -353,10 +355,10 @@ function WeekCalendar({
                 nowInDay <= LAST_HOUR * 60 && (
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-x-0 z-20 h-0.5 bg-[var(--maroon)]"
+                    className="pointer-events-none absolute inset-x-0 z-20 h-0.5 bg-[image:var(--grad)]"
                     style={{ top: toPx(nowInDay) }}
                   >
-                    <span className="absolute -left-1.5 -top-[5px] h-3 w-3 rounded-full bg-[var(--maroon)]" />
+                    <span className="absolute -left-1.5 -top-[5px] h-3 w-3 rounded-full bg-[var(--brand)]" />
                   </div>
                 )}
             </div>
@@ -402,12 +404,12 @@ function CalendarEvent({
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={panelId}
-        className={`group flex h-full w-full flex-col overflow-hidden border-2 border-[var(--ink)] border-l-[6px] px-2 py-1.5 text-left transition-[transform,box-shadow] duration-150 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--mustard)] ${
-          open ? "-translate-y-0.5 shadow-[3px_3px_0_var(--ink)]" : ""
+        className={`group flex h-full w-full flex-col overflow-hidden rounded-xl border border-l-4 border-[var(--line)] px-2 py-1.5 text-left transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow)] ${
+          open ? "-translate-y-0.5 shadow-[var(--shadow)]" : ""
         }`}
         style={{ background: tint(c), borderLeftColor: batchColor(c) }}
       >
-        <span className="font-[family-name:var(--font-mono)] text-[10.5px] leading-tight text-[var(--ink-soft)]">
+        <span className="font-[family-name:var(--font-mono)] text-[10.5px] leading-tight text-[var(--muted)]">
           {shortRange(c, lang)}
         </span>
         <span className="mt-0.5 text-[13px] font-bold leading-tight">
@@ -421,11 +423,11 @@ function CalendarEvent({
             {L(c.label)}
           </span>
         )}
-        <span className="mt-auto truncate text-[11.5px] leading-tight text-[var(--ink-soft)]">
+        <span className="mt-auto truncate text-[11.5px] leading-tight text-[var(--muted)]">
           ▣ {L(c.town)}
         </span>
         {live && (
-          <span className="label absolute right-1.5 top-1.5 bg-[var(--maroon)] px-1.5 py-0.5 text-[9px] text-[var(--paper)]">
+          <span className="label absolute right-1.5 top-1.5 rounded-full bg-[var(--brand)] px-1.5 py-0.5 text-[9px] text-[var(--on-brand)]">
             {t.timetable.now}
           </span>
         )}
@@ -441,29 +443,29 @@ function CalendarEvent({
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.12 } }}
             transition={{ duration: 0.18, ease: [0.2, 0.8, 0.3, 1] }}
-            className="hard absolute w-[272px] border-2 border-[var(--ink)] bg-[var(--paper)]"
+            className="absolute w-[280px] overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow-lg)]"
             style={{
               [upwards ? "bottom" : "top"]: 0,
               [leftwards ? "right" : "left"]: "calc(100% + 10px)",
             }}
           >
             <div
-              className="flex items-center justify-between gap-2 border-b-2 border-l-[6px] border-[var(--ink)] bg-[var(--panel)] px-3.5 py-2"
-              style={{ borderLeftColor: batchColor(c) }}
+              className="flex items-center justify-between gap-2 border-b border-[var(--line)] px-4 py-2.5"
+              style={{ background: tint(c, 14) }}
             >
-              <span className="label text-[var(--mustard)]">
+              <span className="label" style={{ color: batchColor(c) }}>
                 {L(c.batch.kind)}
               </span>
               <button
                 type="button"
                 onClick={onToggle}
                 aria-label={t.timetable.close}
-                className="label px-1 text-[var(--panel-fg)] hover:opacity-70"
+                className="grid h-6 w-6 place-items-center rounded-full text-[11px] text-[var(--muted)] hover:bg-[var(--bg-soft)] hover:text-[var(--fg)]"
               >
                 ✕
               </button>
             </div>
-            <div className="px-3.5 py-3">
+            <div className="px-4 py-3.5">
               <p className="display text-[17px] leading-tight">{L(c.title)}</p>
               <dl className="mt-2.5 grid gap-1.5 text-[13px]">
                 <DetailRow k="▤" v={L(c.day)} />
@@ -478,7 +480,7 @@ function CalendarEvent({
                 href={message(c)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="press hard-sm mt-3.5 flex items-center justify-center gap-2 border-2 border-[var(--ink)] bg-[var(--green)] px-3 py-2.5 text-[13px] font-bold text-[var(--paper)]"
+                className="press btn-green mt-3.5 flex items-center justify-center gap-2 rounded-full px-3 py-2.5 text-[13px] font-semibold"
               >
                 <WhatsAppGlyph className="h-4 w-4 shrink-0" />
                 {t.timetable.join}
@@ -494,7 +496,7 @@ function CalendarEvent({
 function DetailRow({ k, v, mono }: { k: string; v: string; mono?: boolean }) {
   return (
     <div className="flex gap-2">
-      <dt aria-hidden className="w-4 shrink-0 text-[var(--maroon)]">
+      <dt aria-hidden className="w-4 shrink-0 text-[var(--brand)]">
         {k}
       </dt>
       <dd
@@ -540,19 +542,19 @@ function MobileSchedule({
     <div className="mt-5">
       {/* view switch */}
       <div
-        className="flex border-2 border-[var(--ink)] bg-[var(--paper)]"
+        className="flex rounded-full border border-[var(--line)] bg-[var(--surface)] p-1 shadow-[var(--shadow-sm)]"
         role="tablist"
       >
-        {(["day", "week"] as const).map((v, i) => (
+        {(["day", "week"] as const).map((v) => (
           <button
             key={v}
             type="button"
             role="tab"
             aria-selected={view === v}
             onClick={() => setView(v)}
-            className={`flex-1 px-4 py-2.5 text-[13.5px] font-semibold transition-colors ${
-              i > 0 ? "border-l-2 border-[var(--ink)]" : ""
-            } ${view === v ? "bg-[var(--panel)] text-[var(--panel-fg)]" : ""}`}
+            className={`flex-1 rounded-full px-4 py-2 text-[13.5px] font-semibold transition-colors ${
+              view === v ? "bg-[var(--fg)] text-[var(--bg)]" : "text-[var(--muted)]"
+            }`}
           >
             {v === "day" ? t.timetable.dayView : t.timetable.weekView}
           </button>
@@ -578,12 +580,12 @@ function MobileSchedule({
                   aria-selected={active}
                   aria-label={L(d.long)}
                   onClick={() => go(i)}
-                  className={`relative flex flex-col items-center gap-1.5 border-2 border-[var(--ink)] px-0.5 pb-2 pt-2 transition-colors ${
+                  className={`relative flex flex-col items-center gap-1.5 rounded-2xl border px-0.5 pb-2 pt-2.5 transition-colors ${
                     active
-                      ? "bg-[var(--panel)] text-[var(--panel-fg)]"
+                      ? "border-transparent bg-[image:var(--grad)] text-[var(--on-brand)] shadow-[var(--glow)]"
                       : dots.length === 0
-                        ? "bg-[var(--paper-2)] text-[var(--ink-soft)]"
-                        : "bg-[var(--paper)]"
+                        ? "border-[var(--line)] bg-transparent text-[var(--muted)]"
+                        : "border-[var(--line)] bg-[var(--surface)]"
                   }`}
                 >
                   <span className="text-[12.5px] font-bold leading-none">
@@ -593,13 +595,13 @@ function MobileSchedule({
                     {dots.map((c) => (
                       <span
                         key={c.id}
-                        className="h-1.5 w-1.5 rounded-full"
+                        className={`h-1.5 w-1.5 rounded-full ${active ? "ring-1 ring-white/70" : ""}`}
                         style={{ background: batchColor(c) }}
                       />
                     ))}
                   </span>
                   {i === today && (
-                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[var(--mustard)] px-1 text-[8.5px] font-bold uppercase leading-[14px] tracking-wide text-[var(--on-accent)]">
+                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-[var(--accent)] px-1.5 text-[8.5px] font-bold uppercase leading-[14px] tracking-wide text-[var(--on-accent)]">
                       {t.timetable.today}
                     </span>
                   )}
@@ -609,20 +611,20 @@ function MobileSchedule({
           </div>
 
           {/* selected day */}
-          <div className="mt-4 overflow-hidden border-2 border-[var(--ink)] bg-[var(--paper)]">
-            <div className="flex items-center justify-between border-b-2 border-[var(--ink)] bg-[var(--panel)] text-[var(--panel-fg)]">
+          <div className="card mt-4 overflow-hidden rounded-3xl">
+            <div className="flex items-center justify-between border-b border-[var(--line)] bg-[var(--bg-soft)]">
               <button
                 type="button"
                 onClick={() => go(day - 1)}
                 aria-label={t.timetable.prevDay}
-                className="px-4 py-2.5 text-[18px] leading-none hover:text-[var(--mustard)]"
+                className="m-1.5 grid h-9 w-9 place-items-center rounded-full text-[18px] leading-none hover:bg-[var(--surface)]"
               >
                 ‹
               </button>
-              <p className="display text-[17px] text-[var(--mustard)]">
+              <p className="display text-[17px]">
                 {L(days[day].long)}
                 {day === today && (
-                  <span className="label ml-2 text-[var(--panel-fg)] opacity-70">
+                  <span className="label ml-2 text-[var(--brand)]">
                     · {t.timetable.today}
                   </span>
                 )}
@@ -631,7 +633,7 @@ function MobileSchedule({
                 type="button"
                 onClick={() => go(day + 1)}
                 aria-label={t.timetable.nextDay}
-                className="px-4 py-2.5 text-[18px] leading-none hover:text-[var(--mustard)]"
+                className="m-1.5 grid h-9 w-9 place-items-center rounded-full text-[18px] leading-none hover:bg-[var(--surface)]"
               >
                 ›
               </button>
@@ -666,7 +668,7 @@ function MobileSchedule({
                         key={c.id}
                         className={
                           i > 0
-                            ? "border-t-2 border-dashed border-[var(--ink)]"
+                            ? "border-t border-[var(--line)]"
                             : ""
                         }
                       >
@@ -698,7 +700,7 @@ function MobileSchedule({
                               : after.c.dayIndex + 7,
                           )
                         }
-                        className="mt-3 text-[13px] font-semibold text-[var(--maroon)] underline decoration-dotted underline-offset-4"
+                        className="press btn-ghost mt-4 rounded-full px-4 py-2 text-[13px] font-semibold"
                       >
                         {t.timetable.next}: {L(after.c.day)} ·{" "}
                         {L(clockLabel(after.c.start))} →
@@ -709,7 +711,7 @@ function MobileSchedule({
               </motion.div>
             </motion.div>
           </div>
-          <p className="label mt-2 text-center text-[var(--ink-soft)] opacity-70">
+          <p className="label mt-2 text-center text-[var(--muted)] opacity-70">
             {t.timetable.swipe}
           </p>
         </>
@@ -721,12 +723,12 @@ function MobileSchedule({
             return (
               <li
                 key={d.long.en}
-                className="border-2 border-[var(--ink)] bg-[var(--paper)]"
+                className="card overflow-hidden rounded-3xl"
               >
-                <p className="display flex items-center justify-between border-b-2 border-[var(--ink)] bg-[var(--panel)] px-4 py-2.5 text-[16px] text-[var(--mustard)]">
+                <p className="display flex items-center justify-between border-b border-[var(--line)] bg-[var(--bg-soft)] px-4 py-3 text-[16px]">
                   {L(d.long)}
                   {i === today && (
-                    <span className="label text-[var(--panel-fg)] opacity-70">
+                    <span className="label text-[var(--brand)]">
                       {t.timetable.today}
                     </span>
                   )}
@@ -737,7 +739,7 @@ function MobileSchedule({
                       key={c.id}
                       className={
                         j > 0
-                          ? "border-t-2 border-dashed border-[var(--ink)]"
+                          ? "border-t border-[var(--line)]"
                           : ""
                       }
                     >
@@ -768,13 +770,13 @@ function AgendaItem({ c, live }: { c: ClassInfo; live: boolean }) {
     <div className="flex gap-3 px-4 py-4">
       <div className="w-[80px] shrink-0 whitespace-nowrap font-[family-name:var(--font-mono)] text-[12px] leading-snug">
         <p className="font-bold">{L(clockLabel(c.start))}</p>
-        <p className="text-[var(--ink-soft)]">{L(clockLabel(c.end))}</p>
-        <p className="mt-1 text-[10.5px] text-[var(--ink-soft)]">
+        <p className="text-[var(--muted)]">{L(clockLabel(c.end))}</p>
+        <p className="mt-1 text-[10.5px] text-[var(--muted)]">
           {duration(c, lang)}
         </p>
       </div>
       <div
-        className="min-w-0 flex-1 border-l-[5px] pl-3"
+        className="min-w-0 flex-1 border-l-[3px] pl-3"
         style={{ borderLeftColor: batchColor(c) }}
       >
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -783,21 +785,21 @@ function AgendaItem({ c, live }: { c: ClassInfo; live: boolean }) {
           </span>
           {c.label && (
             <span
-              className="border px-1.5 py-px text-[11px] font-semibold"
-              style={{ borderColor: batchColor(c), color: batchColor(c) }}
+              className="rounded-full px-2 py-0.5 text-[11px] font-semibold"
+              style={{ background: tint(c, 16), color: batchColor(c) }}
             >
               {L(c.label)}
             </span>
           )}
           {live && (
-            <span className="label bg-[var(--maroon)] px-1.5 py-0.5 text-[9.5px] text-[var(--paper)]">
+            <span className="label rounded-full bg-[var(--brand)] px-1.5 py-0.5 text-[9.5px] text-[var(--on-brand)]">
               {t.timetable.now}
             </span>
           )}
         </p>
-        <p className="label mt-1 text-[var(--ink-soft)]">{L(c.batch.kind)}</p>
+        <p className="label mt-1 text-[var(--muted)]">{L(c.batch.kind)}</p>
         <p className="mt-1.5 text-[13px] leading-snug">
-          <span aria-hidden className="mr-1.5 text-[var(--maroon)]">
+          <span aria-hidden className="mr-1.5 text-[var(--brand)]">
             ▣
           </span>
           {L(c.institute)}, {L(c.town)}
@@ -806,7 +808,7 @@ function AgendaItem({ c, live }: { c: ClassInfo; live: boolean }) {
           href={message(c)}
           target="_blank"
           rel="noopener noreferrer"
-          className="press mt-2.5 inline-flex items-center gap-1.5 border-2 border-[var(--ink)] bg-[var(--green)] px-3 py-1.5 text-[12.5px] font-bold text-[var(--paper)]"
+          className="press btn-green mt-3 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12.5px] font-semibold"
         >
           <WhatsAppGlyph className="h-3.5 w-3.5 shrink-0" />
           {t.timetable.join}
