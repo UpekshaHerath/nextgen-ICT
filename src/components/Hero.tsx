@@ -301,25 +301,34 @@ export function Hero() {
         </div>
       </div>
 
-      {/* stats */}
+      {/* stats: the one solid maroon band on the page */}
       <div className="shell">
-        <dl className="grid grid-cols-2 overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow)] sm:grid-cols-4">
-          {stats.map((s, i) => (
-            <div
-              key={s.value}
-              className={`px-3 py-5 text-center sm:py-7 ${i % 2 === 1 ? "border-l border-[var(--line)]" : ""} ${
-                i >= 2 ? "border-t border-[var(--line)] sm:border-t-0" : ""
-              } ${i === 2 ? "sm:border-l" : ""}`}
-            >
-              <dt className="display text-[clamp(1.8rem,6vw,2.8rem)]">
-                <StatCounter value={s.value} />
-              </dt>
-              <dd className="mt-1 text-[12.5px] font-medium leading-snug text-[var(--muted)] sm:text-[13px]">
-                {L(s.label)}
-              </dd>
-            </div>
-          ))}
-        </dl>
+        <div className="stat-band relative overflow-hidden rounded-3xl text-white shadow-[var(--shadow-lg)]">
+          <div aria-hidden className="stat-texture pointer-events-none absolute inset-0" />
+          <dl className="relative grid grid-cols-2 sm:grid-cols-4">
+            {stats.map((s, i) => (
+              <div
+                key={s.value}
+                className={`relative flex flex-col items-center px-3 py-6 text-center sm:py-8 ${
+                  i % 2 === 1 ? "border-l border-white/15" : ""
+                } ${i >= 2 ? "border-t border-white/15 sm:border-t-0" : ""} ${i === 2 ? "sm:border-l" : ""}`}
+              >
+                <span
+                  aria-hidden
+                  className="mb-3 grid h-10 w-10 place-items-center rounded-full bg-white/10 ring-1 ring-white/15 sm:h-11 sm:w-11"
+                >
+                  <StatIcon index={i} />
+                </span>
+                <dt className="display text-[clamp(1.9rem,6vw,2.9rem)]">
+                  <StatCounter value={s.value} />
+                </dt>
+                <dd className="mt-1 text-[12.5px] font-medium leading-snug text-white/75 sm:text-[13.5px]">
+                  {L(s.label)}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
 
       {/* topic ticker */}
@@ -357,6 +366,34 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Line icons for the stat band, in the same order as `stats`. */
+const STAT_ICONS = [
+  // students
+  "M16 19v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 17.5V19M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM20 19v-1.5a3.5 3.5 0 0 0-2.5-3.35M15.5 4.15a3.5 3.5 0 0 1 0 6.7",
+  // experience
+  "M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM8.5 13.9 7 21l5-3 5 3-1.5-7.1",
+  // locations
+  "M12 21s-7-5.6-7-11a7 7 0 1 1 14 0c0 5.4-7 11-7 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
+  // syllabus
+  "M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15ZM4 20.5A2.5 2.5 0 0 0 6.5 23H20M9 10l2 2 4-4",
+];
+
+function StatIcon({ index }: { index: number }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={STAT_ICONS[index % STAT_ICONS.length]} />
+    </svg>
   );
 }
 

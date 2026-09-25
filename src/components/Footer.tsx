@@ -2,6 +2,7 @@
 
 import { useLang } from "./LanguageProvider";
 import { ChannelBadge } from "./BrandIcons";
+import { BrandMark } from "./BrandMark";
 import { site, telLink, waLink } from "@/lib/site";
 
 export function Footer() {
@@ -13,15 +14,7 @@ export function Footer() {
       <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-[var(--panel-fg)]/10" />
       <div className="shell grid gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
         <div className="sm:col-span-2 lg:col-span-1">
-          <div className="flex items-center gap-3">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[var(--brand)] font-[family-name:var(--font-mono)] text-[11px] font-bold text-white">
-              ICT
-            </span>
-            <span className="leading-none">
-              <span className="display block text-[20px]">NextGen ICT</span>
-              <span className="mt-1 block text-[12px] opacity-60">with Subhashana</span>
-            </span>
-          </div>
+          <BrandMark size="lg" onDark />
           <p className="mt-4 max-w-[40ch] text-[13px] leading-relaxed opacity-75 sm:text-[13.5px]">
             {L(site.tutor.role)} · {L(site.location)}
           </p>
