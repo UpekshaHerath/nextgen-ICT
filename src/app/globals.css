@@ -35,6 +35,10 @@
   --brand: #8e1b2e;
   --accent: #8e1b2e;
   --whatsapp: #1f8f4e;
+  --wa-soft-bg: #e5f7ec;
+  --wa-soft-bg-hover: #d3f1df;
+  --wa-soft-fg: #125f33;
+  --wa-soft-line: rgba(37, 211, 102, 0.35);
 
   /* one colour per batch, kept muted: timetable blocks, legend dots */
   --batch-al-2027: #8e1b2e;
@@ -72,6 +76,14 @@
     --brand: #e07a8b;
     --accent: #e07a8b;
     --whatsapp: #25a55f;
+  --wa-soft-bg: rgba(37, 211, 102, 0.12);
+  --wa-soft-bg-hover: rgba(37, 211, 102, 0.18);
+  --wa-soft-fg: #86e3ab;
+  --wa-soft-line: rgba(37, 211, 102, 0.3);
+    --wa-soft-bg: rgba(37, 211, 102, 0.12);
+    --wa-soft-bg-hover: rgba(37, 211, 102, 0.18);
+    --wa-soft-fg: #86e3ab;
+    --wa-soft-line: rgba(37, 211, 102, 0.3);
 
     --batch-al-2027: #e07a8b;
     --batch-al-2028: #86acd6;
@@ -279,6 +291,17 @@ html[data-lang="si"] body {
 
 .btn-brand:hover {
   background: color-mix(in srgb, var(--brand) 88%, var(--fg));
+}
+
+/* light green WhatsApp call to action, paired with the green logo */
+.btn-wa-soft {
+  background: var(--wa-soft-bg);
+  color: var(--wa-soft-fg);
+  border: 1px solid var(--wa-soft-line);
+}
+
+.btn-wa-soft:hover {
+  background: var(--wa-soft-bg-hover);
 }
 
 /* the floating WhatsApp button keeps the colour people recognise */
