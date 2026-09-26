@@ -57,7 +57,8 @@ export const metadata: Metadata = {
   authors: [{ name: site.tutor.name.en, url: site.facebook }],
   creator: site.tutor.name.en,
   publisher: `${site.brand.en} with ${site.tutor.name.en}`,
-  // og:image and twitter:image come from app/opengraph-image.tsx
+  // og:image and twitter:image come from app/opengraph-image.jpg + twitter-image.jpg
+  // (regenerate with: node scripts/generate-og-image.mjs)
   openGraph: {
     type: "website",
     url: "/",
