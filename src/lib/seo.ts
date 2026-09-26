@@ -83,7 +83,7 @@ export function jsonLdGraph() {
     description: seoDescription,
     url: siteUrl,
     logo: `${siteUrl}/icon.png`,
-    image: `${siteUrl}/opengraph-image`,
+    image: `${siteUrl}/opengraph-image.jpg`,
     telephone: `+${site.whatsappNumber}`,
     address: {
       "@type": "PostalAddress",
