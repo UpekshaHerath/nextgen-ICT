@@ -85,6 +85,8 @@ export const metadata: Metadata = {
     },
   },
   formatDetection: { telephone: true, address: true },
+  // Search Console ownership check; removing it un-verifies the property
+  verification: { google: "fIjaqdiq7Yvg18fDmlWHngWnqTgwuWs2MF8Evm-xq-U" },
 };
 
 export const viewport: Viewport = {
